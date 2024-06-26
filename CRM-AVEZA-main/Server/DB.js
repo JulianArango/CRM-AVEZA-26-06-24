@@ -32,22 +32,22 @@ console.log("Datos conexion:", { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME });
 
 //! Configuración de Sequelize para entorno local
 
-const sequelize = new Sequelize(
-  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
-  { logging: false, native: false }
-);
+// const sequelize = new Sequelize(
+//   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
+//   { logging: false, native: false }
+// );
 
 //! Configuración de Sequelize para despliegue en Render
 
-// const sequelize = new Sequelize(DB_DEPLOY, {
-//   logging: false,
-//   native: false,
-//   dialectOptions: {
-//     ssl: {
-//       require: true,
-//     },
-//   },
-// });
+const sequelize = new Sequelize(DB_DEPLOY, {
+  logging: false,
+  native: false,
+  dialectOptions: {
+    ssl: {
+      require: true,
+    },
+  },
+});
 
 const Caso = casoModel(sequelize);
 const Cotizacion = cotizacionModel(sequelize);
