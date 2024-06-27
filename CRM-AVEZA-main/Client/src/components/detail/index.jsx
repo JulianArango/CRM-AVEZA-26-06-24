@@ -20,8 +20,11 @@ const Detail = () => {
   const datos = useSelector((state) =>
     source === "abogado" ? state.abogado : state.cliente
   );
+
+  console.log("Datos cliente:", datos);
   const cedula =
     source === "abogado" ? datos.cedulaAbogado : datos.cedulaCliente;
+  const tarjetaProf = source === "abogado" ? datos.tarjetaProf : null;
 
   const [userDataDetail, setUserDataDetail] = useState({
     email: "",
@@ -50,7 +53,7 @@ const Detail = () => {
         nombres: datos.nombres,
         apellidos: datos.apellidos,
         direccion: datos.direccion,
-        comentarios: datos.comentarios,
+        comentarios: "",
         cedula: cedula,
       });
     } else {
@@ -79,7 +82,7 @@ const Detail = () => {
       if (isConfirmed) {
         dispatch(deleteAbogado(cedula));
         console.log("cedula", cedula);
-        navigate("/home/lawyers");
+        navigate("/abogados");
       }
     } else {
       const isConfirmed = window.confirm(
@@ -88,7 +91,7 @@ const Detail = () => {
 
       if (isConfirmed) {
         dispatch(deleteCliente(cedula));
-        navigate("/home/customers");
+        navigate("/clientes");
       }
     }
   };
@@ -99,8 +102,6 @@ const Detail = () => {
       [e.target.name]: e.target.value, // Sintaxis ES6 para actualizar la key correspondiente
     });
   };
-
-
 
   const submitUpdateDetail = (e) => {
     e.preventDefault();
@@ -120,11 +121,63 @@ const Detail = () => {
           </Button>
           {/* </Link> */}
           <Button onClick={handleDelete} className="botonesiniciosesion">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1.2em"
+              height="1.2em"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="black"
+                d="M7 21q-.825 0-1.412-.587T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413T17 21zM17 6H7v13h10zM9 17h2V8H9zm4 0h2V8h-2zM7 6v13z"
+              ></path>
+            </svg>
             Eliminar
           </Button>
-          <Link to={"/clientes"}>
-            <Button className="botonesiniciosesion">Volver</Button>
-          </Link>
+
+          {datos?.tarjetaProf ? (
+            <Link to="/abogados">
+              <Button >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1.2em"
+                  height="1.2em"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    fill="none"
+                    stroke="black"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={50.5}
+                    d="M244 400L100 256l144-144M120 256h292"
+                  ></path>
+                </svg>
+                Volver
+              </Button>
+            </Link>
+          ) : (
+            <Link to="/clientes">
+              <Button >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1.2em"
+                  height="1.2em"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    fill="none"
+                    stroke="black"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={50.5}
+                    d="M244 400L100 256l144-144M120 256h292"
+                  ></path>
+                </svg>
+                Volver
+              </Button>
+            </Link>
+          )}
           {/* <Button className="botonesiniciosesion" onClick={generarContrato}>
             Generar Documentos
           </Button> */}
@@ -219,19 +272,21 @@ const Detail = () => {
                 onChange={handleUpdateDetail}
               />
             </div>
-            <div className="infodetail">
-              <label htmlFor="comentarios" className="labeldetail">
-                Comentarios:
-              </label>
-              <input
-                type="text"
-                className="cajadetail"
-                name="departamento"
-                id="departamento"
-                value={userDataDetail.comentarios}
-                onChange={handleUpdateDetail}
-              />
-            </div>
+            {datos?.comentarios && (
+              <div className="infodetail">
+                <label htmlFor="comentarios" className="labeldetail">
+                  Comentarios:
+                </label>
+                <input
+                  type="text"
+                  className="cajadetail"
+                  name="departamento"
+                  id="departamento"
+                  value={userDataDetail.comentarios}
+                  onChange={handleUpdateDetail}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

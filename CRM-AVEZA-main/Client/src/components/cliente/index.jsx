@@ -2,8 +2,8 @@ import React from "react";
 // import "../../App.css";
 import "./cliente.css";
 import { Link } from "react-router-dom";
-import { connect, useDispatch } from "react-redux";
-import { clienteActual, getClienteByCedula} from "../../redux/actions";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { clienteActual, getClienteByCedula, setAbogado} from "../../redux/actions";
 import { useState, useEffect} from "react";
 import { numeroALetras } from "../convertiraletras";
 import { useNavigate } from "react-router-dom";
@@ -12,43 +12,56 @@ const Cliente = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   //const cliente = useSelector((state) => state.cliente);
-  const {
-    cedulaCliente,
-    email,
-    nombres,
-    apellidos,
-    direccion,
-    codigo_ciudad,
-    celular,
-    Ciudads,
-    comentarios,
-  } = props.cliente;
-  console.log(props.cliente);
+  const source = useSelector((state) => state.source);
+  const cedula =
+    source === "abogado"
+      ? props.cliente.cedulaAbogado
+      : props.cliente.cedulaCliente;
+  // const cedula = source === "abogado" ? datos.nombres : datos.cedulaCliente;
+  // const {
+  //   cedulaCliente,
+  //   email,
+  //   nombres,
+  //   apellidos,
+  //   direccion,
+  //   codigo_ciudad,
+  //   celular,
+  //   Ciudads,
+  //   comentarios,
+  // } = props.cliente;
 
- const newCliente = {
-   cedulaCliente,
-   email,
-   nombres,
-   apellidos,
-   direccion,
-   codigo_ciudad,
-   celular,
-   Ciudads,
-   comentarios,
- }; 
+  console.log('Props cliente:', props.cliente);
+
+//  const newCliente = {
+//    cedulaCliente,
+//    email,
+//    nombres,
+//    apellidos,
+//    direccion,
+//    codigo_ciudad,
+//    celular,
+//    Ciudads,
+//    comentarios,
+//  }; 
 
 
   const onClickDetail = () => {
-    dispatch(clienteActual(newCliente));
-    navigate("/detail");
+    if (source === "cliente") {
+   dispatch(clienteActual(props.cliente));
+   navigate("/detail");
+    } else {
+     dispatch(setAbogado(props.cliente));
+     navigate("/detail"); 
+ }
+    
   };
 
 
   return (
-    <div className="cardcliente" key={cedulaCliente}>
+    <div className="cardcliente" key={cedula}>
       <Link to={"/detail"} onClick={onClickDetail} className="link">
         <h1 className="titulocard">
-          {nombres.toUpperCase()} {apellidos.toUpperCase()}
+          {props.cliente.nombres.toUpperCase()} {props.cliente.apellidos.toUpperCase()}
         </h1>
       </Link>
     </div>

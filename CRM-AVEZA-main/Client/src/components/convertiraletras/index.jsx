@@ -130,16 +130,16 @@ export const numeroALetras=(numero, opciones = {}) =>{
   return `${letrasParteEntera} ${moneda} con ${letrasParteDecimal} ${centavos}`;
 }
 
-// Ejemplo de uso
-const cantidad = 900250150.45;
-const resultado = numeroALetras(cantidad, {
-  plural: "pesos",
-  singular: "peso",
-  centPlural: "centavos",
-  centSingular: "centavo",
-});
+// // Ejemplo de uso
+// const cantidad = 900250150.45;
+// const resultado = numeroALetras(cantidad, {
+//   plural: "pesos",
+//   singular: "peso",
+//   centPlural: "centavos",
+//   centSingular: "centavo",
+// });
 
-console.log(resultado);
+// console.log(resultado);
 // "Ciento veintitrés pesos con cuarenta y cinco centavos"
 
 

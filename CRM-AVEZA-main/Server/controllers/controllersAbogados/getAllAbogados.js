@@ -5,6 +5,7 @@ import { models } from "../../DB.js";
 
 const getAllAbogados = async (filters) => {
   //filters = acá me traigo req.query
+  console.log('filtros',filters)
   const pagina = [];
   const newFilters = {};
   const newOrder = {};

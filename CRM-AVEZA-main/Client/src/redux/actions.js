@@ -99,7 +99,7 @@ export const setSource = (source) => {
 };
 
 export const getClientes = () => {
-  const endpoint = `/clientes?pagina=1&porPagina=50`;
+  const endpoint = `/clientes/conocimientolitigios?pagina=1&porPagina=50`;
   return async (dispatch) => {
     const { data } = await axios.get(endpoint);
     return dispatch({
@@ -156,7 +156,7 @@ export const getByIdCliente = (cedulaCliente) => {
 };
 
 export const filterCliente = (filtro) => {
-  const endpoint = `/clientes?${filtro}`;
+  const endpoint = `/clientes/conocimientolitigios?${filtro}`;
   console.log("URL", endpoint);
   return async (dispatch) => {
     try {
@@ -436,11 +436,11 @@ export const getAbogadosTodos = () => {
 };
   
 
-export const setAbogado = (source) => {
-  console.log("Limpiar estado detail:", source);
+export const setAbogado = (abogado) => {
+  console.log("Abogado Action:", abogado);
   return {
     type: SET_ABOGADO,
-    payload: source,
+    payload: abogado,
   };
 };
 
@@ -453,7 +453,7 @@ export const setCliente = (source) => {
 };
 
 export const getClientesTodos = () => {
-  const endpoint = `/clientes?pagina=1&porPagina=50`;
+  const endpoint = `/clientes/conocimientolitigios?pagina=1&porPagina=50`;
   return async (dispatch) => {
     const { data } = await axios.get(endpoint);
     return dispatch({

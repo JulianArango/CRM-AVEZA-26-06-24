@@ -1,13 +1,14 @@
 import Cliente from "../cliente";
-import {useEffect } from "react";
+import {useEffect, useState } from "react";
 import "../../App.css";
 import "./clientes.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getClienteAll } from "../../redux/actions";
+import { filterCliente, getClienteAll, getClientes, getClientesTodos, setSource } from "../../redux/actions";
 import { Button } from "../Mystyles";
 import SearchBar from "../searchBarClientes";
 import OrderClientes from "../orderCliente/orderCliente";
 import { Link } from "react-router-dom";
+import loading from "../../assets/loading.gif";
 
 const Clientes = () => {
   const dispatch = useDispatch();
@@ -15,51 +16,52 @@ const Clientes = () => {
 
   useEffect(() => {
     dispatch(getClienteAll());
+    dispatch(setSource("cliente"));
   }, [dispatch]);
 
   console.log("Clientes conocimiento: ", clientes);
 
  
-//  const pages = useSelector((state) => state.pages);
-//  const [filterApplied, setFilterApplied] = useState(false);
-//  const [searchPerformed, setSearchPerformed] = useState(false);
-//  const [currentPage, setCurrentPage] = useState(1);
-//  const [order, setOrder] = useState("");
+ const pages = useSelector((state) => state.pages);
+ const [filterApplied, setFilterApplied] = useState(false);
+ const [searchPerformed, setSearchPerformed] = useState(false);
+ const [currentPage, setCurrentPage] = useState(1);
+ const [order, setOrder] = useState("");
 
-//  useEffect(() => {
-//    dispatch(getClientesTodos()); // Obtener el total de clientes
-//  }, [dispatch]);
+ useEffect(() => {
+   dispatch(getClientesTodos()); // Obtener el total de clientes
+ }, [dispatch]);
 
-//  const totalPages = Math.ceil(pages?.length / 6);
-//  console.log(totalPages);
+ const totalPages = Math.ceil(pages?.length / 6);
+ console.log(totalPages);
 
-//  console.log("pages", pages);
+ console.log("pages", pages);
 
-//  useEffect(() => {
-//    if (order) {
-//      dispatch(orderClientes(order, currentPage));
-//    } else {
-//      dispatch(getClientes(currentPage));
-//    }
-//  }, [dispatch, currentPage, order]);
+ useEffect(() => {
+  //  if (order) {
+  //    dispatch(orderClientes(order, currentPage));
+  //  } else {
+     dispatch(getClientes(currentPage));
+  //  }
+ }, [dispatch, currentPage, order]);
 
-//  console.log("order", order, "currentpage", currentPage);
+ console.log("order", order, "currentpage", currentPage);
  const handleVerTodosClick = () => {
   //  setOrder("");
-  //  setCurrentPage(1);
-  //  dispatch(getClientes(1));
-  //  setFilterApplied(false);
-  //  setSearchPerformed(false);
+   setCurrentPage(1);
+   dispatch(getClientes(1));
+   setFilterApplied(false);
+   setSearchPerformed(false);
  };
 
  const handleFilter = (filtro, inputValue) => {
-  //  dispatch(filterCliente(filtro, inputValue));
-  //  setFilterApplied(true);
-  //  setSearchPerformed(true);
+   dispatch(filterCliente(filtro, inputValue));
+   setFilterApplied(true);
+   setSearchPerformed(true);
  };
 
  const handlePageChange = (newPage) => {
-  //  setCurrentPage(newPage);
+   setCurrentPage(newPage);
  };
 
  const handleOrderChange = (newOrder) => {
@@ -76,31 +78,41 @@ const Clientes = () => {
       <div className="registrocliente">
         <SearchBar onFilter={handleFilter} />
         <Link to="/registrocliente">
-          <Button>Crear cliente</Button>
+          <Button>
+            {" "}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1em"
+              height="1em"
+              viewBox="0 0 16 16"
+            >
+              <path fill="black" d="M14 7H9V2H7v5H2v2h5v5h2V9h5z"></path>
+            </svg>
+            Crear cliente
+          </Button>
         </Link>
-        {/* {filterApplied && ( */}
-        <Button onClick={handleVerTodosClick}>Ver todos</Button>
-        {/* )} */}
+        {filterApplied && (
+          <Button onClick={handleVerTodosClick}>Ver todos</Button>
+        )}
       </div>
 
       <div className="divclientes">
-                {/* {searchPerformed && clientes.length === 0 && (
+        {searchPerformed && clientes.length === 0 && (
           <p>No hay coincidencias</p>
         )}
         {!searchPerformed && clientes.length === 0 && (
           <div className="loading-container">
             <img className="loading-image" src={loading} alt="loading" />
           </div>
-        )} */}
+        )}
         {clientes.length > 0 &&
-        clientes.map((cliente) => {
-          return (
-            <div>
-              <Cliente key={cliente.cedula} cliente={cliente} />
-            </div>
-          );
-        })
-        }
+          clientes.map((cliente) => {
+            return (
+              <div>
+                <Cliente key={cliente.cedula} cliente={cliente} />
+              </div>
+            );
+          })}
       </div>
       {/* {searchPerformed ? undefined : (
         <div className="pagination mt-4 join self-center">

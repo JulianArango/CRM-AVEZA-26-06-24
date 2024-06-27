@@ -71,21 +71,17 @@ const submitHandlerRegistro = async (e) => {
     // );
   };
 
-// if (isLoading || !pages ) {
-//   //|| !pages.datosPagina
-//   return (
-//     <div className="loading-container">
-//       <img className="loading-image" src={loading} alt="loading" />
-//     </div>
-//   );
-// }
+if (isLoading || !pages || !pages.datosPagina) {
+  return (
+    <div className="loading-container">
+      <img className="loading-image" src={loading} alt="loading" />
+    </div>
+  );
+}
 
 
   //  console.log("casos2", casos);
 
-  //  if (!casos || !casos.datosPagina) {
-  //    return null;
-  //  }
 
   // console.log("registro", dataRegistro);
   
@@ -95,13 +91,8 @@ const submitHandlerRegistro = async (e) => {
         <p className="titulo">Agendar Cita</p>
       </div>
       <div className="calendario">
-        {/* <p className="agenda">Agenda</p> */}
         <br />
         <Calendario></Calendario>
-
-        {/* <div className="formCita">
-        <FormCita></FormCita>
-      </div> */}
         <div className="containerCita">
           <h1 className="tituloCita">Crear Cita</h1>
           <form onSubmit={submitHandlerRegistro} className="formularioCita">

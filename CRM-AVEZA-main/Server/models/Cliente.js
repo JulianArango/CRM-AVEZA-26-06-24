@@ -22,7 +22,7 @@ export default (sequelize) => {
       // aceptacion_cotizacion: { type: DataTypes.STRING, allowNull: true },
       // honorarios: { type: DataTypes.BIGINT, allowNull: false },
       // forma_de_pago: { type: DataTypes.STRING, allowNull: false },
-      // comentarios: { type: DataTypes.STRING, allowNull: false },
+      comentarios: { type: DataTypes.STRING, allowNull: false },
       activo: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,

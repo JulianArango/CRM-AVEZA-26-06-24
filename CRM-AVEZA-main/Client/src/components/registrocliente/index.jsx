@@ -2,6 +2,7 @@ import { useState } from "react";
 import "../../App.css";
 import "./registrocliente.css";
 import { Button } from "../Mystyles";
+import { useNavigate } from "react-router-dom";
 
 const RegistroCliente = ({registroCliente}) => {
     const [userDataRegistro, setUserDataRegistro] = useState({
@@ -22,6 +23,7 @@ const RegistroCliente = ({registroCliente}) => {
       valor_pretensiones:""
       
     });
+  const navigate = useNavigate();
 
     const handleChangeRegistro = (e) => {
       setUserDataRegistro({
@@ -33,6 +35,7 @@ const RegistroCliente = ({registroCliente}) => {
     const submitHandlerRegistro = (e) => {
       e.preventDefault();
       registroCliente(userDataRegistro);
+      navigate('/clientes');
     };
   return (
     <div className="contenedorregistro">
