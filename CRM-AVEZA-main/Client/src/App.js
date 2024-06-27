@@ -50,9 +50,9 @@ import Payments from "./components/payments/payments.component.jsx";
 
 // const URL = import.meta.env.VITE_URL;
 // const { URL } = process.env;
-// axios.defaults.baseURL = "https://crm-aveza.onrender.com/crmAveza/";
+axios.defaults.baseURL = "https://crm-aveza.onrender.com/crmAveza/";
 
-axios.defaults.baseURL = "http://localhost:3001/crmAveza";
+// axios.defaults.baseURL = "http://localhost:3001/crmAveza";
 function App() {
   const [access, setAccess] = useState(false);
   const location = useLocation();
