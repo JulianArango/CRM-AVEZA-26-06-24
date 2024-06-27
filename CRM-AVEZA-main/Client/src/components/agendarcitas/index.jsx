@@ -4,61 +4,90 @@ import Calendario from "../../components/calendar";
 // import FormCita from "../formCrearCita/index";
 import logo from "../../img/logoAveza.png";
 import { Link, useNavigate } from "react-router-dom";
-import { getCasos } from "../../redux/actions";
+import { getCasos, getCasosTodos } from "../../redux/actions";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postCitaHandlers } from "../../handlers/crearCita";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Button } from "../Mystyles";
+import loading from "../../assets/loading.gif";
 
 function AgendarCitas() {
+const [dataRegistro, setDataRegistro] = useState({
+  titulo: "",
+  descripcion: "",
+  fechaCita: "",
+  horaCita: "",
+  idCaso: "",
+});
 
-   const [dataRegistro, setDataRegistro] = useState({
-     titulo: "",
-     descripcion: "",
-     fechaCita: "",
-     horaCita: "",
-     idCaso: "",
-   });
+const [errors, setErrors] = useState({});
 
-   const handleChangeRegistro = (e) => {
-     const { name, value } = e.target
-       ? e.target
-       : { name: "fechaCita", value: e };
-     setDataRegistro((prevData) => ({
-       ...prevData,
-       [name]: value,
-     }));
-   };
-   const dispatch = useDispatch();
-   const casos = useSelector((state) => state.casos);
+const [isLoading, setIsLoading] = useState(true); // Estado para controlar la visualización del loading
 
-   console.log("casos", casos);
+// console.log(dataRegistro);
 
-  //  useEffect(() => {
-  //    dispatch(getCasos());
-  //  }, [dispatch]);
+const dispatch = useDispatch();
 
-   const submitHandlerRegistro = async (e) => {
-     e.preventDefault();
-     try {
-       await postCitaHandlers(dataRegistro);
-       window.alert("Cita creado con éxito");
-       window.location.reload();
-     } catch (error) {
-       console.error("Error al crear la cita:", error.message);
-       window.alert("No se pudo crear la cita");
-     }
-   };
+const casos = useSelector((state) => state.casos);
+const pages = useSelector((state) => state.pages);
 
-   console.log("casos2", casos);
+useEffect(() => {
+  dispatch(getCasosTodos()).then(() => setIsLoading(false)); // Desactivar el loading después de cargar los casos
+}, []);
+  
+  
+// console.log("pages", pages);
+
+const submitHandlerRegistro = async (e) => {
+  e.preventDefault();
+  try {
+    setIsLoading(true); // Activar el loading antes de enviar la solicitud
+    await postCitaHandlers(dataRegistro);
+    // window.alert("Cita creado con éxito");
+    window.location.reload();
+  } catch (error) {
+    console.error("Error al crear la cita:", error.message);
+    window.alert("No se pudo crear la cita");
+  } finally {
+    setIsLoading(false); // Desactivar el loading después de la solicitud
+  }
+};
+
+  const handleChangeRegistro = (e) => {
+    const { name, value } = e.target
+      ? e.target
+      : { name: "fechaCita", value: e };
+    setDataRegistro((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+    // setErrors(
+    //   validation({
+    //     ...dataRegistro,
+    //     [name]: value,
+    //   })
+    // );
+  };
+
+// if (isLoading || !pages ) {
+//   //|| !pages.datosPagina
+//   return (
+//     <div className="loading-container">
+//       <img className="loading-image" src={loading} alt="loading" />
+//     </div>
+//   );
+// }
+
+
+  //  console.log("casos2", casos);
 
   //  if (!casos || !casos.datosPagina) {
   //    return null;
   //  }
 
-  console.log("registro", dataRegistro);
+  // console.log("registro", dataRegistro);
   
   return (
     <div className="containerDiary">
@@ -122,15 +151,15 @@ function AgendarCitas() {
                   onChange={(event) => handleChangeRegistro(event)}
                 >
                   <option value="" className="inputCrearCita">
-                    Seleccionar...
+                    Seleccionar caso
                   </option>
-                  {casos.datosPagina.map((caso) => (
+                  {pages.datosPagina?.map((caso) => (
                     <option
                       key={caso.id}
-                      value={caso.tipoCaso}
+                      value={caso.id}
                       className="inputCrearCita"
                     >
-                      {caso.tipoCaso}
+                      {`${caso.tipoCaso} - ${caso.apellidosAbogado}/${caso.apellidoCliente}`}
                     </option>
                   ))}
                 </select>
@@ -152,7 +181,7 @@ function AgendarCitas() {
             </div>
             <div className="botonescrearcita">
               <Button onClick={submitHandlerRegistro}> Crear</Button>
-              <Link to="/home">
+              <Link to="/">
                 <Button className="button">Volver</Button>
               </Link>
             </div>

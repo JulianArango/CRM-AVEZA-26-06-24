@@ -269,7 +269,7 @@ export const getCasosTodos = () => {
     console.log('Data casos:',data)
     return dispatch({
       type: GET_CASOS_TODOS,
-      payload: data.datosPagina,
+      payload: data,
     });
   };
 };

@@ -42,7 +42,7 @@ function Calendario() {
   useEffect(() => {
     dispatch(getCitas());
   }, [dispatch]);
-console.log('Citas calendario: ', citas)
+// console.log('Citas calendario: ', citas)
   useEffect(() => {
     if (citas) {
       // const filteredCitas = datos.administrador
@@ -85,8 +85,8 @@ console.log('Citas calendario: ', citas)
 
       const endDateTime = dayjs(startDateTime).add(30, "minute").toDate();
 
-      console.log("Fecha y hora de inicio:", startDateTime);
-      console.log("Fecha y hora de fin:", endDateTime);
+      // console.log("Fecha y hora de inicio:", startDateTime);
+      // console.log("Fecha y hora de fin:", endDateTime);
 
       return {
         start: startDateTime,
@@ -97,7 +97,7 @@ console.log('Citas calendario: ', citas)
     })
     .filter((event) => event !== null);
 
-  console.log("events", events);
+  // console.log("events", events);
 
   const handleSelectEvent = (event) => {
     setView("day");

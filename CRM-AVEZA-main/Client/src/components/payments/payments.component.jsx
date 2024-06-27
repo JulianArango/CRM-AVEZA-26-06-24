@@ -84,7 +84,7 @@ console.log('Casos para pagos:',pages)
 
   const fechaFormateada = formatearFecha(pagos?.fechaDeAprobacion);
 
-  const userCasos = pages.filter(
+  const userCasos = pages.datosPagina.filter(
     (caso) =>
       caso.nombreCliente === user.nombres &&
       caso.apellidoCliente === user.apellidos
@@ -118,7 +118,7 @@ console.log('Casos para pagos:',pages)
           <p>
             Selecciona el caso al cual se va a aplicar el pago
           </p>
-          {pages.length > 0 ? (
+          {pages.datosPagina ? (
               <select
                 name="idCaso"
                 id="idCaso"

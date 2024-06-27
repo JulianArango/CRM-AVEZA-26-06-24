@@ -186,7 +186,7 @@ const getAllCaso = async (filters) => {
   //console.log("offset....", offset, "  elementos........", elementos);
   const totalPaginas = Math.ceil(arregloOrdenado.length / elementos);
   const paginaActual = paginarArreglo(arregloOrdenado, offset - 1, elementos);
-  console.log(paginaActual);
+  // console.log(paginaActual);
   return { datosPagina: paginaActual, totalPaginas: totalPaginas };
 };
 
