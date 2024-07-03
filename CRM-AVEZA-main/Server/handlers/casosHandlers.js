@@ -47,6 +47,7 @@ const createCasosHandler = async (req, res) => {
 
 const getCasoHandler = async (req, res) => {
   try {
+    console.log('Req get caso handler:', req.query)
     const response = await getAllCaso(req);
     res.status(200).json(response);
   } catch (error) {

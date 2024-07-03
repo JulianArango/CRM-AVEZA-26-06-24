@@ -38,7 +38,7 @@ const SearchBar = ({ onFilter }) => {
 
   const formatInputValue = (value) => {
     if (!value) return "";
-    return value.charAt(0).toUpperCase() + value.slice(1); //.toLowerCase();
+    return value //.charAt(0).toUpperCase() + value.slice(1); //.toLowerCase();
   };
 
   return (

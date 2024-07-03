@@ -10,12 +10,14 @@ function paginarArreglo(arreglo, paginaActual, tamañoPagina) {
 
 //Si la variable todos viene en true, muestra todos los casos aun los que han sido finalizados
 const getAllCaso = async (filters) => {
-  const todos = filters.query.todos || "true";
+  console.log('filters get caso controller:', filters.query)
+  const todos = filters.query.todos || "verdadero";
   let getAllCasoBd = [];
+  console.log('Todos filter casos:', todos)
   console.log("Esto viene en el query en todos ... ", filters.query.todos);
   // if (!filters.query.todos || filters.query.todos==='false' ) {
 
-  //Consulta a la base de datos
+  // Consulta a la base de datos
   if (todos.toUpperCase() === "FALSE") {
     getAllCasoBd = await Caso.findAll({
       where: {
@@ -92,8 +94,8 @@ const getAllCaso = async (filters) => {
     id: elemento.idCaso,
     descripcion: elemento.descripcion,
     fecha: elemento.fecha,
-    nombreCliente: elemento.Cliente.nombres,
-    apellidoCliente: elemento.Cliente.apellidos,
+    nombresCliente: elemento.Cliente.nombres,
+    apellidosCliente: elemento.Cliente.apellidos,
     direccionCliente: elemento.Cliente.direccion,
     // ciudadCliente: elemento.Cliente.ciudad,
     celularCliente: elemento.Cliente.celular,
@@ -105,6 +107,7 @@ const getAllCaso = async (filters) => {
     tipoCaso: elemento.TipoDeCaso.descripcion,
   }));
 
+
   //Filtra de acuerdo a los parametros recibidos
   Object.entries(filters.query).forEach(([field, value]) => {
     console.log("campo.... ", field, " valor..... ", value);
@@ -115,7 +118,7 @@ const getAllCaso = async (filters) => {
       field !== "todos"
     )
       datos = datos.filter(
-        (elemento) => elemento[field].toUpperCase() === value.toUpperCase(),
+        (elemento) => elemento[field].toUpperCase().includes(value.toUpperCase()),
       );
   });
 

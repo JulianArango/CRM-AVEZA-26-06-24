@@ -10,8 +10,8 @@ function TarjetaCaso({caso}) {
     tipoCaso,
     nombresabogado, 
     apellidosAbogado,
-    nombreCliente,
-    apellidoCliente,
+    nombresCliente,
+    apellidosCliente,
      } = caso;
 
 
@@ -39,7 +39,7 @@ function TarjetaCaso({caso}) {
           <div className="infocasotarjeta">
             <span className="labelcaso">Cliente: </span>
             <span className="nombrecaso">
-              {apellidoCliente} {nombreCliente}
+              {apellidosCliente} {nombresCliente}
             </span>
           </div>
         </Link>

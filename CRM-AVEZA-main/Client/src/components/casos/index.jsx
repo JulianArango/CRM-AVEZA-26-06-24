@@ -116,7 +116,7 @@ function Casos() {
         )}
       </div>
 
-      {/* <div className="p-2"> */}
+
 
       {isLoading ? (
         <div className="loading-container">
@@ -155,7 +155,6 @@ function Casos() {
       )}
     </div>
 
-    // </div>
   );
 }
 

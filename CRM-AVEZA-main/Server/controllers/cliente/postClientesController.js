@@ -74,8 +74,8 @@ const createClienteBd = async (
         valor_pretensiones: valor_pretensiones,
       });
       newCliente.addCiudad(codigo_ciudad);
-      newCliente.addTipoDeCaso(tipo_de_caso);
-      newCliente.addTipoUsuario(tipo_usuario);
+      // newCliente.addTipoDeCaso(tipo_de_caso);
+      // newCliente.addTipoUsuario(tipo_usuario);
 
       // if (newCliente) sendEmailCliente(newCliente);
       console.log(newCliente);

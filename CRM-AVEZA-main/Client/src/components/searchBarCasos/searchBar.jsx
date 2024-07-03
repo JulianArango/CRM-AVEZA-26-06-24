@@ -33,22 +33,35 @@ const SearchBar = ({ onFilter }) => {
     obtenerTipos();
   }, []);
 
+  //  useEffect(() => {
+  //    // Ejecuta la función handleSearch cuando cambie el valor del selector
+  //    handleSearch(tipoCaso);
+  //  }, [tipoCaso]);
+
   const handleInputChange = (e, setValue) => {
     setValue(e.target.value);
   };
 
   const handleChangeSelect = (e) => {
-    setTipoCaso(e.target.value);
-    handleSearch();
+    e.preventDefault();
+    const valueTipoCaso = e.target.value;
+      console.log("Target value", valueTipoCaso);
+    setTipoCaso(valueTipoCaso);
+    console.log("Tipo caso change: ", tipoCaso);
+      handleSearch(valueTipoCaso);
+
   };
 
-  const handleSearch = () => {
+  const handleSearch = (valueTipoCaso) => {
     const queryParts = [];
-    if (tipoCaso) queryParts.push(`tipoCaso=${tipoCaso}`);
+    console.log("Tipo caso search: ", valueTipoCaso);
+    if (valueTipoCaso) queryParts.push(`tipoCaso=${valueTipoCaso}`);
     if (apellidoAbogado)
-      queryParts.push(`apellidoAbogado=${formatInputValue(apellidoAbogado)}`);
+      queryParts.push(`apellidosAbogado=${formatInputValue(apellidoAbogado)}`);
     if (apellidoCliente)
-      queryParts.push(`apellidoCliente=${formatInputValue(apellidoCliente)}`);
+      queryParts.push(`apellidosCliente=${formatInputValue(apellidoCliente)}`);
+
+    console.log("Query parts:", queryParts);
     const queryString = queryParts.join("&");
 
     if (queryString) {
@@ -67,7 +80,7 @@ const SearchBar = ({ onFilter }) => {
 
   const formatInputValue = (value) => {
     if (!value) return "";
-    return value.charAt(0).toUpperCase() + value.slice(1); //.toLowerCase();
+    return value //.charAt(0).toUpperCase() + value.slice(1); //.toLowerCase();
   };
 
   return (
@@ -84,9 +97,9 @@ const SearchBar = ({ onFilter }) => {
         name="TipoDeCasoid"
         id="TipoDeCasoid"
         className="inputfiltrocaso"
-        onChange={handleChangeSelect}
+        onChange={(e) => handleChangeSelect(e)}
       >
-        <option value="" className="tipodecaso">
+        <option value="1" className="tipodecaso">
           Tipo de caso
         </option>
         {tipos.allTipoDeCaso.map((tipo) => (

@@ -99,7 +99,7 @@ export const setSource = (source) => {
 };
 
 export const getClientes = () => {
-  const endpoint = `/clientes/conocimientolitigios?pagina=1&porPagina=50`;
+  const endpoint = `/clientes/conocimientolitigios?pagina=1&porPagina=24`;
   return async (dispatch) => {
     const { data } = await axios.get(endpoint);
     return dispatch({
@@ -110,7 +110,7 @@ export const getClientes = () => {
 };
 
 export const getAbogados = () => {
-  const endpoint = `/abogados?pagina=1&porPagina=50`;
+  const endpoint = `/abogados?pagina=1&porPagina=24`;
 
   return async (dispatch) => {
     const { data } = await axios.get("/abogados");
@@ -252,9 +252,9 @@ export const getTiposDeCasos = () => {
 };
 
 export const getCasos = (page) => {
-  const endpoint = `/casos?pagina=${page}&porPagina=6`;
+  const endpoint = `/casos?pagina=${page}&porPagina=9`;
   return async (dispatch) => {
-    const { data } = await axios.get("/casos?pagina=1&porPagina=6");
+    const { data } = await axios.get("/casos?pagina=1&porPagina=9");
     return dispatch({
       type: GET_CASOS,
       payload: data,
@@ -411,7 +411,7 @@ export const recordarPassword = async (email) => {
 };
   
 export const getAbogadosTodos = () => {
-  const endpoint = `/abogados?pagina=1&porPagina=50`;
+  const endpoint = `/abogados?pagina=1&porPagina=24`;
 
   return async (dispatch) => {
     const { data } = await axios.get(endpoint);
@@ -453,7 +453,7 @@ export const setCliente = (source) => {
 };
 
 export const getClientesTodos = () => {
-  const endpoint = `/clientes/conocimientolitigios?pagina=1&porPagina=50`;
+  const endpoint = `/clientes/conocimientolitigios?pagina=1&porPagina=24`;
   return async (dispatch) => {
     const { data } = await axios.get(endpoint);
     return dispatch({

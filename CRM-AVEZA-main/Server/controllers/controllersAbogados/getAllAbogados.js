@@ -37,7 +37,9 @@ const getAllAbogados = async (filters) => {
           //verifico que el comando requiera ser ordnado
           newOrder[field.substring(0, field.length - 3)]; //traeme desde el cero hasta los tres anteriorres
         } else {
-          newFilters[field] = value; // acá estoy guardando de forma dinamica los valores de cada propiedad
+          newFilters[field] = {
+            [Sequelize.Op.iLike]: `%${value}%`,
+          }; // acá estoy guardando de forma dinamica los valores de cada propiedad
         }
       } else {
         pagina[field];
@@ -53,12 +55,6 @@ const getAllAbogados = async (filters) => {
     where: {
       activo: true,
       ...newFilters, // agrego los campos cuyos valores existan
-      // nombre: {
-      //   [Sequelize.Op.like]: `${newFilters.nombre}%`,
-      // },
-      // apellido: {
-      //   [Sequelize.Op.like]: `${newFilters.apellido}%`,
-      // },
     },
     include: [
       {

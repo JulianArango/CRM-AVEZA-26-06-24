@@ -1,4 +1,5 @@
  import {models} from "../../DB.js";
+import { Sequelize } from "sequelize";
 
  const { Cliente, Ciudad, Departamento, Pais, TipoUsuario, TipoDeCaso} = models;
 const getAllCliente = async (filters) => {
@@ -33,7 +34,9 @@ const getAllCliente = async (filters) => {
           //verifico que el comando requiera ser ordnado
           newOrder[field.substring(0, field.length - 3)]; //traeme desde el cero hasta los tres anteriorres
         } else {
-          newFilters[field] = value; // acá estoy guardando de forma dinamica los valores de cada propiedad
+          newFilters[field] = {
+            [Sequelize.Op.iLike]: `%${value}%`,
+          }; // acá estoy guardando de forma dinamica los valores de cada propiedad
         }
       } else {
         pagina[field];
