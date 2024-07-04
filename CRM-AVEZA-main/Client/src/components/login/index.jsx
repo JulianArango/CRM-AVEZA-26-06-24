@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { setAuth } from "../../redux/actions";
 import photo from "../../assets/login.jpg";
 import { Button } from "../Mystyles";
+import { jwtDecode } from "jwt-decode";
 
 const Form = ({ login, clickHandlerRecordatorio, clickHandlerCrear }) => {
   const [userData, setUserData] = useState({
