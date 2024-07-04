@@ -102,7 +102,7 @@ function CrearCaso() {
         <br />
         <div className="datoscrear">
           <div className="inputcrearcaso">
-            <label for="TipoDeCasoid" className="labelcrearcaso">
+            <label htmlFor="TipoDeCasoid" className="labelcrearcaso">
               Selecciona el tipo de caso:
             </label>
             <select
@@ -127,7 +127,7 @@ function CrearCaso() {
           </div>
 
           <div className="inputcrearcaso">
-            <label for="fecha" className="labelcrearcaso">
+            <label htmlFor="fecha" className="labelcrearcaso">
               Fecha inicio:
             </label>
             <input
@@ -141,7 +141,7 @@ function CrearCaso() {
           </div>
 
           <div className="inputcrearcaso">
-            <label for="fechaFin" className="labelcrearcaso">
+            <label htmlFor="fechaFin" className="labelcrearcaso">
               Fecha final:
             </label>
             <input
@@ -153,9 +153,33 @@ function CrearCaso() {
               onChange={handleChangeRegistro}
             />
           </div>
+          {/* <div className="inputcrearcaso">
+            <label htmlFor="nombreAbogado" className="labelcrearcaso">
+              Selecciona el abogado:
+            </label>
+            <select
+              name="nombreAbogado"
+              id="nombreAbogado"
+              className="cajacrearcaso"
+              onChange={(event) => handleChangeRegistro(event)}
+            >
+              <option value="" className="tipodecaso">
+                Abogados
+              </option>
+              {abogados.map((abogado) => (
+                <option
+                  key={tipo.TipoDeCasoid}
+                  value={tipo.TipoDeCasoid}
+                  className="opcionestipodecaso"
+                >
+                  {tipo.descripcion}
+                </option>
+              ))}
+            </select>
+          </div> */}
 
           <div className="inputcrearcaso">
-            <label for="cedulaAbogado" className="labelcrearcaso">
+            <label htmlFor="Abogado" className="labelcrearcaso">
               Selecciona el abogado:
             </label>
             <select
@@ -173,14 +197,14 @@ function CrearCaso() {
                   value={abogado.cedulaAbogado}
                   className="opcionestipodecaso"
                 >
-                  {abogado.nombre} {abogado.apellido}
+                  {abogado.nombres} {abogado.apellidos}
                 </option>
               ))}
             </select>
           </div>
 
           <div className="inputcrearcaso">
-            <label for="cedulaCliente" className="labelcrearcaso">
+            <label htmlFor="cedulaCliente" className="labelcrearcaso">
               Selecciona el cliente:
             </label>
             <select
@@ -198,7 +222,7 @@ function CrearCaso() {
                   value={cliente.cedulaCliente}
                   className="opcionesclientes"
                 >
-                  {cliente.nombre} {cliente.apellido}
+                  {cliente.nombres} {cliente.apellidos}
                 </option>
               ))}
             </select>
@@ -218,7 +242,7 @@ function CrearCaso() {
           </div>
         </div>
         <div className="honorarios">
-          <label for="numerocedula" className="labelcrearcaso">
+          <label htmlFor="numerocedula" className="labelcrearcaso">
             Valor pretensiones:
           </label>
           <input
@@ -229,7 +253,7 @@ function CrearCaso() {
             value={userDataRegistro.valor_pretensiones}
             onChange={handleChangeRegistro}
           />
-          <label for="honorarios" className="labelcrearcaso">
+          <label htmlFor="honorarios" className="labelcrearcaso">
             Honorarios:
           </label>
           <input
@@ -254,7 +278,7 @@ function CrearCaso() {
             <option value="Contado">Contado</option>
             <option value="Crédito">Crédito</option>
           </select>{" "}
-          <label for="cuotas" className="labelcrearcaso">
+          <label htmlFor="cuotas" className="labelcrearcaso">
             Numero de cuotas:
           </label>
           <input
