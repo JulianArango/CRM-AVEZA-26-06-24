@@ -27,6 +27,7 @@ export const POST_CITA = "POST_CITA";
 export const GET_CITAS = "GET_CITAS";
 export const POST_CONSULTA = "POST_CONSULTA";
 export const GET_CONSULTAS = "GET_CONSULTAS";
+export const GET_CONSULTAS_TODOS = "GET_CONSULTAS_TODOS";
 export const GET_PAGOS = "GET_PAGOS";
 export const CLEAN_USER = "CLEAN_USER";
 export const GET_ABOGADOS_TODOS = "GET_ABOGADOS_TODOS";
@@ -381,7 +382,7 @@ export const postConsulta =  async(payload) => {
 }; 
 
   export const getConsultas = (page) => {
-    const endpoint = '/consultas';
+    const endpoint = `/consultas`;
     return async (dispatch) => {
       const { data } = await axios.get(endpoint);
       return dispatch({
@@ -389,7 +390,18 @@ export const postConsulta =  async(payload) => {
         payload: data,
       });
     };
-};
+  };
+
+    export const getConsultasTodos = (page) => {
+      const endpoint = `/consultas?pagina=${page}&porPagina=6`;
+      return async (dispatch) => {
+        const { data } = await axios.get(endpoint);
+        return dispatch({
+          type: GET_CONSULTAS_TODOS,
+          payload: data,
+        });
+      };
+    };
   
 export const recordarPassword = async (email) => {
   const endpoint = `/login/password/?correo=${email}`;

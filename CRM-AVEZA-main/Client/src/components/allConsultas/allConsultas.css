@@ -34,7 +34,7 @@
   /* flex-direction: row;
     flex-wrap: wrap; */
   justify-content: flex-start;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   /* grid-gap: 15px; */
   grid-auto-rows: minmax(20px, auto);
 }
@@ -43,22 +43,15 @@
   background-color: lightgray;
   opacity: 0.85;
   border-radius: 8px;
-  padding: 5px;
+  padding: 10px;
   margin: 15px;
-  min-width: 350px;
+  min-width: 330px;
   min-height: 220px;
-  /* justify-content: flex-start; */
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
-/* .contenedortarjetacaso{
-  background-color: lightgray;
-  opacity: 0.85;
-  border-radius: 8px;
-  padding: 5px;
-  margin-left: 10px;
-  min-width:300px;
-  height: 220px;
-} */
 
 .labelconsulta {
   color: black;
@@ -80,4 +73,5 @@
 .infoconsultatarjeta{
     display: flex;
     flex-direction: row;
+    margin-left: 5px;
 }

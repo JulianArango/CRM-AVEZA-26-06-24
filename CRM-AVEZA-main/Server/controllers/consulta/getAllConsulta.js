@@ -39,7 +39,7 @@ const getAllConsulta = async (filters) => {
     order,
     offset: offset || 0,
 
-    limit: limit2 || 6,
+    limit: limit2 || 50,
   });
 
   return getAllConsultaBd;
