@@ -4,7 +4,7 @@ import "../../App.css";
 import "./abogados.css";
 import { useDispatch, useSelector } from "react-redux";
 import { filterAbogado, getAbogados, getAbogadosTodos, setSource} from "../../redux/actions";
-import { Button } from "../Mystyles";
+import { Button, Button2, Button3 } from "../Mystyles";
 import SearchBar from "../searchBarAbogados";
 import loading from "../../assets/loading.gif";
 // import OrderClientes from "../orderCliente/orderCliente";
@@ -24,7 +24,7 @@ const Abogados = () => {
     dispatch(getAbogadosTodos());
   }, [dispatch]);
 
-  const totalPages = Math.ceil(pages?.length / 6);
+  const totalPages = Math.ceil(pages?.length / 12);
   console.log(totalPages);
 
   console.log("pages", pages);
@@ -108,6 +108,28 @@ const Abogados = () => {
           <Button onClick={handleVerTodosClick}>Ver todos</Button>
         )}
       </div>
+      {searchPerformed ? undefined : (
+        <div className="paginationabogados">
+          {currentPage > 1 && (
+            <Button2
+              onClick={() => handlePageChange(currentPage - 1)}
+              // className="join-item btn btn-xs btn-accent"
+            >
+              &lt;&lt;
+            </Button2>
+          )}
+          <Button3 className="paginaabogados">Página {currentPage}</Button3>
+          {currentPage < totalPages && (
+            <Button2
+              onClick={() => handlePageChange(currentPage + 1)}
+              // className="join-item btn btn-xs btn-accent"
+            >
+              &gt;&gt;
+            </Button2>
+          )}
+        </div>
+      )}
+      <br />
       <div className="divabogados">
         {searchPerformed && abogados.length === 0 && (
           <p>No hay coincidencias</p>
@@ -126,29 +148,6 @@ const Abogados = () => {
             );
           })}
       </div>
-      {/* {searchPerformed ? undefined : (
-        <div className="pagination mt-4 join self-center">
-          {currentPage > 1 && (
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              className="join-item btn btn-xs btn-accent"
-            >
-              &lt;&lt;
-            </button>
-          )}
-          <span className="join-item btn btn-xs btn-accent">
-            Página {currentPage}
-          </span>
-          {currentPage < totalPages && (
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              className="join-item btn btn-xs btn-accent"
-            >
-              &gt;&gt;
-            </button>
-          )}
-        </div>
-      )} */}
     </div>
   );
 };

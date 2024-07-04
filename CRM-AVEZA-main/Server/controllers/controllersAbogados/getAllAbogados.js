@@ -80,7 +80,7 @@ const getAllAbogados = async (filters) => {
     order,
     offset: offset || 0,
 
-    limit: limit2 || 5,
+    limit: limit2 || 12,
   });
 
   return getAllAbogadosBd;

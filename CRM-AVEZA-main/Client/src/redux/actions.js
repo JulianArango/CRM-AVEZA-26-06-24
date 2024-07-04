@@ -98,8 +98,8 @@ export const setSource = (source) => {
   };
 };
 
-export const getClientes = () => {
-  const endpoint = `/clientes/conocimientolitigios?pagina=1&porPagina=24`;
+export const getClientes = (page) => {
+  const endpoint = `/clientes/conocimientolitigios?pagina=${page}&porPagina=12`;
   return async (dispatch) => {
     const { data } = await axios.get(endpoint);
     return dispatch({
@@ -109,11 +109,10 @@ export const getClientes = () => {
   };
 };
 
-export const getAbogados = () => {
-  const endpoint = `/abogados?pagina=1&porPagina=24`;
-
+export const getAbogados = (page) => {
+  const endpoint = `/abogados?pagina=${page}&porPagina=12`;
   return async (dispatch) => {
-    const { data } = await axios.get("/abogados");
+    const { data } = await axios.get(endpoint);
     return dispatch({
       type: GET_ABOGADOS,
       payload: data,
@@ -254,7 +253,7 @@ export const getTiposDeCasos = () => {
 export const getCasos = (page) => {
   const endpoint = `/casos?pagina=${page}&porPagina=9`;
   return async (dispatch) => {
-    const { data } = await axios.get("/casos?pagina=1&porPagina=9");
+    const { data } = await axios.get(endpoint);
     return dispatch({
       type: GET_CASOS,
       payload: data,

@@ -4,7 +4,7 @@ import "../../App.css";
 import "./clientes.css";
 import { useDispatch, useSelector } from "react-redux";
 import { filterCliente, getClienteAll, getClientes, getClientesTodos, setSource } from "../../redux/actions";
-import { Button } from "../Mystyles";
+import { Button, Button2, Button3 } from "../Mystyles";
 import SearchBar from "../searchBarClientes";
 import OrderClientes from "../orderCliente/orderCliente";
 import { Link } from "react-router-dom";
@@ -32,7 +32,7 @@ const Clientes = () => {
    dispatch(getClientesTodos()); // Obtener el total de clientes
  }, [dispatch]);
 
- const totalPages = Math.ceil(pages?.length / 6);
+ const totalPages = Math.ceil(pages?.length / 12);
  console.log(totalPages);
 
  console.log("pages", pages);
@@ -95,7 +95,23 @@ const Clientes = () => {
           <Button onClick={handleVerTodosClick}>Ver todos</Button>
         )}
       </div>
-
+      {searchPerformed ? undefined : (
+        <div className="paginationclientes">
+          {currentPage > 1 && (
+            <Button2 onClick={() => handlePageChange(currentPage - 1)}>
+              &lt;&lt;
+            </Button2>
+          )}
+          <Button3 className="paginaclientes">Página {currentPage}</Button3>
+          {currentPage < totalPages && (
+            <Button2
+              onClick={() => handlePageChange(currentPage + 1)}
+            >
+              &gt;&gt;
+            </Button2>
+          )}
+        </div>
+      )}
       <div className="divclientes">
         {searchPerformed && clientes.length === 0 && (
           <p>No hay coincidencias</p>
@@ -114,29 +130,6 @@ const Clientes = () => {
             );
           })}
       </div>
-      {/* {searchPerformed ? undefined : (
-        <div className="pagination mt-4 join self-center">
-          {currentPage > 1 && (
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              className="join-item btn btn-xs btn-accent"
-            >
-              &lt;&lt;
-            </button>
-          )}
-          <span className="join-item btn btn-xs btn-accent">
-            Página {currentPage}
-          </span>
-          {currentPage < totalPages && (
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              className="join-item btn btn-xs btn-accent"
-            >
-              &gt;&gt;
-            </button>
-          )}
-        </div>
-      )} */}
     </div>
   );
 };

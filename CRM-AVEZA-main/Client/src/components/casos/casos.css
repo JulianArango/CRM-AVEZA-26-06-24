@@ -1,4 +1,4 @@
-.contenedorcasos{
+.contenedorcasos {
   background-color: white;
   opacity: 0.85;
   border-radius: 10px;
@@ -11,31 +11,32 @@
   align-items: center;
 }
 
-.encabezado{
+.encabezado {
   width: 300px;
 }
 
-.crearcaso{
+.crearcaso {
   display: flex;
   flex-direction: row;
 }
 
-.casosconpagina{
+.casosconpagina {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
-   .divcasos{
-    display: grid;
-    /* flex-direction: row;
+.divcasos {
+  display: grid;
+  /* flex-direction: row;
     flex-wrap: wrap; */
-    justify-content: flex-start;
-        grid-template-columns: repeat(3, 1fr);
-    /* grid-gap: 15px; */
-    grid-auto-rows: minmax(20px, auto);
-   }
+  justify-content: flex-start;
+  grid-template-columns: repeat(3, 1fr);
+  /* grid-gap: 15px; */
+  grid-auto-rows: minmax(20px, auto);
+}
 
-   .menucasos{
-    display: flex;
-    flex-direction: row;
-   }
+.menucasos {
+  display: flex;
+  flex-direction: row;
+}

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import "../../App.css";
 import "./registroabogado.css";
+import { Button } from "../Mystyles";
 
 
 const RegistroAbogado = ({registroAbogado}) => {
@@ -32,13 +33,13 @@ const RegistroAbogado = ({registroAbogado}) => {
     <div className="contenedorregistro">
       <form className="datos" method="post" onSubmit={submitHandlerRegistro}>
         {/* <div className="logo-aveza"> */}
-        <h1 className="titulo">Registro De Abogado</h1>
+        <h1 className="titulo">Registro de Abogado</h1>
         {/* <img src={logo} alt="logo-aveza" /> */}
         {/* </div> */}
         <br />
         <br />
-        <div className="nombreapellidos">
-          <label for="nombre" className="labelregistrodecliente">
+        <div className="inforegistroabogado">
+          <label htmlFor="nombre" className="labelregistroabogado">
             Nombre(s):
           </label>
           <input
@@ -49,7 +50,7 @@ const RegistroAbogado = ({registroAbogado}) => {
             value={userDataRegistro.nombres}
             onChange={handleChangeRegistro}
           />
-          <label for="apellidos" className="labelregistrodecliente">
+          <label htmlFor="apellidos" className="labelregistroabogado">
             Apellido(s):
           </label>
           <input
@@ -63,8 +64,8 @@ const RegistroAbogado = ({registroAbogado}) => {
         </div>
         <br />
         <br />
-        <div className="numerocedula">
-          <label for="numerocedula" className="labelregistrodecliente">
+        <div className="inforegistroabogado">
+          <label htmlFor="cedula" className="labelregistroabogado">
             Numero de cédula:
           </label>
           <input
@@ -76,7 +77,7 @@ const RegistroAbogado = ({registroAbogado}) => {
             onChange={handleChangeRegistro}
           />
 
-          <label for="telefono" className="labelregistrodecliente">
+          <label htmlFor="telefono" className="labelregistroabogado">
             {" "}
             Celular:
           </label>
@@ -92,8 +93,8 @@ const RegistroAbogado = ({registroAbogado}) => {
 
         <br />
         <br />
-        <div className="nombreapellidos">
-          <label for="correo" className="labelregistrodecliente">
+        <div className="inforegistroabogado">
+          <label htmlFor="correo" className="labelregistroabogado">
             Email:
           </label>
           <input
@@ -105,7 +106,7 @@ const RegistroAbogado = ({registroAbogado}) => {
             onChange={handleChangeRegistro}
           />
 
-          <label for="direccion" className="labelregistrodecliente">
+          <label htmlFor="direccion" className="labelregistroabogado">
             Dirección:
           </label>
           <input
@@ -120,8 +121,8 @@ const RegistroAbogado = ({registroAbogado}) => {
 
         <br />
         <br />
-        <div className="nombreapellidos">
-          <label for="ciudad" className="labelregistrodecliente">
+        <div className="inforegistroabogado">
+          <label htmlFor="ciudad" className="labelregistroabogado">
             Ciudad:
           </label>
           <input
@@ -132,7 +133,7 @@ const RegistroAbogado = ({registroAbogado}) => {
             value={userDataRegistro.nombre_ciudad}
             onChange={handleChangeRegistro}
           />
-          <label for="tarjetaProf" className="labelregistrodecliente">
+          <label htmlFor="tarjetaProf" className="labelregistroabogado">
             Tarjeta profesional:
           </label>
           <input
@@ -143,33 +144,22 @@ const RegistroAbogado = ({registroAbogado}) => {
             value={userDataRegistro.tarjetaProf}
             onChange={handleChangeRegistro}
           />
-          {/* <label for="password" className="labelregistrodecliente">
-            Password:
-          </label>
-          <input
-            type="password"
-            className="cajaregistroabogado"
-            name="password"
-            id="passsword"
-            value={userDataRegistro.password}
-            onChange={handleChangeRegistro}
-          /> */}
         </div>
         <br />
-        <br /><br />
-        <div className="nombreapellidos">
-          <input className="botones" type="button" value="Modificar" />
-          <input
-            className="botones"
-            type="submit"
-            value="Guardar"
+        <br />
+        <br />
+        <div className="inforegistroabogado">
+          <Button
+            onClick={submitHandlerRegistro}
             disabled={
               !userDataRegistro.email ||
               !userDataRegistro.cedulaAbogado ||
               !userDataRegistro.nombres ||
               !userDataRegistro.apellidos
             }
-          />
+          >
+            Guardar
+          </Button>
         </div>
       </form>
     </div>

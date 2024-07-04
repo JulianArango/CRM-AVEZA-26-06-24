@@ -37,3 +37,14 @@
   font-family: "Outfit", sans-serif;
   outline: none;
 }
+
+.paginaabogados{
+  border-radius: 3px;
+  padding: 3px;
+  margin: 8px;
+  background-color: rgb(81, 115, 238, 0.75);
+  color: black;
+  /* height: 25x; */
+  min-width: 90px;
+  font-weight: bold;
+}

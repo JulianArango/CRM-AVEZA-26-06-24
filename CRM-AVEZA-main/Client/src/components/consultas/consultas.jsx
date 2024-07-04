@@ -37,7 +37,7 @@ function Consultas() {
     try {
       postConsulta(dataRegistro);
 
-      window.alert("Consulta creado con éxito");
+      window.alert("Consulta creada con éxito");
       setDataRegistro({
         nombre: "",
         apellido: "",
@@ -45,7 +45,7 @@ function Consultas() {
         telefono: "",
         consulta: "",
       });
-      // navigate('/')
+      navigate('/')
     } catch (error) {
       console.error("Error al crear la consulta:", error.message);
       window.alert("No se pudo crear la consulta");

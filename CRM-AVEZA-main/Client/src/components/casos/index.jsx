@@ -12,7 +12,7 @@ import SearchBar from "../../components/searchBarCasos/searchBar";
 // import OrderCasos from "../../components/orderCasos/orderCasos";
 import { Link } from "react-router-dom";
 import loading from "../../assets/loading.gif";
-import { Button } from "../Mystyles";
+import { Button, Button2, Button3 } from "../Mystyles";
 
 function Casos() {
   const user = JSON.parse(localStorage.getItem("loggedUser"));
@@ -29,7 +29,7 @@ function Casos() {
   }, [dispatch]);
 
   const todos = pages?.datosPagina || [];
-  const totalPages = Math.ceil(todos.length / 6);
+  const totalPages = Math.ceil(todos.length / 9);
 
   console.log(totalPages);
 
@@ -127,21 +127,20 @@ function Casos() {
           {searchPerformed ? undefined : (
             <div className="pagination">
               {currentPage > 1 && (
-                <button
+                <Button2
                   onClick={() => handlePageChange(currentPage - 1)}
-                  className="botonprevpag"
                 >
                   &lt;&lt;
-                </button>
+                </Button2>
               )}
-              <span className="labelpagina">Página {currentPage}</span>
+              <Button3>Página {currentPage}</Button3>
               {currentPage < casos.totalPaginas && (
-                <button
+                <Button2
                   className="botonpagsig"
                   onClick={() => handlePageChange(currentPage + 1)}
                 >
                   &gt;&gt;
-                </button>
+                </Button2>
               )}
             </div>
           )}

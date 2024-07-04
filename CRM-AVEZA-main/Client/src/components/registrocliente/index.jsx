@@ -35,18 +35,15 @@ const RegistroCliente = ({registroCliente}) => {
     const submitHandlerRegistro = (e) => {
       e.preventDefault();
       registroCliente(userDataRegistro);
-      navigate('/clientes');
+      // navigate('/clientes');
     };
   return (
     <div className="contenedorregistro">
       <form className="datos" method="post" onSubmit={submitHandlerRegistro}>
-        {/* <div className="logo-aveza"> */}
         <h1 className="titulo">Registro De Cliente</h1>
-        {/* <img src={logo} alt="logo-aveza" /> */}
-        {/* </div> */}
         <br />
         <br />
-        <div className="nombreapellidos">
+        <div className="inforegistrocliente">
           <label for="nombre" className="labelregistrodecliente">
             Nombre(s):
           </label>
@@ -72,8 +69,8 @@ const RegistroCliente = ({registroCliente}) => {
         </div>
         <br />
         <br />
-        <div className="numerocedula">
-          <label for="numerocedula" className="labelregistrodecliente">
+        <div className="inforegistrocliente">
+          <label for="cedula" className="labelregistrodecliente">
             Numero de cédula:
           </label>
           <input
@@ -101,8 +98,8 @@ const RegistroCliente = ({registroCliente}) => {
 
         <br />
         <br />
-        <div className="nombreapellidos">
-          <label for="correo" className="labelregistrodecliente">
+        <div className="inforegistrocliente">
+          <label for="email" className="labelregistrodecliente">
             Email:
           </label>
           <input
@@ -119,7 +116,7 @@ const RegistroCliente = ({registroCliente}) => {
           <input
             type="text"
             name="direccion"
-            id="address"
+            id="direccion"
             className="cajaregistrocliente"
             value={userDataRegistro.direccion}
             onChange={handleChangeRegistro}
@@ -127,14 +124,14 @@ const RegistroCliente = ({registroCliente}) => {
         </div>
         <br />
         <br />
-        <div className="ciudad">
+        <div className="inforegistrocliente">
           <label for="ciudad" className="labelregistrodecliente">
             Ciudad:
           </label>
           <input
             type="text"
             name="nombre_ciudad"
-            id="city"
+            id="ciudad"
             className="cajaregistrocliente"
             value={userDataRegistro.nombre_ciudad}
             onChange={handleChangeRegistro}
@@ -158,9 +155,6 @@ const RegistroCliente = ({registroCliente}) => {
         </div>
         <br />
         <div className="documentoagenerar">
-          {/* <Button value="Modificar" /> */}
-          <Button>Modificar</Button>
-          {/* <Button type="submit" value="Guardar" />{" "} */}
           <Button
             onClick={submitHandlerRegistro}
             disabled={

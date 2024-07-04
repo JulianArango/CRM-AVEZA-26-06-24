@@ -50,9 +50,9 @@ import Payments from "./components/payments/payments.component.jsx";
 
 // const URL = import.meta.env.VITE_URL;
 // const { URL } = process.env;
-axios.defaults.baseURL = "https://crm-aveza.onrender.com/crmAveza";
+// axios.defaults.baseURL = "https://crm-aveza.onrender.com/crmAveza";
 
-// axios.defaults.baseURL = "http://localhost:3001/crmAveza";
+axios.defaults.baseURL = "http://localhost:3001/crmAveza";
 function App() {
   const [access, setAccess] = useState(false);
   const location = useLocation();
@@ -177,7 +177,7 @@ function App() {
       });
       window.alert("Se ha registrado el cliente con éxito.");
       setAccess(true);
-      access && navigate("/home/litigiosporcliente");
+      access && navigate("/clientes");
     } catch (error) {
       window.alert("No fue posible registrar el cliente.");
     }
@@ -212,11 +212,10 @@ function App() {
         tarjetaProf: `${tarjetaProf}`,
         password: `${password}`,
       });
-      window.alert("Se ha registrado el cliente con éxito.");
-      setAccess(true);
-      access && navigate("/abogados");
+      window.alert("Se ha registrado el abogado con éxito.");
+      navigate("/abogados");
     } catch (error) {
-      window.alert("No fue posible registrar el cliente.");
+      window.alert("No fue posible registrar el abogado.");
     }
   }
 
