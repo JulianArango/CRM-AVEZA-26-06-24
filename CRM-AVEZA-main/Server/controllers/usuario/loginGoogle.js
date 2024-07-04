@@ -1,40 +1,41 @@
  import {models} from '../../DB.js'
- const { Cliente, Abogado, Usuario } = models
+const { Cliente, Abogado, Usuario } = models
+ 
 const getLoginGoogle = async (email,rol) => {
-    
-    if (rol === "Administrador") {
-                    const login = await Abogado.findOne({
-                      where: {
-                        correo: email,
-                        administrador:true,
-                      },
-                    });
+    const login = await Usuario.findOne({
+      where: {
+        email: email,
+      },
+    });
+    if (login) {
+      console.log("Usuario encontrado:", login);
+      const user = await Cliente.findOne({
+        where: {
+          cedulaCliente: login.cedula,
+        },
+      });
+      console.log("Cedula cliente:", user.cedulaCliente);
+      if (!user) {
+        const user = await Abogado.findOne({
+          where: {
+            cedulaAbogado: login.cedula,
+          },
+        });
+        console.log("Cedula abogado:", user.cedulaAbogado);
+        if (!user) throw new Error("Aún no tiene autorización para ingresar");
         return {
           access: true,
-          usuario: login,
+          usuario: user,
         };
+      }
+      return {
+        access: true,
+        usuario: user,
+      };
     } else {
-        const login = await Cliente.findOne({
-            where: {
-                correo: email,
-            }
-        })
-        if (!login) {
-            const login = await Abogado.findOne({
-                where: {
-                    correo: email,
-                }
-            })
-            if (!login) throw new Error('Password o email inválido')
-            return {
-                access: true,
-                usuario: login
-            }
-        }
-        return {
-            access: true,
-            usuario: login
-        }
+      return {
+        access: false,
+      };
     }
 }
 

@@ -4,8 +4,9 @@ import "./crearusuario.css";
 import logo from "../../img/logoAveza.png";
 import { Button } from "../Mystyles";
 import { Link } from "react-router-dom";
+import { crearUsuario } from "../../handlers/crearUsuario";
 
-const CrearUsuario = ({ crearUsuario }) => {
+const CrearUsuario = () => {
   const [userDataCrear, setUserDataCrear] = useState({
     email: "",
     password: "",

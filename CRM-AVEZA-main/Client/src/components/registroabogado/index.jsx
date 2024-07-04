@@ -3,9 +3,10 @@ import { useState } from "react";
 import "../../App.css";
 import "./registroabogado.css";
 import { Button } from "../Mystyles";
+import { registroAbogado } from "../../handlers/registroAbogado";
 
 
-const RegistroAbogado = ({registroAbogado}) => {
+const RegistroAbogado = () => {
     const [userDataRegistro, setUserDataRegistro] = useState({
       email: "",
       nombres: "",

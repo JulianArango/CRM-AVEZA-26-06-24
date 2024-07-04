@@ -3,8 +3,9 @@ import "../../App.css";
 import "./registrocliente.css";
 import { Button } from "../Mystyles";
 import { useNavigate } from "react-router-dom";
+import { registroCliente } from "../../handlers/registroCliente";
 
-const RegistroCliente = ({registroCliente}) => {
+const RegistroCliente = () => {
     const [userDataRegistro, setUserDataRegistro] = useState({
       email: "",
       nombres: "",

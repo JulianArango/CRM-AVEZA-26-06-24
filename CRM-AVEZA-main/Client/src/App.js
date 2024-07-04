@@ -1,14 +1,12 @@
 //Importar modulos necesarios
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./App.css";
-// import Cards from "./components/cards";
 import Nav from "./components/nav";
 import {
   Routes,
   Route,
   useLocation,
   useNavigate,
-  Outlet,
 } from "react-router-dom";
 import PrevisualizarContrato from "./components/previsualizarcontrato";
 import Detail from "./components/detail";
@@ -31,11 +29,7 @@ import LitigiosPorCliente from "./components/litigiosporcliente";
 import Autorizacion from "./components/autorizacion";
 import Insolvencia from "./components/insolvencia";
 import Poder from "./components/poder";
-import { codigoPaises } from "./utils/codigoPaises.js";
-import { codigoCiudades } from "./utils/codigoCiudades.js";
-import { codigoDepartamentos } from "./utils/codigoDepartamentos.js";
 import WordToHtml from "./components/wordtohtml";
-import { PrivateRoute } from "./components/privateroute";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuth } from "./redux/actions";
 import Abogados from "./components/abogados/index.jsx";
@@ -46,6 +40,7 @@ import CrearCaso from "./components/CrearCaso/crearCaso.jsx";
 import Consultas from "./components/consultas/consultas.jsx";
 import AllConsultas from "./components/allConsultas/allConsultas.jsx";
 import Payments from "./components/payments/payments.component.jsx";
+import { crearUsuario } from "./handlers/crearUsuario.jsx";
 // export const URL = "http://localhost:3001/crmAveza/";
 
 // const URL = import.meta.env.VITE_URL;
@@ -59,9 +54,7 @@ function App() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.isAuthenticated);
-  // useEffect(() => {
-  //   !access && navigate("/");
-  // }, []);
+
 
   //Funcion para verificar datos de ingreso
   async function login(userData) {
@@ -75,9 +68,6 @@ function App() {
       console.log("Login propio:", data);
       const { access } = data;
       console.log("Access: ", access);
-      //  setAccess(access);
-      // dispatch(setAuth(access));
-      // navigate("/home");
       window.localStorage.setItem("loggedUser", JSON.stringify(data.usuario));
       if (access === true) {
         dispatch(setAuth(access));
@@ -97,127 +87,6 @@ function App() {
     }
   }
 
-  async function crearUsuario(userDataCrear) {
-    const {
-      email,
-      password,
-      nombres,
-      apellidos,
-      cedula,
-      celular,
-      direccion,
-      nombre_ciudad,
-      tipo_usuario,
-    } = userDataCrear;
-    console.log("Userdata: ", userDataCrear);
-    const ciudad = codigoCiudades.filter(
-      (ciudad) => ciudad.nombre_ciudad === nombre_ciudad.toUpperCase()
-    );
-
-    console.log("Codigo ciudad Userdata: ", ciudad);
-    // const URL = "/crearusuario";
-    try {
-      await axios.post("/usuarios", {
-        email: `${email}`,
-        password: `${password}`,
-        nombres: `${nombres}`,
-        apellidos: `${apellidos}`,
-        cedula: `${cedula}`,
-        celular: `${celular}`,
-        direccion: `${direccion}`,
-        nombre_ciudad: [`${ciudad[0].codigo_ciudad}`],
-        tipo_usuario: `${tipo_usuario}`,
-      });
-      window.alert("Usuario creado con éxito.");
-      setAccess(false);
-      access && navigate("/");
-    } catch (error) {
-      window.alert("No fue posible crear el usuario.");
-    }
-  }
-
-  async function registroCliente(userDataRegistro) {
-    const {
-      email,
-      nombres,
-      apellidos,
-      cedulaCliente,
-      celular,
-      direccion,
-      nombre_ciudad,
-      tipo_usuario,
-      tipo_de_caso,
-      forma_de_pago,
-      honorarios,
-      cuotas,
-      comentarios,
-      valor_pretensiones,
-    } = userDataRegistro;
-
-    console.log("User data registro:", userDataRegistro);
-
-    const URL = "/clientes/registrocliente";
-    try {
-      await axios.post(URL, {
-        email: `${email}`,
-        // password: `${password}`,
-        nombres: `${nombres}`,
-        apellidos: `${apellidos}`,
-        cedulaCliente: `${cedulaCliente}`,
-        celular: `${celular}`,
-        direccion: `${direccion}`,
-        nombre_ciudad: `${nombre_ciudad}`,
-        tipo_usuario: `${tipo_usuario}`,
-        tipo_de_caso: `${tipo_de_caso}`,
-        forma_de_pago: `${forma_de_pago}`,
-        honorarios: `${honorarios}`,
-        cuotas: `${cuotas}`,
-        comentarios: `${comentarios}`,
-        valor_pretensiones: `${valor_pretensiones}`,
-      });
-      window.alert("Se ha registrado el cliente con éxito.");
-      setAccess(true);
-      access && navigate("/clientes");
-    } catch (error) {
-      window.alert("No fue posible registrar el cliente.");
-    }
-  }
-
-  async function registroAbogado(userDataRegistro) {
-    const {
-      email,
-      nombres,
-      apellidos,
-      cedulaAbogado,
-      celular,
-      direccion,
-      nombre_ciudad,
-      tarjetaProf,
-      password,
-    } = userDataRegistro;
-
-    console.log("User data registro:", userDataRegistro);
-
-    const URL = "/abogados";
-    try {
-      await axios.post(URL, {
-        email: `${email}`,
-        // password: `${password}`,
-        nombres: `${nombres}`,
-        apellidos: `${apellidos}`,
-        cedulaAbogado: `${cedulaAbogado}`,
-        celular: `${celular}`,
-        direccion: `${direccion}`,
-        nombre_ciudad: `${nombre_ciudad}`,
-        tarjetaProf: `${tarjetaProf}`,
-        password: `${password}`,
-      });
-      window.alert("Se ha registrado el abogado con éxito.");
-      navigate("/abogados");
-    } catch (error) {
-      window.alert("No fue posible registrar el abogado.");
-    }
-  }
 
   const logout = () => {
      window.localStorage.setItem("loggedUser", JSON.stringify({}));
@@ -229,22 +98,6 @@ function App() {
   const sendSMS = () => {
     // setAccess(false);
     navigate("/sms");
-  };
-
-
-
-  const relacionarPaises = async () => {
-    try {
-      await axios.post("/relacionarpaises", {
-        codigoPaises,
-        codigoCiudades,
-        codigoDepartamentos,
-      });
-      // console.log("Data verificar clientes:", data);
-    } catch (error) {
-      console.log(error.message);
-      window.alert("Paises NO encontrados!");
-    }
   };
 
   const onClose = (id) => {
@@ -318,11 +171,11 @@ function App() {
         <Route path="insolvencia" element={<Insolvencia />} />
         <Route
           path="registrocliente"
-          element={<RegistroCliente registroCliente={registroCliente} />}
+          element={<RegistroCliente />}
         />
         <Route
           path="registroabogado"
-          element={<RegistroAbogado registroAbogado={registroAbogado} />}
+          element={<RegistroAbogado/>}
         />
         <Route path="detail" element={<Detail />} />
         <Route
@@ -353,18 +206,5 @@ function App() {
   );
 }
 
-function LayoutWithNav() {
-  return (
-    <div className="home">
-      {/* Barra de navegación a la izquierda */}
-      {/* <Home className="home" /> */}
-
-      {/* Contenedor principal del contenido a la derecha */}
-      <div className="contenedor-derecha">
-        <Outlet />
-      </div>
-    </div>
-  );
-}
 
 export default App;

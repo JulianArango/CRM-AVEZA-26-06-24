@@ -1,27 +1,43 @@
-import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-
-
-export async function crearUsuario(data) {
+export async function crearUsuario(userDataCrear) {
   const {
-      correo,
-      password,
-      imagen,
-      rol
-    } = data;
-console.log("data del post", data)
-
-  const URL = '/usuarios';
+    email,
+    password,
+    nombres,
+    apellidos,
+    cedula,
+    celular,
+    direccion,
+    nombre_ciudad,
+    tipo_usuario,
+  } = userDataCrear;
+  console.log("Userdata: ", userDataCrear);
+  const ciudad = codigoCiudades.filter(
+    (ciudad) => ciudad.nombre_ciudad === nombre_ciudad.toUpperCase()
+  );
+  const navigate = useNavigate();
+  
+  console.log("Codigo ciudad Userdata: ", ciudad);
+  // const URL = "/crearusuario";
   try {
-    await axios.post(URL, {
-      correo: `${correo}`,
-      password:`${password}`,
-      imagen: `${imagen}`,
-      rol: `${rol}`
+    await axios.post("/usuarios", {
+      email: `${email}`,
+      password: `${password}`,
+      nombres: `${nombres}`,
+      apellidos: `${apellidos}`,
+      cedula: `${cedula}`,
+      celular: `${celular}`,
+      direccion: `${direccion}`,
+      nombre_ciudad: [`${ciudad[0].codigo_ciudad}`],
+      tipo_usuario: `${tipo_usuario}`,
     });
-    window.alert("Se ha registrado el usuario con éxito.");
+    window.alert("Usuario creado con éxito.");
+    // setAccess(false);
+    // access &&
+    navigate("/");
   } catch (error) {
-    window.alert("No fue posible registrar el usuario.");
+    window.alert("No fue posible crear el usuario.");
   }
-
 }

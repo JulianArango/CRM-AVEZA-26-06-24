@@ -1,18 +1,17 @@
-import React, { useState, useEffect} from "react";
+import React, { useState} from "react";
 import { validar } from "../../utils/validacion";
 import "../../App.css";
 import "./login.css";
 import { Link } from "react-router-dom";
-import { useLocation, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import logo from "../../img/logoAveza.png";
 import { GoogleLogin } from "@react-oauth/google";
 import { useDispatch } from "react-redux";
 import { setAuth } from "../../redux/actions";
-import { useAuth0 } from "@auth0/auth0-react";
 import photo from "../../assets/login.jpg";
 import { Button } from "../Mystyles";
 
-const Form = ({ login, clickHandlerRecordatorio,clickHandlerCrear }) => {
+const Form = ({ login, clickHandlerRecordatorio, clickHandlerCrear }) => {
   const [userData, setUserData] = useState({
     cedula: "",
     password: "",
@@ -24,10 +23,8 @@ const Form = ({ login, clickHandlerRecordatorio,clickHandlerCrear }) => {
   });
 
   const dispatch = useDispatch();
-  
-  
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setErrores(validar({ ...userData, [e.target.name]: e.target.value }));
@@ -38,29 +35,50 @@ const Form = ({ login, clickHandlerRecordatorio,clickHandlerCrear }) => {
     });
   };
 
-
   const submitHandler = (e) => {
     e.preventDefault();
     login(userData);
   };
 
-  const responseMessage = (response) => {
+  const responseMessage = async (response) => {
+    const user = jwtDecode(response.credential);
+    // Loginf();
+    dispatch(setUserToken(user));
+    const { rol } = userData;
+    console.log("Datos login:", user.email, rol);
+    try {
+      const { data } = await axios(
+        `/login/google/?email=${user.email}&rol=&${rol}`
+      );
 
+      console.log("Login 3:", data);
 
-      dispatch(setAuth(true));
+      const { access } = data;
+      console.log("Access: ", access);
 
-    // login();
-    navigate("/home");
-    console.log(response);
+      window.localStorage.setItem("loggedUser", JSON.stringify(data.usuario));
+      if (access === true) {
+        dispatch(setAuth(access));
+
+        if (data.usuario.administrador || data.usuario.cedulaAbogado) {
+          navigate("/clientes");
+        } else if (data.usuario.cedulaCliente) {
+          navigate("/casos");
+        } else {
+          navigate("/home");
+        }
+      } else {
+        window.alert("Usuario o contraseña incorrectos");
+      }
+    } catch (error) {
+      window.alert("Usuario o contraseña incorrectos");
+    }
   };
+
   const errorMessage = (error) => {
     console.log(error);
     window.alert("Usuario o contraseña incorrectos");
   };
-
-
-
-
 
   // const { loginWithRedirect } = useAuth0();
 
@@ -84,8 +102,9 @@ const Form = ({ login, clickHandlerRecordatorio,clickHandlerCrear }) => {
               <td></td>
             </tr>
             <tr>
-              
-              <td><br /></td>
+              <td>
+                <br />
+              </td>
               <td>
                 <label htmlFor="usuario" className="labellogin">
                   Usuario:
@@ -206,5 +225,3 @@ const Form = ({ login, clickHandlerRecordatorio,clickHandlerCrear }) => {
   );
 };
 export default Form;
-
-
