@@ -29,6 +29,7 @@ const CrearUsuario = () => {
   const submitHandlerCrear = (e) => {
     e.preventDefault();
     crearUsuario(userDataCrear);
+    navigate("/");
   };
 
   return (
