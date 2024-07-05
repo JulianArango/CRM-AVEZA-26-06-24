@@ -1,37 +1,37 @@
-
 import { useState } from "react";
 import "../../App.css";
 import "./registroabogado.css";
 import { Button } from "../Mystyles";
 import { registroAbogado } from "../../handlers/registroAbogado";
-
+import { useNavigate } from "react-router-dom";
 
 const RegistroAbogado = () => {
-    const [userDataRegistro, setUserDataRegistro] = useState({
-      email: "",
-      nombres: "",
-      apellidos: "",
-      cedulaAbogado: "",
-      celular: "",
-      direccion: "",
-      nombre_ciudad: "",
-      tarjetaProf: "",
-      password: "",
-    });
-
-    const handleChangeRegistro = (e) => {
-      setUserDataRegistro({
-        ...userDataRegistro,
-        [e.target.name]: e.target.value, // Sintaxis ES6 para actualizar la key correspondiente
-      });
-    };
-
-    const submitHandlerRegistro = (e) => {
-      e.preventDefault();
-      registroAbogado(userDataRegistro);
-      navigate("/abogados");
-    };
+  const [userDataRegistro, setUserDataRegistro] = useState({
+    email: "",
+    nombres: "",
+    apellidos: "",
+    cedulaAbogado: "",
+    celular: "",
+    direccion: "",
+    nombre_ciudad: "",
+    tarjetaProf: "",
+    password: "",
+  });
   
+  const navigate = useNavigate();
+  const handleChangeRegistro = (e) => {
+    setUserDataRegistro({
+      ...userDataRegistro,
+      [e.target.name]: e.target.value, // Sintaxis ES6 para actualizar la key correspondiente
+    });
+  };
+
+  const submitHandlerRegistro = (e) => {
+    e.preventDefault();
+    registroAbogado(userDataRegistro);
+    navigate("/abogados");
+  };
+
   return (
     <div className="contenedorregistro">
       <form className="datos" method="post" onSubmit={submitHandlerRegistro}>

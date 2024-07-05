@@ -5,6 +5,7 @@ import logo from "../../img/logoAveza.png";
 import { Button } from "../Mystyles";
 import { Link } from "react-router-dom";
 import { crearUsuario } from "../../handlers/crearUsuario";
+import { useNavigate } from "react-router-dom";
 
 const CrearUsuario = () => {
   const [userDataCrear, setUserDataCrear] = useState({
@@ -18,7 +19,8 @@ const CrearUsuario = () => {
     nombre_ciudad: "",
     tipo_usuario: "1",
   });
-
+  const navigate = useNavigate();
+  
   const handleChangeCrear = (e) => {
     setUserDataCrear({
       ...userDataCrear,
