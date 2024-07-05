@@ -1,5 +1,6 @@
-
+import axios from "axios";
 import { codigoCiudades } from "../utils/codigoCiudades.js";
+import { useNavigate } from "react-router-dom";
 
 export async function crearUsuario(userDataCrear) {
   const {
@@ -13,7 +14,11 @@ export async function crearUsuario(userDataCrear) {
     nombre_ciudad,
     tipo_usuario,
   } = userDataCrear;
+
+  const navigate = useNavigate();
+  
   console.log("Userdata: ", userDataCrear);
+  
   const ciudad = codigoCiudades.filter(
     (ciudad) => ciudad.nombre_ciudad === nombre_ciudad.toUpperCase()
   );
