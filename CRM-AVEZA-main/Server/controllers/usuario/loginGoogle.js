@@ -11,14 +11,14 @@ const getLoginGoogle = async (email,rol) => {
       console.log("Usuario encontrado:", login);
       const user = await Cliente.findOne({
         where: {
-          cedulaCliente: login.cedula,
+          email: login.email,
         },
       });
-      console.log("Cedula cliente:", user.cedulaCliente);
+      console.log("Email cliente:", user.email);
       if (!user) {
         const user = await Abogado.findOne({
           where: {
-            cedulaAbogado: login.cedula,
+            email: login.email,
           },
         });
         console.log("Cedula abogado:", user.cedulaAbogado);
