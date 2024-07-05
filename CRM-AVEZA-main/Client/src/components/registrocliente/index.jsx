@@ -36,7 +36,7 @@ const RegistroCliente = () => {
     const submitHandlerRegistro = (e) => {
       e.preventDefault();
       registroCliente(userDataRegistro);
-      // navigate('/clientes');
+      navigate('/clientes');
     };
   return (
     <div className="contenedorregistro">

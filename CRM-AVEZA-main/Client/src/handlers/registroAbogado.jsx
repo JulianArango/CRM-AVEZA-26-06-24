@@ -34,7 +34,7 @@ export async function registroAbogado(userDataRegistro) {
       password: `${password}`,
     });
     window.alert("Se ha registrado el abogado con éxito.");
-    navigate("/abogados");
+    
   } catch (error) {
     window.alert("No fue posible registrar el abogado.");
   }

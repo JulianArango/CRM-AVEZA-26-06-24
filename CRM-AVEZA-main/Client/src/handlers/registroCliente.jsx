@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export async function registroCliente(userDataRegistro) {
@@ -18,9 +17,7 @@ export async function registroCliente(userDataRegistro) {
     comentarios,
     valor_pretensiones,
   } = userDataRegistro;
-  
-  const navigate = useNavigate();
-  
+
   console.log("User data registro:", userDataRegistro);
   
   const URL = "/clientes/registrocliente";
@@ -43,9 +40,7 @@ export async function registroCliente(userDataRegistro) {
       valor_pretensiones: `${valor_pretensiones}`,
     });
     window.alert("Se ha registrado el cliente con éxito.");
-    // setAccess(true);
-    // access &&
-      navigate("/clientes");
+   
   } catch (error) {
     window.alert("No fue posible registrar el cliente.");
   }

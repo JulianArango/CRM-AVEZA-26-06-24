@@ -29,7 +29,9 @@ const RegistroAbogado = () => {
     const submitHandlerRegistro = (e) => {
       e.preventDefault();
       registroAbogado(userDataRegistro);
+      navigate("/abogados");
     };
+  
   return (
     <div className="contenedorregistro">
       <form className="datos" method="post" onSubmit={submitHandlerRegistro}>
