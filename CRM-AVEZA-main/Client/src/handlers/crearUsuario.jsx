@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+
+import { codigoCiudades } from "../utils/codigoCiudades.js";
 
 export async function crearUsuario(userDataCrear) {
   const {
@@ -17,8 +17,7 @@ export async function crearUsuario(userDataCrear) {
   const ciudad = codigoCiudades.filter(
     (ciudad) => ciudad.nombre_ciudad === nombre_ciudad.toUpperCase()
   );
-  const navigate = useNavigate();
-  
+
   console.log("Codigo ciudad Userdata: ", ciudad);
   // const URL = "/crearusuario";
   try {
@@ -34,9 +33,8 @@ export async function crearUsuario(userDataCrear) {
       tipo_usuario: `${tipo_usuario}`,
     });
     window.alert("Usuario creado con éxito.");
-    // setAccess(false);
-    // access &&
-    navigate("/");
+    setAccess(false);
+    access && navigate("/");
   } catch (error) {
     window.alert("No fue posible crear el usuario.");
   }
