@@ -14,23 +14,25 @@ const getLoginGoogle = async (email,rol) => {
           email: login.email,
         },
       });
-      console.log("Email cliente:", user.email);
+      console.log("Email cliente:", user);
       if (!user) {
         const user = await Abogado.findOne({
           where: {
             email: login.email,
           },
         });
-        console.log("Cedula abogado:", user.cedulaAbogado);
+        console.log("Cedula abogado:", user);
         if (!user) throw new Error("Aún no tiene autorización para ingresar");
         return {
           access: true,
-          usuario: user,
+            usuario: user,
+          rol: "abogado",
         };
       }
       return {
         access: true,
         usuario: user,
+        rol: "cliente",
       };
     } else {
       return {

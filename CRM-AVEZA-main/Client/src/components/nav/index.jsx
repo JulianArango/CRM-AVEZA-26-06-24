@@ -4,7 +4,13 @@ import { Button } from "../Mystyles";
 import logo from "../../img/logoAveza.png";
 import "./nav.css";
 
-const Nav = ({logout }) => {
+const Nav = ({ logout }) => {
+  
+   const user = JSON.parse(localStorage.getItem("loggedUser"));
+ 
+   console.log("User local storage: ", user);
+
+  
   return (
     <div className="navbar">
       {/* <SearchBar onVerificarCliente={onVerificarCliente} /> */}
@@ -14,45 +20,50 @@ const Nav = ({logout }) => {
       <br />
       <br />
       <br />
-      <Link to="/abogados">
-        <Button>
-          {" "}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="1.2em"
-            height="1.2em"
-            viewBox="0 0 20 20"
-          >
-            <g fill="black" fillRule="evenodd" clipRule="evenodd">
-              <path d="M5 9a2 2 0 1 0 0-4a2 2 0 0 0 0 4m0 1a3 3 0 1 0 0-6a3 3 0 0 0 0 6"></path>
-              <path d="M3.854 8.896a.5.5 0 0 1 0 .708l-.338.337A3.47 3.47 0 0 0 2.5 12.394v1.856a.5.5 0 1 1-1 0v-1.856a4.47 4.47 0 0 1 1.309-3.16l.337-.338a.5.5 0 0 1 .708 0m11.792-.3a.5.5 0 0 0 0 .708l.338.337A3.469 3.469 0 0 1 17 12.094v2.156a.5.5 0 0 0 1 0v-2.156a4.47 4.47 0 0 0-1.309-3.16l-.337-.338a.5.5 0 0 0-.708 0"></path>
-              <path d="M14 9a2 2 0 1 1 0-4a2 2 0 0 1 0 4m0 1a3 3 0 1 1 0-6a3 3 0 0 1 0 6m-4.5 3.25a2.5 2.5 0 0 0-2.5 2.5v1.3a.5.5 0 0 1-1 0v-1.3a3.5 3.5 0 0 1 7 0v1.3a.5.5 0 1 1-1 0v-1.3a2.5 2.5 0 0 0-2.5-2.5"></path>
-              <path d="M9.5 11.75a2 2 0 1 0 0-4a2 2 0 0 0 0 4m0 1a3 3 0 1 0 0-6a3 3 0 0 0 0 6"></path>
-            </g>
-          </svg>
-          {"   "}
-          Abogados
-        </Button>
-      </Link>
-      <Link to="/clientes">
-        <Button>
-          {" "}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="1.2em"
-            height="1.2em"
-            viewBox="0 0 20 20"
-          >
-            <g fill="black" fillRule="evenodd" clipRule="evenodd">
-              <path d="M5 9a2 2 0 1 0 0-4a2 2 0 0 0 0 4m0 1a3 3 0 1 0 0-6a3 3 0 0 0 0 6"></path>
-              <path d="M3.854 8.896a.5.5 0 0 1 0 .708l-.338.337A3.47 3.47 0 0 0 2.5 12.394v1.856a.5.5 0 1 1-1 0v-1.856a4.47 4.47 0 0 1 1.309-3.16l.337-.338a.5.5 0 0 1 .708 0m11.792-.3a.5.5 0 0 0 0 .708l.338.337A3.469 3.469 0 0 1 17 12.094v2.156a.5.5 0 0 0 1 0v-2.156a4.47 4.47 0 0 0-1.309-3.16l-.337-.338a.5.5 0 0 0-.708 0"></path>
-              <path d="M14 9a2 2 0 1 1 0-4a2 2 0 0 1 0 4m0 1a3 3 0 1 1 0-6a3 3 0 0 1 0 6m-4.5 3.25a2.5 2.5 0 0 0-2.5 2.5v1.3a.5.5 0 0 1-1 0v-1.3a3.5 3.5 0 0 1 7 0v1.3a.5.5 0 1 1-1 0v-1.3a2.5 2.5 0 0 0-2.5-2.5"></path>
-              <path d="M9.5 11.75a2 2 0 1 0 0-4a2 2 0 0 0 0 4m0 1a3 3 0 1 0 0-6a3 3 0 0 0 0 6"></path>
-            </g>
-          </svg>
-          {"  "}Clientes
-        </Button>
-      </Link>
+      {(user.administrador=== true) && (
+        <Link to="/abogados">
+          <Button>
+            {" "}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1.2em"
+              height="1.2em"
+              viewBox="0 0 20 20"
+            >
+              <g fill="black" fillRule="evenodd" clipRule="evenodd">
+                <path d="M5 9a2 2 0 1 0 0-4a2 2 0 0 0 0 4m0 1a3 3 0 1 0 0-6a3 3 0 0 0 0 6"></path>
+                <path d="M3.854 8.896a.5.5 0 0 1 0 .708l-.338.337A3.47 3.47 0 0 0 2.5 12.394v1.856a.5.5 0 1 1-1 0v-1.856a4.47 4.47 0 0 1 1.309-3.16l.337-.338a.5.5 0 0 1 .708 0m11.792-.3a.5.5 0 0 0 0 .708l.338.337A3.469 3.469 0 0 1 17 12.094v2.156a.5.5 0 0 0 1 0v-2.156a4.47 4.47 0 0 0-1.309-3.16l-.337-.338a.5.5 0 0 0-.708 0"></path>
+                <path d="M14 9a2 2 0 1 1 0-4a2 2 0 0 1 0 4m0 1a3 3 0 1 1 0-6a3 3 0 0 1 0 6m-4.5 3.25a2.5 2.5 0 0 0-2.5 2.5v1.3a.5.5 0 0 1-1 0v-1.3a3.5 3.5 0 0 1 7 0v1.3a.5.5 0 1 1-1 0v-1.3a2.5 2.5 0 0 0-2.5-2.5"></path>
+                <path d="M9.5 11.75a2 2 0 1 0 0-4a2 2 0 0 0 0 4m0 1a3 3 0 1 0 0-6a3 3 0 0 0 0 6"></path>
+              </g>
+            </svg>
+            {"   "}
+            Abogados
+          </Button>
+        </Link>
+      )}
+      {(user.administrador === true || user.cedulaAbogado) && (
+        <Link to="/clientes">
+          <Button>
+            {" "}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1.2em"
+              height="1.2em"
+              viewBox="0 0 20 20"
+            >
+              <g fill="black" fillRule="evenodd" clipRule="evenodd">
+                <path d="M5 9a2 2 0 1 0 0-4a2 2 0 0 0 0 4m0 1a3 3 0 1 0 0-6a3 3 0 0 0 0 6"></path>
+                <path d="M3.854 8.896a.5.5 0 0 1 0 .708l-.338.337A3.47 3.47 0 0 0 2.5 12.394v1.856a.5.5 0 1 1-1 0v-1.856a4.47 4.47 0 0 1 1.309-3.16l.337-.338a.5.5 0 0 1 .708 0m11.792-.3a.5.5 0 0 0 0 .708l.338.337A3.469 3.469 0 0 1 17 12.094v2.156a.5.5 0 0 0 1 0v-2.156a4.47 4.47 0 0 0-1.309-3.16l-.337-.338a.5.5 0 0 0-.708 0"></path>
+                <path d="M14 9a2 2 0 1 1 0-4a2 2 0 0 1 0 4m0 1a3 3 0 1 1 0-6a3 3 0 0 1 0 6m-4.5 3.25a2.5 2.5 0 0 0-2.5 2.5v1.3a.5.5 0 0 1-1 0v-1.3a3.5 3.5 0 0 1 7 0v1.3a.5.5 0 1 1-1 0v-1.3a2.5 2.5 0 0 0-2.5-2.5"></path>
+                <path d="M9.5 11.75a2 2 0 1 0 0-4a2 2 0 0 0 0 4m0 1a3 3 0 1 0 0-6a3 3 0 0 0 0 6"></path>
+              </g>
+            </svg>
+            {"  "}Clientes
+          </Button>
+        </Link>
+      )}
+      
       <Link to="/casos">
         <Button>
           {" "}
@@ -96,41 +107,46 @@ const Nav = ({logout }) => {
           Agenda
         </Button>
       </Link>
-      <Link to="/pagos">
-        <Button>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="1.2em"
-            height="1.2em"
-            viewBox="0 0 24 24"
-          >
-            <path
-              fill="black"
-              d="M19.435 4.065H4.565a2.5 2.5 0 0 0-2.5 2.5v10.87a2.5 2.5 0 0 0 2.5 2.5h14.87a2.5 2.5 0 0 0 2.5-2.5V6.565a2.5 2.5 0 0 0-2.5-2.5m1.5 9.93h-6.42a2 2 0 0 1 0-4h6.42Zm-6.42-5a3 3 0 0 0 0 6h6.42v2.44a1.5 1.5 0 0 1-1.5 1.5H4.565a1.5 1.5 0 0 1-1.5-1.5V6.565a1.5 1.5 0 0 1 1.5-1.5h14.87a1.5 1.5 0 0 1 1.5 1.5v2.43Z"
-            ></path>
-            <circle cx={14.519} cy={11.996} r={1} fill="white"></circle>
-          </svg>
-          {"   "}
-          Pagos
-        </Button>
-      </Link>
-      <Link to="/verconsultas">
-        <Button>
-          {" "}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="1.2em"
-            height="1.2em"
-            viewBox="0 0 24 24"
-          >
-            <path
-              fill="black"
-              d="M12 7q.425 0 .713-.288T13 6t-.288-.712T12 5t-.712.288T11 6t.288.713T12 7m0 8q.425 0 .713-.288T13 14v-4q0-.425-.288-.712T12 9t-.712.288T11 10v4q0 .425.288.713T12 15m-6 3l-2.3 2.3q-.475.475-1.088.213T2 19.575V4q0-.825.588-1.412T4 2h16q.825 0 1.413.588T22 4v12q0 .825-.587 1.413T20 18zm-.85-2H20V4H4v13.125zM4 16V4z"
-            ></path>
-          </svg>{" "}
-          Consultas
-        </Button>
-      </Link>
+      {(user.administrador === true || user.cedulaCliente) && (
+        <Link to="/pagos">
+          <Button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1.2em"
+              height="1.2em"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="black"
+                d="M19.435 4.065H4.565a2.5 2.5 0 0 0-2.5 2.5v10.87a2.5 2.5 0 0 0 2.5 2.5h14.87a2.5 2.5 0 0 0 2.5-2.5V6.565a2.5 2.5 0 0 0-2.5-2.5m1.5 9.93h-6.42a2 2 0 0 1 0-4h6.42Zm-6.42-5a3 3 0 0 0 0 6h6.42v2.44a1.5 1.5 0 0 1-1.5 1.5H4.565a1.5 1.5 0 0 1-1.5-1.5V6.565a1.5 1.5 0 0 1 1.5-1.5h14.87a1.5 1.5 0 0 1 1.5 1.5v2.43Z"
+              ></path>
+              <circle cx={14.519} cy={11.996} r={1} fill="white"></circle>
+            </svg>
+            {"   "}
+            Pagos
+          </Button>
+        </Link>
+      )}
+      {user.administrador === true && (
+        <Link to="/verconsultas">
+          <Button>
+            {" "}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1.2em"
+              height="1.2em"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="black"
+                d="M12 7q.425 0 .713-.288T13 6t-.288-.712T12 5t-.712.288T11 6t.288.713T12 7m0 8q.425 0 .713-.288T13 14v-4q0-.425-.288-.712T12 9t-.712.288T11 10v4q0 .425.288.713T12 15m-6 3l-2.3 2.3q-.475.475-1.088.213T2 19.575V4q0-.825.588-1.412T4 2h16q.825 0 1.413.588T22 4v12q0 .825-.587 1.413T20 18zm-.85-2H20V4H4v13.125zM4 16V4z"
+              ></path>
+            </svg>{" "}
+            Consultas
+          </Button>
+        </Link>
+      )}
+
       {/* <Link to="/configurarrecordatorios">
         <Button>Configurar Recordatorios</Button>
       </Link> */}
