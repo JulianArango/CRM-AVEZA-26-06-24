@@ -86,7 +86,9 @@ function Casos() {
             (caso.nombresabogado === user.nombres &&
               caso.apellidosAbogado === user.apellidos)
         ));
- console.log('Casos: ', casos)
+  console.log('Casos: ', casos)
+  
+  console.log("Casos usuario: ", userCasos);
   return (
     <div className="contenedorcasos">
       <div className="encabezado">
@@ -146,7 +148,7 @@ function Casos() {
           )}
           <br />
           <div className="divcasos">
-            {userCasos.datosPagina.map((caso) => (
+            {userCasos.map((caso) => (
               <TarjetaCaso caso={caso} key={caso.id} />
             ))}
           </div>

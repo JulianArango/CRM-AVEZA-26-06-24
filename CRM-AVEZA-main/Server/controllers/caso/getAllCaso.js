@@ -88,23 +88,23 @@ const getAllCaso = async (filters) => {
     });
   }
 
-  //console.log(getAllCasoBd.descripcion)
+console.log('Casos :',getAllCasoBd)
   //Obtiene los campos a devolver
   let datos = getAllCasoBd.map((elemento) => ({
-    id: elemento.idCaso,
-    descripcion: elemento.descripcion,
-    fecha: elemento.fecha,
-    nombresCliente: elemento.Cliente.nombres,
-    apellidosCliente: elemento.Cliente.apellidos,
-    direccionCliente: elemento.Cliente.direccion,
-    // ciudadCliente: elemento.Cliente.ciudad,
-    celularCliente: elemento.Cliente.celular,
-    nombresabogado: elemento.Abogado.nombres,
-    apellidosAbogado: elemento.Abogado.apellidos,
-    direccionAbogado: elemento.Abogado.direccion,
-    // ciudadAbogado: elemento.Abogado.ciudad,
-    celularAbogado: elemento.Abogado.celular,
-    tipoCaso: elemento.TipoDeCaso.descripcion,
+    id: elemento.dataValues.idCaso,
+    descripcion: elemento.dataValues.descripcion,
+    fecha: elemento.dataValues.fecha,
+    nombresCliente: elemento.dataValues.Cliente.nombres,
+    apellidosCliente: elemento.dataValues.Cliente.apellidos,
+    direccionCliente: elemento.dataValues.Cliente.direccion,
+    // ciudadCliente: elemento.dataValues.Cliente.ciudad,
+    celularCliente: elemento.dataValues.Cliente.celular,
+    nombresabogado: elemento.dataValues.Abogado.nombres,
+    apellidosAbogado: elemento.dataValues.Abogado.apellidos,
+    direccionAbogado: elemento.dataValues.Abogado.direccion,
+    // ciudadAbogado: elemento.dataValues.Abogado.ciudad,
+    celularAbogado: elemento.dataValues.Abogado.celular,
+    tipoCaso: elemento.dataValues.TipoDeCaso.descripcion,
   }));
 
 
