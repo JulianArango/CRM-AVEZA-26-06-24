@@ -85,14 +85,6 @@ const SearchBar = ({ onFilter }) => {
 
   return (
     <div className="searchbar">
-      {/* <input
-            placeholder="Tipo de caso"
-            type="text"
-            value={tipoCaso}
-            onKeyDown={handleKeyDown}
-            onChange={(e) => handleInputChange(e, setTipoCaso)}
-            className="inputfiltrocaso"
-          /> */}
       <select
         name="TipoDeCasoid"
         id="TipoDeCasoid"

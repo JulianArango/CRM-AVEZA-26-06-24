@@ -23,9 +23,9 @@ clientesRouter.post("/relacionarpaises", relacionarPaises);
 clientesRouter.post("/relacionardepartamentos", relacionarDepartamentos);
 clientesRouter.post("/crearciudades", crearCiudades);
 
-clientesRouter.put("/:cedulaCliente", postActualizaClientes); //Actualizar datos (uno a la vez)
+clientesRouter.put("/actualiza", postActualizaClientes); //Actualizar datos (uno a la vez)
 
-clientesRouter.delete("/:email", postEliminaClientes);
+clientesRouter.post("/elimina", postEliminaClientes);
 
 export default clientesRouter;
 

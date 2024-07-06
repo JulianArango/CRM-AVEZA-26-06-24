@@ -32,6 +32,7 @@ export const GET_PAGOS = "GET_PAGOS";
 export const CLEAN_USER = "CLEAN_USER";
 export const GET_ABOGADOS_TODOS = "GET_ABOGADOS_TODOS";
 export const MODIFICAR_DATOS = "MODIFICAR_DATOS";
+export const MODIFICAR_DATOS_ABOGADO = "MODIFICAR_DATOS_ABOGADO";
 export const SET_ABOGADO = "SET_ABOGADO";
 export const GET_CLIENTES_TODOS = "GET_CLIENTES_TODOS";
 
@@ -232,7 +233,7 @@ export const deleteCliente = (cedulaCliente) => {
   return async (dispatch) => {
     const data = await axios.post(endpoint, { cedulaCliente });
     console.log("url", endpoint);
-    console.log("cedula", cedulaAbogado);
+    // console.log("cedula", cedulaAbogado);
     return dispatch({
       type: DELETE_CLIENTE,
       payload: data,
@@ -437,14 +438,29 @@ export const getAbogadosTodos = () => {
     const endpoint = `/clientes/actualiza`;
 
     return async (dispatch) => {
-      const data = await axios.post(endpoint, payload);
+      const data = await axios.put(endpoint, payload);
       console.log("URL", endpoint, "PAYLOAD", payload);
+      window.alert("Se ha actualizado el cliente con éxito.");
       return dispatch({
         type: MODIFICAR_DATOS,
         payload: data,
       });
     };
-};
+  };
+
+    export const modificarDatosAbogado = (payload) => {
+      const endpoint = `/abogados/actualiza`;
+
+      return async (dispatch) => {
+        const data = await axios.put(endpoint, payload);
+        console.log("URL", endpoint, "PAYLOAD", payload);
+        window.alert("Se ha actualizado el abogado con éxito.");
+        return dispatch({
+          type: MODIFICAR_DATOS_ABOGADO,
+          payload: data,
+        });
+      };
+    };
   
 
 export const setAbogado = (abogado) => {

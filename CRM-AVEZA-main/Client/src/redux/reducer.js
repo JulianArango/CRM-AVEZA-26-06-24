@@ -41,6 +41,7 @@ import {
   GET_CONSULTAS,
   GET_CONSULTAS_TODOS,
   MODIFICAR_DATOS,
+  MODIFICAR_DATOS_ABOGADO,
   GET_PAGOS,
 } from "./actions";
 
@@ -221,6 +222,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         cliente: action.payload,
+      };
+    case MODIFICAR_DATOS_ABOGADO:
+      return {
+        ...state,
+        abogado: action.payload,
       };
     case GET_PAGOS:
       return {

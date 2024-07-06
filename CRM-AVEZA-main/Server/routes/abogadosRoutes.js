@@ -17,6 +17,6 @@ abogadosRouter.post("/", postAbogadosHandler);
 
 abogadosRouter.post("/delete", deleteAbogadoHandler);
 
-abogadosRouter.post("/actualiza", postActualizaAbogado);
+abogadosRouter.put("/actualiza", postActualizaAbogado);
 
 export default abogadosRouter;

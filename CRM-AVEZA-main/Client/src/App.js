@@ -25,7 +25,6 @@ import RecordatorioContrasena from "./components/recordatoriocontrasena";
 import axios from "axios";
 import logo from "./img/logoAveza.png";
 import PDF from "./components/PDF";
-import LitigiosPorCliente from "./components/litigiosporcliente";
 import Autorizacion from "./components/autorizacion";
 import Insolvencia from "./components/insolvencia";
 import Poder from "./components/poder";
@@ -193,7 +192,6 @@ function App() {
         />
         <Route path="documentoslegales" element={<DocumentosLegales />} />
         <Route path="contrato" element={<Contrato />} />
-        <Route path="litigiosporcliente" element={<LitigiosPorCliente />} />
         <Route path="clientes" element={<Clientes />} />
         <Route path="casos" element={<Casos />} />
         <Route path="casos/:id" element={<DetailCasos />} />

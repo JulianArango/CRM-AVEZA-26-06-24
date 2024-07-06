@@ -3,28 +3,28 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../Mystyles";
 import "../detail/detail.css";
-import logo from "../../img/logoAveza.png";
-import {
-  getByIdAbogado,
-  getByIdCliente,
-  setAbogado,
-  setCliente,
-} from "../../redux/actions";
-import { deleteAbogado, deleteCliente } from "../../redux/actions";
+import { deleteAbogado, deleteCliente, modificarDatos, modificarDatosAbogado} from "../../redux/actions";
 
 const Detail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const source = useSelector((state) => state.source);
 
-  const datos = useSelector((state) =>
-    source === "abogado" ? state.abogado : state.cliente
-  );
+  // const datos = useSelector((state) =>
+  //   source === "abogado" ? state.abogado : state.cliente
+  // );
+  console.log('Source:', source)
+  const cliente = JSON.parse(localStorage.getItem("cliente"));
+  console.log('Cliente local:', cliente)
+
+  const abogado = JSON.parse(localStorage.getItem("abogado"));
+  console.log("Abogado local:", abogado);
+
+  const datos = source === "abogado" ? abogado:cliente;
 
   console.log("Datos cliente:", datos);
-  const cedula =
+  const Cedula =
     source === "abogado" ? datos.cedulaAbogado : datos.cedulaCliente;
-  const tarjetaProf = source === "abogado" ? datos.tarjetaProf : null;
 
   const [userDataDetail, setUserDataDetail] = useState({
     email: "",
@@ -38,7 +38,7 @@ const Detail = () => {
     departamento: "",
     // password: "",
     comentarios: "",
-    cedula: cedula,
+    cedulanew: "",
   });
 
   useEffect(() => {
@@ -48,13 +48,15 @@ const Detail = () => {
         email: datos.email,
         celular: datos.celular,
         ciudad: datos.Ciudads[0].nombre_ciudad,
+        ciudad_anterior: datos.Ciudads[0].codigo_ciudad,
         departamento: datos.Ciudads[0].Departamentos[0].nombre_departamento,
         tarjetaProf: datos.tarjetaProf,
         nombres: datos.nombres,
         apellidos: datos.apellidos,
         direccion: datos.direccion,
         comentarios: "",
-        cedula: cedula,
+        cedulanew: datos.cedulaAbogado,
+        cedula_anterior: datos.cedulaAbogado,
       });
     } else {
       setUserDataDetail({
@@ -62,13 +64,15 @@ const Detail = () => {
         email: datos.email,
         celular: datos.celular,
         ciudad: datos.Ciudads[0].nombre_ciudad,
+        ciudad_anterior: datos.Ciudads[0].codigo_ciudad,
         departamento: datos.Ciudads[0].Departamentos[0].nombre_departamento,
         nombres: datos.nombres,
         tarjetaProf: "",
         apellidos: datos.apellidos,
         direccion: datos.direccion,
         comentarios: datos.comentarios,
-        cedula: cedula,
+        cedulanew: datos.cedulaCliente,
+        cedula_anterior: datos.cedulaCliente,
       });
     }
   }, [dispatch, source]);
@@ -80,8 +84,8 @@ const Detail = () => {
       );
 
       if (isConfirmed) {
-        dispatch(deleteAbogado(cedula));
-        console.log("cedula", cedula);
+        dispatch(deleteAbogado(Cedula));
+        console.log("cedula", Cedula);
         navigate("/abogados");
       }
     } else {
@@ -90,13 +94,14 @@ const Detail = () => {
       );
 
       if (isConfirmed) {
-        dispatch(deleteCliente(cedula));
+        dispatch(deleteCliente(Cedula));
         navigate("/clientes");
       }
     }
   };
 
   const handleUpdateDetail = (e) => {
+    e.preventDefault();
     setUserDataDetail({
       ...userDataDetail,
       [e.target.name]: e.target.value, // Sintaxis ES6 para actualizar la key correspondiente
@@ -105,8 +110,17 @@ const Detail = () => {
 
   const submitUpdateDetail = (e) => {
     e.preventDefault();
-    registroCliente(userDataRegistro);
+    if (source === "abogado") {
+      dispatch(modificarDatosAbogado(userDataDetail));
+      window.localStorage.setItem("abogado", JSON.stringify(userDataDetail));
+     } else {
+      
+      dispatch(modificarDatos(userDataDetail));
+      window.localStorage.setItem("cliente", JSON.stringify(userDataDetail));
+    }
   };
+
+  console.log("Nuevos Datos cliente:", userDataDetail);
 
   return (
     <div className="contenedordetail">
@@ -137,7 +151,7 @@ const Detail = () => {
 
           {datos?.tarjetaProf ? (
             <Link to="/abogados">
-              <Button >
+              <Button>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="1.2em"
@@ -158,7 +172,7 @@ const Detail = () => {
             </Link>
           ) : (
             <Link to="/clientes">
-              <Button >
+              <Button>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="1.2em"
@@ -195,31 +209,44 @@ const Detail = () => {
         <div className="info">
           <div className="personal">
             <div className="infodetail">
-              <label htmlFor="numerocedula" className="labeldetail">
+              <label htmlFor="cedula" className="labeldetail">
                 Numero de cédula:
               </label>
               <input
                 type="number"
                 className="cajadetail"
-                name="cedulaAbogado"
+                name="cedulanew"
                 id="cedula"
-                value={userDataDetail.cedula}
+                value={userDataDetail.cedulanew}
                 onChange={handleUpdateDetail}
               />
             </div>
             <div className="infodetail">
-              <label htmlFor="numerocedula" className="labeldetail">
+              <label htmlFor="celular" className="labeldetail">
                 Celular:
               </label>
               <input
                 type="number"
                 className="cajadetail"
-                name="cedulaAbogado"
-                id="cedula"
+                name="celular"
+                id="celular"
                 value={userDataDetail.celular}
                 onChange={handleUpdateDetail}
               />
             </div>
+            {/* <div className="infodetail">
+              <label htmlFor="cedula" className="labeldetail">
+                Numero de cédula:
+              </label>
+              <input
+                type="number"
+                className="cajadetail"
+                name="cedula"
+                id="cedula"
+                value={userDataDetail.cedula}
+                onChange={handleUpdateDetail}
+              />
+            </div> */}
             <div className="infodetail">
               <label htmlFor="email" className="labeldetail">
                 Correo:
@@ -260,7 +287,7 @@ const Detail = () => {
               />
             </div>
             <div className="infodetail">
-              <label htmlFor="ciudad" className="labeldetail">
+              <label htmlFor="departamento" className="labeldetail">
                 Departamento:
               </label>
               <input
@@ -277,11 +304,12 @@ const Detail = () => {
                 <label htmlFor="comentarios" className="labeldetail">
                   Comentarios:
                 </label>
-                <input
-                  type="text"
+                <textarea
                   className="cajadetail"
-                  name="departamento"
-                  id="departamento"
+                  cols="30"
+                  rows="5"
+                  name="comentarios"
+                  id="comentarios"
                   value={userDataDetail.comentarios}
                   onChange={handleUpdateDetail}
                 />

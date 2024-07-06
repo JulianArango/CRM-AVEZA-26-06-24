@@ -11,7 +11,7 @@ const getClienteById = async (cedulaCliente)=>{
       include: [
         {
           model: Ciudad,
-          attributes: ["nombre_ciudad"],
+          attributes: ["nombre_ciudad","codigo_ciudad"],
           through: { attributes: [] },
           include: [
             {

@@ -1,49 +1,89 @@
 import { models } from "../../DB.js";
+import { codigoCiudades } from "../../utils/codigoCiudades.js";
 
-const { Cliente } = models;
+const { Cliente, Ciudad, Pais, Departamento } = models;
 
 const actualizaCliente = async (
-  cedulaCliente,
+  cedula,
   nombres,
   apellidos,
   email,
   celular,
   direccion,
-  valor_pretensiones,
-  aceptacion_cotizacion,
-  tiene_contrato,
-  honorarios,
-  forma_de_pago,
+  ciudad,
+  ciudad_anterior,
   comentarios,
+  cedula_anterior
   // password,
 ) => {
-  // console.log('imagen',imagen)
+  const cedulaCliente = cedula;
+  console.log('Cedula cliente controller:', cedulaCliente)
+  console.log("Cedula anterior controller:", cedula_anterior);
+    const ciudadfilter = codigoCiudades.filter(
+      (Ciudad) => Ciudad.nombre_ciudad === ciudad.toUpperCase()
+    );
+    console.log("Ciudad filter:", ciudadfilter);
+
+    const codigo_ciudad = ciudadfilter[0].codigo_ciudad;
+    console.log("Codigo ciudad:", codigo_ciudad);
+
+  console.log("ciudad:", ciudadfilter);
+  
+  const clienteActualizar = await Cliente.findByPk(cedula_anterior);
+
+  clienteActualizar.removeCiudad(ciudad_anterior);
 
   const [updateCount, updateClient] = await Cliente.update(
-    {
+    { cedulaCliente: cedulaCliente,
       nombres: nombres,
       apellidos: apellidos,
       email: email,
       celular: celular,
       direccion: direccion,
-      numero: numero,
-      valor_pretensiones: valor_pretensiones,
-      aceptacion_cotizacion: aceptacion_cotizacion,
-      tiene_contrato: tiene_contrato,
-      honorarios: honorarios,
-      forma_de_pago: forma_de_pago,
       comentarios: comentarios
       // password: password,
     },
     {
       where: {
-        cedulaCliente: cedulaCliente,
+        cedulaCliente: cedula_anterior,
       },
     }
   );
+  
+      const consulta = {
+        where: {
+          cedulaCliente: parseInt(cedulaCliente),
+          activo: true,
+        },
+        include: [
+          {
+            model: Ciudad,
+            attributes: ["nombre_ciudad", "codigo_ciudad"],
+            through: { attributes: [] },
+            include: [
+              {
+                model: Departamento,
+                attributes: ["nombre_departamento"],
+                through: { attributes: [] },
+                include: [
+                  {
+                    model: Pais,
+                    attributes: ["nombre_pais"],
+                    through: { attributes: [] },
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      };
+
+      const nuevoCliente = await Cliente.findOne(consulta);
+  nuevoCliente.addCiudad(codigo_ciudad);
 
   if (updateCount > 0) {
-    return "Actualizado";
+
+    return nuevoCliente;
   } else {
     return "";
   }

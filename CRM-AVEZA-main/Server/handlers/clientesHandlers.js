@@ -111,31 +111,35 @@ const postEliminaClientes = async (req, res) => {
 };
 
 const postActualizaClientes = async (req, res) => {
+
   const {
-    cedulaCliente,
-    nombre,
-    apellido,
-    correo,
-    telefono,
-    calle,
-    numero,
-    codigoPostal,
+    cedulanew,
+    nombres,
+    apellidos,
+    email,
+    celular,
+    direccion,
     ciudad,
-    pais,
+    ciudad_anterior,
+    comentarios,
+    cedula_anterior,
   } = req.body;
+  
+  const cedula = cedulanew;
 
   try {
+    console.log('Cedula anterior handler:',cedula_anterior)
     const response = await actualizaCliente(
-      cedulaCliente,
-      nombre,
-      apellido,
-      correo,
-      telefono,
-      calle,
-      numero,
-      codigoPostal,
+      cedula,
+      nombres,
+      apellidos,
+      email,
+      celular,
+      direccion,
       ciudad,
-      pais,
+      ciudad_anterior,
+      comentarios,
+      cedula_anterior
     );
     if (response) res.status(200).json(response);
     else res.status(204).json("No se actualizo el cliente");

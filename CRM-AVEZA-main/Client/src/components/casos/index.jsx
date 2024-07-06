@@ -75,17 +75,17 @@ function Casos() {
 
   const isLoading = !casos || !casos.datosPagina;
 
-  // const userCasos =
-  //   !isLoading &&
-  //   (user.administrador
-  //     ? casos.datosPagina
-  //     : casos.datosPagina.filter(
-  //         (caso) =>
-  //           (caso.nombreCliente === user.nombre &&
-  //             caso.apellidoCliente === user.apellido) ||
-  //           (caso.nombreabogado === user.nombre &&
-  //             caso.apellidoAbogado === user.apellido)
-  //       ));
+  const userCasos =
+    !isLoading &&
+    (user.administrador
+      ? casos.datosPagina
+      : casos.datosPagina.filter(
+          (caso) =>
+            (caso.nombresCliente === user.nombres &&
+              caso.apellidosCliente === user.apellidos) ||
+            (caso.nombresabogado === user.nombres &&
+              caso.apellidosAbogado === user.apellidos)
+        ));
  console.log('Casos: ', casos)
   return (
     <div className="contenedorcasos">
@@ -95,7 +95,7 @@ function Casos() {
       <br />
       <div className="menucasos">
         <SearchBar onFilter={handleFilter} />
-        {/* {user.administrador === true || user.cedulaAbogado ? ( */}
+        {user.administrador === true || user.cedulaAbogado ? (
         <Link to="/casos/crearcaso" className="botoncrearcaso">
           <Button>
             {" "}
@@ -110,7 +110,7 @@ function Casos() {
             Crear caso
           </Button>
         </Link>
-        {/* ) : null} */}
+        ) : null}
         {filterApplied && (
           <Button onClick={handleVerTodosClick}>Ver todos</Button>
         )}
@@ -146,7 +146,7 @@ function Casos() {
           )}
           <br />
           <div className="divcasos">
-            {casos.datosPagina.map((caso) => (
+            {userCasos.datosPagina.map((caso) => (
               <TarjetaCaso caso={caso} key={caso.id} />
             ))}
           </div>

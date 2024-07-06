@@ -45,7 +45,7 @@ const RegistroCliente = () => {
         <br />
         <br />
         <div className="inforegistrocliente">
-          <label for="nombre" className="labelregistrodecliente">
+          <label htmlFor="nombre" className="labelregistrodecliente">
             Nombre(s):
           </label>
           <input
@@ -56,7 +56,7 @@ const RegistroCliente = () => {
             value={userDataRegistro.nombres}
             onChange={handleChangeRegistro}
           />
-          <label for="apellidos" className="labelregistrodecliente">
+          <label htmlFor="apellidos" className="labelregistrodecliente">
             Apellido(s):
           </label>
           <input
@@ -71,7 +71,7 @@ const RegistroCliente = () => {
         <br />
         <br />
         <div className="inforegistrocliente">
-          <label for="cedula" className="labelregistrodecliente">
+          <label htmlFor="cedula" className="labelregistrodecliente">
             Numero de cédula:
           </label>
           <input
@@ -83,7 +83,7 @@ const RegistroCliente = () => {
             onChange={handleChangeRegistro}
           />
 
-          <label for="telefono" className="labelregistrodecliente">
+          <label htmlFor="telefono" className="labelregistrodecliente">
             {" "}
             Celular:
           </label>
@@ -100,7 +100,7 @@ const RegistroCliente = () => {
         <br />
         <br />
         <div className="inforegistrocliente">
-          <label for="email" className="labelregistrodecliente">
+          <label htmlFor="email" className="labelregistrodecliente">
             Email:
           </label>
           <input
@@ -111,7 +111,7 @@ const RegistroCliente = () => {
             value={userDataRegistro.email}
             onChange={handleChangeRegistro}
           />
-          <label for="direccion" className="labelregistrodecliente">
+          <label htmlFor="direccion" className="labelregistrodecliente">
             Dirección:
           </label>
           <input
@@ -126,7 +126,7 @@ const RegistroCliente = () => {
         <br />
         <br />
         <div className="inforegistrocliente">
-          <label for="ciudad" className="labelregistrodecliente">
+          <label htmlFor="ciudad" className="labelregistrodecliente">
             Ciudad:
           </label>
           <input
@@ -140,7 +140,7 @@ const RegistroCliente = () => {
         </div>
         <div className="comentarios">
           <br />
-          <label for="comentarios" className="labelregistrodecliente">
+          <label htmlFor="comentarios" className="labelregistrodecliente">
             Comentarios
           </label>
           <br />

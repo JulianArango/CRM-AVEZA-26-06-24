@@ -1,7 +1,6 @@
 import "./payments.css";
 import { Link } from "react-router-dom";
 // const PUBLIC_KEY = import.meta.env.VITE_MERCADOPAGO_PUBLIC_KEY;
-// import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import { initMercadoPago } from "@mercadopago/sdk-react";
 import { useEffect, useState } from "react";
 import { crearPago } from "../../handlers/crearPago";
@@ -73,6 +72,8 @@ function Payments() {
     };
     fetchData();
   }, [dispatch]);
+
+  console.log("Pagos:", pagos);
 console.log('Casos para pagos:',pages)
   function formatearFecha(fechaISO) {
     const fecha = new Date(fechaISO);
@@ -84,16 +85,16 @@ console.log('Casos para pagos:',pages)
 
   const fechaFormateada = formatearFecha(pagos?.fechaDeAprobacion);
 
-  const userCasos = pages.datosPagina.filter(
-    (caso) =>
-      caso.nombreCliente === user.nombres &&
-      caso.apellidoCliente === user.apellidos
-  );
+  // const userCasos = pages.datosPagina.filter(
+  //   (caso) =>
+  //     caso.nombresCliente === user.nombres &&
+  //     caso.apellidosCliente === user.apellidos
+  // );
 
   return (
     <div className="contenedorpagos">
-      {/* {user.cedulaCliente ? ( */}
-      {/* <div className=""> */}
+      {user.cedulaCliente ? (
+      <div className="">
         <h1 className="encabezadopagos">
           Realizar un pago
         </h1>
@@ -149,9 +150,9 @@ console.log('Casos para pagos:',pages)
 
         <div id="wallet_container"></div>
         <br />
-      {/* </div> */}
+      </div>
 
-      {/* ) : (
+      ) : (
         <div className="grid grid-cols-3 gap-8">
           {loadingState ? (
             <div className="loading-container">
@@ -184,7 +185,7 @@ console.log('Casos para pagos:',pages)
             ))
           )}
         </div>
-      )} */}
+      )}
     </div>
   );
 }

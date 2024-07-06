@@ -83,39 +83,36 @@ const deleteAbogadoHandler = async (req, res) => {
 };
 
 const postActualizaAbogado = async (req, res) => {
+  console.log('Body actualiza abogado: ', req.body)
   const {
-    cedulaAbogado,
-    matricula,
-    nombre,
-    apellido,
-    correo,
-    telefono,
-    calle,
-    numero,
-    codigoPostal,
+    cedulanew,
+    tarjetaProf,
+    nombres,
+    apellidos,
+    email,
+    celular,
+    direccion,
     ciudad,
-    pais,
-    imagen,
-    password,
-    administrador,
+    ciudad_anterior,
+    comentarios,
+    cedula_anterior,
   } = req.body;
+
+  const cedulaAbogado = cedulanew;
 
   try {
     const response = await actualizaAbogado(
       cedulaAbogado,
-      matricula,
-      nombre,
-      apellido,
-      correo,
-      telefono,
-      calle,
-      numero,
-      codigoPostal,
+      tarjetaProf,
+      nombres,
+      apellidos,
+      email,
+      celular,
+      direccion,
       ciudad,
-      pais,
-      imagen,
-      password,
-      administrador,
+      ciudad_anterior,
+      comentarios,
+      cedula_anterior
     );
     if (response) res.status(200).json(response);
     else res.status(204).json("No se actualizo el abogado");
