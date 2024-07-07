@@ -40,6 +40,8 @@ import Consultas from "./components/consultas/consultas.jsx";
 import AllConsultas from "./components/allConsultas/allConsultas.jsx";
 import Payments from "./components/payments/payments.component.jsx";
 import { crearUsuario } from "./handlers/crearUsuario.jsx";
+import Status from "../src/components/status";
+
 // export const URL = "http://localhost:3001/crmAveza/";
 
 // const URL = import.meta.env.VITE_URL;
@@ -168,14 +170,8 @@ function App() {
         <Route path="poder" element={<Poder />} />
         <Route path="PDF" element={<PDF />} />
         <Route path="insolvencia" element={<Insolvencia />} />
-        <Route
-          path="registrocliente"
-          element={<RegistroCliente />}
-        />
-        <Route
-          path="registroabogado"
-          element={<RegistroAbogado/>}
-        />
+        <Route path="registrocliente" element={<RegistroCliente />} />
+        <Route path="registroabogado" element={<RegistroAbogado />} />
         <Route path="detail" element={<Detail />} />
         <Route
           path="previsualizarcontrato"
@@ -199,6 +195,7 @@ function App() {
         <Route path="abogados" element={<Abogados />} />
         <Route path="verconsultas" element={<AllConsultas />} />
         <Route path="pagos" element={<Payments />} />
+        <Route path="pagos/status" element={<Status />} />
       </Routes>
     </div>
   );

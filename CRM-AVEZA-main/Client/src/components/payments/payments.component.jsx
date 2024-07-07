@@ -74,7 +74,8 @@ function Payments() {
   }, [dispatch]);
 
   console.log("Pagos:", pagos);
-console.log('Casos para pagos:',pages)
+  console.log('Casos para pagos:', pages)
+  console.log('User:', user)
   function formatearFecha(fechaISO) {
     const fecha = new Date(fechaISO);
     const dia = String(fecha.getDate()).padStart(2, "0");
@@ -85,11 +86,11 @@ console.log('Casos para pagos:',pages)
 
   const fechaFormateada = formatearFecha(pagos?.fechaDeAprobacion);
 
-  // const userCasos = pages.datosPagina.filter(
-  //   (caso) =>
-  //     caso.nombresCliente === user.nombres &&
-  //     caso.apellidosCliente === user.apellidos
-  // );
+  const userCasos = pages.datosPagina.filter(
+    (caso) =>
+      caso.nombresCliente === user.nombres &&
+      caso.apellidosCliente === user.apellidos
+  );
 
   return (
     <div className="contenedorpagos">
@@ -104,7 +105,8 @@ console.log('Casos para pagos:',pages)
         <div className="inputpago">
           <label htmlFor="unit_price" className="labelpagos">
             Valor a pagar:
-          </label>
+            </label>
+            {/* <br /> */}
           <input
             name="unit_price"
             type="number"
@@ -131,7 +133,7 @@ console.log('Casos para pagos:',pages)
                 </option>
                 {userCasos.map((caso) => (
                   <option key={caso.id} value={caso.id} className="cajaspago">
-                    {`${caso.descripcion} - ${caso.apellidosAbogado}/${caso.apellidoCliente}`}
+                    {`${caso.descripcion} - ${caso.apellidosAbogado}/${caso.apellidosCliente}`}
                   </option>
                 ))}
               </select>

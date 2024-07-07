@@ -52,10 +52,10 @@ const crearOrden = async (item) => {
       },
       back_urls: {
         success: "https://crm-aveza-kappa.vercel.app/pagos/status",
-        failure: "https://proyecto-final-develop.vercel.app/#/home",
-        pending: "https://proyecto-final-develop.vercel.app/#/home",
+        failure: "https://crm-aveza-kappa.vercel.app/pagos",
+        pending: "https://crm-aveza-kappa.vercel.app/pagos",
       },
-      notification_url: "https://legaltech-develop.onrender.com/pagos/webhook",
+      notification_url: "https://crm-aveza.onrender.com/pagos/webhook",
       auto_return: "approved",
     };
 

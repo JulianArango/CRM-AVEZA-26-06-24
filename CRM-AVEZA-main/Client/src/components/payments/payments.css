@@ -31,3 +31,11 @@
     flex-direction: column;
     justify-content: center;
 }
+
+.inputpago{
+  display: flex;
+  flex-direction: column;
+}
+/* .labelpagos{
+  margin-bottom: 10px;
+} */

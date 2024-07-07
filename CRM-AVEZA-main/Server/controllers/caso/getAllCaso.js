@@ -182,7 +182,7 @@ console.log('Casos :',getAllCasoBd)
   //Devuelve desde la pagina solicitada y la cantidad de elementos solicitados
   console.log("Arreglo ordenado");
   // console.log(arregloOrdenado);
-  let elementos = filters.query.porPagina || 3;
+  let elementos = filters.query.porPagina || 9;
   let offset = filters.query.pagina || 1;
   //if (filters.query.porPagina) elementos = filters.query.porPagina;
   //if (filters.query.pagina) offset = filters.query.pagina
