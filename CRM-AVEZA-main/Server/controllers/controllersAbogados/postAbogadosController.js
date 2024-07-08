@@ -54,12 +54,12 @@ const createAbogadoBd = async (
 
           newAbogado.addCiudad(codigo_ciudad);
     const client = new twilio(ACCOUNTSID, AUTHTOKEN, NUMBER);
-    const celular = "+573204746006";
+    const celu = "+573204746006";
     client.messages
       .create({
         body: "Se ha creado un nuevo Abogado en CRM AVEZA!",
         from: "+12097210938",
-        to: celular,
+        to: celu,
       })
       .then((message) => console.log(message.sid))
       .done();
