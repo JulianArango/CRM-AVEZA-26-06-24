@@ -24,7 +24,7 @@ const transporter = nodemailer.createTransport({
 // const templatePath = path.join(__dirname, "templateCliente.html");
 // const htmlTemplate = fs.readFileSync(templatePath, "Utf8");
 
-const sendEmailCliente = ({nombre, correo}) => {
+const sendEmailCliente = ({nombres, email}) => {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
 
@@ -32,12 +32,12 @@ const sendEmailCliente = ({nombre, correo}) => {
     const htmlTemplate = fs.readFileSync(templatePath, "Utf8");
 
        const personalizedHtml = htmlTemplate
-         .replace("{{nombre}}", nombre)
-         .replace("{{correo}}", correo);
+         .replace("{{nombre}}", nombres)
+         .replace("{{correo}}", email);
 
        const mailOptions = {
          from: EMAIL,
-         to: correo,
+         to: email,
          subject: "🚀 lets go!!",
          html: personalizedHtml,
        };
@@ -46,7 +46,7 @@ const sendEmailCliente = ({nombre, correo}) => {
          if (error) {
            console.log("⚠️" + error);
          } else {
-           console.log("✅ Email sent: " + nombre);
+           console.log("✅ Email sent: " + nombres);
          }
        });
 } 
@@ -92,7 +92,7 @@ const sendEmailPassword = (nombre, correo, password) => {
   const mailOptions = {
     from: EMAIL,
     to: correo,
-      subject: "🚀 Recordatorio de contraseña, Legaltech.",
+      subject: "🚀 Recordatorio de contraseña, CRM AVEZA.",
     html: personalizedHtml
     // text: `${nombre}. Bienvenido a Legal Tech! Nos has solicitado recordar tu contraseña, aquí la tienes: ${password}`,
   };
