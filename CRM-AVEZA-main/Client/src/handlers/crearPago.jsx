@@ -1,12 +1,13 @@
 import axios from "axios";
 
 export async function crearPago(data) {
-  const { description, quantity, unit_price } = data;
+  const { description, quantity, unit_price, idCaso } = data;
   console.log("data del post pago:", data);
 
   const URL = "/pagos/crearorden";
   try {
-   const response = await axios.post(URL, {
+    const response = await axios.post(URL, {
+      id: idCaso,
       description: description,
       quantity: quantity,
       unit_price: unit_price,
