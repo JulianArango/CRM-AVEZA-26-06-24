@@ -53,16 +53,16 @@ const createAbogadoBd = async (
     });
 
           newAbogado.addCiudad(codigo_ciudad);
-    // const client = new twilio(ACCOUNTSID, AUTHTOKEN, NUMBER);
-    // const celular = "+573204746006";
-    // client.messages
-    //   .create({
-    //     body: "Se ha creado un nuevo Abogado en Legaltech!",
-    //     from: "+12097210938",
-    //     to: celular,
-    //   })
-    //   .then((message) => console.log(message.sid))
-    //   .done();
+    const client = new twilio(ACCOUNTSID, AUTHTOKEN, NUMBER);
+    const celular = "+573204746006";
+    client.messages
+      .create({
+        body: "Se ha creado un nuevo Abogado en CRM AVEZA!",
+        from: "+12097210938",
+        to: celular,
+      })
+      .then((message) => console.log(message.sid))
+      .done();
     return newAbogado;
   } catch (error) {
     console.log(error);
