@@ -38,7 +38,7 @@ const sendEmailCliente = ({nombres, email}) => {
        const mailOptions = {
          from: EMAIL,
          to: email,
-         subject: "🚀 lets go!!",
+         subject: "🚀 Bienvenido a CRM AVEZA!!",
          html: personalizedHtml,
        };
 
