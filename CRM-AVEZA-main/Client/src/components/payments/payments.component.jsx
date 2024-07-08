@@ -12,7 +12,7 @@ import { Button } from "../Mystyles";
 
 function Payments() {
   // initMercadoPago(PUBLIC_KEY);
-  initMercadoPago("APP_USR-b26ba8db-fbe9-410e-af81-4a8481738a84", {
+  initMercadoPago("APP_USR-75483c46-733c-4a1a-99fd-9ae437624e52", {
     locale: "es-CO",
   });
 
