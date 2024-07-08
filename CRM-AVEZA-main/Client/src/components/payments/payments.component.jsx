@@ -85,12 +85,21 @@ function Payments() {
   }
 
   const fechaFormateada = formatearFecha(pagos?.fechaDeAprobacion);
-
-  const userCasos = pages.datosPagina.filter(
-    (caso) =>
-      caso.nombresCliente === user.nombres &&
-      caso.apellidosCliente === user.apellidos
-  );
+  
+  if (pages.datosPagina) {
+    
+    var userCasos = pages.datosPagina.filter(
+      (caso) =>
+        caso.nombresCliente === user.nombres &&
+        caso.apellidosCliente === user.apellidos
+    );
+  } else {
+    var userCasos = pages.filter(
+      (caso) =>
+        caso.nombresCliente === user.nombres &&
+        caso.apellidosCliente === user.apellidos
+    );
+  }
 
   return (
     <div className="contenedorpagos">
@@ -170,8 +179,8 @@ function Payments() {
                   Caso: n°{pago?.idCaso} {pago?.Caso?.descripcion}
                 </h3>
                 <p>
-                  <strong>Cliente:</strong> {pago?.Caso?.Cliente?.apellido}{" "}
-                  {pago?.Caso?.Cliente?.nombre}
+                  <strong>Cliente:</strong> {pago?.Caso?.Cliente?.apellidos}{" "}
+                  {pago?.Caso?.Cliente?.nombres}
                 </p>
                 <p>
                   <strong>Fecha:</strong>{" "}

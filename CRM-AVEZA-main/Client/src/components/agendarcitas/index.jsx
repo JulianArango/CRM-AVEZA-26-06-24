@@ -150,7 +150,7 @@ if (isLoading || !pages || !pages.datosPagina) {
                       value={caso.id}
                       className="inputCrearCita"
                     >
-                      {`${caso.tipoCaso} - ${caso.apellidosAbogado}/${caso.apellidoCliente}`}
+                      {`${caso.tipoCaso} - ${caso.apellidosAbogado}/${caso.apellidosCliente}`}
                     </option>
                   ))}
                 </select>
