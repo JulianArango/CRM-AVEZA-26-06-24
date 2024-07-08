@@ -15,7 +15,7 @@ const obtenerPago = async (idPago) => {
         },
       }
     );
-      // console.log('Respuesta obtener pago: ',data)
+      console.log("Respuesta obtener pago: ", data.additional_info);
     const idCaso = data.additional_info.items[0].id;
     console.log("idCaso: ", data.additional_info.items[0].id);
     const orderId = data.order.id;
