@@ -48,6 +48,8 @@ const createCaso = async (
       mensaje: "Tipo de Caso no encontrado o Tipo de Caso eliminado",
     });
   const fechaUTC = moment(fecha).utc().toDate();
+
+  console.log('Radicado controller:',radicado)
   const newCaso = await Caso.create({
     radicado: radicado,
     fecha: fechaUTC,

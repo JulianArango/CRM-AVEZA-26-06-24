@@ -17,6 +17,8 @@ const createCasosHandler = async (req, res) => {
   } = req.body;
   //const fecha_caso= new Date(fecha)
   console.log(
+    "radicado",
+    radicado,
     "cedulaCliente",
     cedulaCliente,
     "cedulaAbogado",
