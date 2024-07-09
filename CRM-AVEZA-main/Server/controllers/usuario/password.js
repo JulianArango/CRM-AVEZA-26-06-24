@@ -11,19 +11,11 @@ const getPassword = async (email) => {
     },
   });
   console.log("Password usuario: ", user.password);
-  // if (!user) {
-  //   const user = await Cliente.findOne({
-  //     where: {
-  //       email: email,
-  //     },
-  //   });
-  //   console.log("Password cliente: ", user.password);
+
     if (!user) throw new Error("Usuario no encontrado");
-    sendEmailPassword(user.nombre, user.email,user.password);
+    sendEmailPassword(user.nombres, user.email,user.password);
     return user
-  // }
-  // sendEmailPassword(user.nombre, user.email, user.password);
-  // return user;
+
 };
 
 export { getPassword };
