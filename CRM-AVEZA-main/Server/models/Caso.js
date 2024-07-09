@@ -9,6 +9,9 @@ export default (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
+      radicado: {
+        type: DataTypes.BIGINT,
+      },
       fecha: {
         type: DataTypes.DATE,
         allowNull: false,

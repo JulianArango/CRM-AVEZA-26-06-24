@@ -4,6 +4,7 @@ import moment from 'moment'
 const { Caso, Cliente, Abogado, TipoDeCaso } = models
 
 const createCaso = async (
+  radicado,
   cedulaCliente,
   cedulaAbogado,
   fecha,
@@ -48,6 +49,7 @@ const createCaso = async (
     });
   const fechaUTC = moment(fecha).utc().toDate();
   const newCaso = await Caso.create({
+    radicado: radicado,
     fecha: fechaUTC,
     descripcion: descripcion,
     TipoDeCasoTipoDeCasoid: TipoDeCasoid,

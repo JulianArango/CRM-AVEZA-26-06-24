@@ -5,6 +5,7 @@ import { getCasoId } from "../controllers/caso/getCasoById.js";
 
 const createCasosHandler = async (req, res) => {
   const {
+    radicado,
     cedulaCliente,
     cedulaAbogado,
     fecha,
@@ -30,6 +31,7 @@ const createCasosHandler = async (req, res) => {
 
   try {
     const response = await createCaso(
+      parseInt(radicado),
       parseInt(cedulaCliente),
       parseInt(cedulaAbogado),
       fecha,

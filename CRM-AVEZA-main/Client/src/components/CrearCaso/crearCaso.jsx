@@ -153,31 +153,6 @@ function CrearCaso() {
               onChange={handleChangeRegistro}
             />
           </div>
-          {/* <div className="inputcrearcaso">
-            <label htmlFor="nombreAbogado" className="labelcrearcaso">
-              Selecciona el abogado:
-            </label>
-            <select
-              name="nombreAbogado"
-              id="nombreAbogado"
-              className="cajacrearcaso"
-              onChange={(event) => handleChangeRegistro(event)}
-            >
-              <option value="" className="tipodecaso">
-                Abogados
-              </option>
-              {abogados.map((abogado) => (
-                <option
-                  key={tipo.TipoDeCasoid}
-                  value={tipo.TipoDeCasoid}
-                  className="opcionestipodecaso"
-                >
-                  {tipo.descripcion}
-                </option>
-              ))}
-            </select>
-          </div> */}
-
           <div className="inputcrearcaso">
             <label htmlFor="Abogado" className="labelcrearcaso">
               Selecciona el abogado:
@@ -251,6 +226,17 @@ function CrearCaso() {
             name="valor_pretensiones"
             id="valorpretensiones"
             value={userDataRegistro.valor_pretensiones}
+            onChange={handleChangeRegistro}
+          />
+          <label htmlFor="radicado" className="labelcrearcaso">
+            N° Radicado juzgado:
+          </label>
+          <input
+            type="number"
+            className="cajacrearcaso"
+            name="radicado"
+            id="radicado"
+            value={userDataRegistro.radicado}
             onChange={handleChangeRegistro}
           />
           <label htmlFor="honorarios" className="labelcrearcaso">
