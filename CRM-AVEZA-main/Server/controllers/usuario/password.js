@@ -7,22 +7,22 @@ const getPassword = async (email) => {
   console.log('Email get password: ',email)
   const user = await Abogado.findOne({
     where: {
-      correo: email,
+      email: email,
     },
   });
-  console.log("Password cliente: ", user.password);
+  console.log("Password abogado: ", user.password);
   if (!user) {
     const user = await Cliente.findOne({
       where: {
-        correo: email,
+        email: email,
       },
     });
-    // console.log("Password abogado: ", user.password);
+    console.log("Password cliente: ", user.password);
     if (!user) throw new Error("Usuario no encontrado");
-    sendEmailPassword(user.nombre, user.correo,user.password);
+    sendEmailPassword(user.nombre, user.email,user.password);
     return user
   }
-  sendEmailPassword(user.nombre, user.correo, user.password);
+  sendEmailPassword(user.nombre, user.email, user.password);
   return user;
 };
 
