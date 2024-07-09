@@ -10,7 +10,7 @@ export default (sequelize) => {
         autoIncrement: true,
       },
       radicado: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.STRING,
       },
       fecha: {
         type: DataTypes.DATE,

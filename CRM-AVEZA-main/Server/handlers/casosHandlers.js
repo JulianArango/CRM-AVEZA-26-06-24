@@ -33,7 +33,7 @@ const createCasosHandler = async (req, res) => {
 
   try {
     const response = await createCaso(
-      parseInt(radicado),
+      radicado,
       parseInt(cedulaCliente),
       parseInt(cedulaAbogado),
       fecha,
