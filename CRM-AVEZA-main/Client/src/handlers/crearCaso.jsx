@@ -2,6 +2,7 @@ import axios from "axios";
 
 export async function postCaso(data) {
   const {
+    radicado,
     cedulaAbogado,
     cedulaCliente,
     fecha,
@@ -18,6 +19,7 @@ export async function postCaso(data) {
   const URL = "/casos";
   try {
     await axios.post(URL, {
+      radicado:`${radicado}`,
       cedulaCliente: `${cedulaCliente}`,
       cedulaAbogado: `${cedulaAbogado}`,
       fecha: `${fecha}`,
