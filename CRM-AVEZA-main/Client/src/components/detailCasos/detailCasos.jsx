@@ -34,6 +34,7 @@ function DetailCasos() {
     AbogadoCedulaAbogado: "",
     Cliente: "",
     Abogado: "",
+    radicado:"",
   });
 
   const caso = useSelector((state) => state.caso); // Asumimos que el detalle del caso se almacena en 'caso'
@@ -105,9 +106,12 @@ function DetailCasos() {
         <div className="menu-detail">
           <input type="file" id="doc" />
           {/* <Link to={"/generardocumentos"}> */}
-            <Button className="botonesiniciosesion" onClick={handlerGenerarDocumentos}>
-              Generar documentos
-            </Button>
+          <Button
+            className="botonesiniciosesion"
+            onClick={handlerGenerarDocumentos}
+          >
+            Generar documentos
+          </Button>
           {/* </Link> */}
           {/* <Link to={"/cotizacion"}>
             <Button className="botonesiniciosesion">Cotización</Button>
@@ -171,6 +175,19 @@ function DetailCasos() {
                 value={casoDetail.idCaso}
                 onChange={handleUpdateDetailCaso}
                 disabled
+              />
+            </div>
+            <div className="infodetailcaso">
+              <label for="radicado" className="labeldetailcaso">
+                N° Radicado Juzgado:
+              </label>
+              <input
+                type="text"
+                className="cajadetail"
+                name="radicado"
+                id="radicado"
+                value={casoDetail.radicado}
+                onChange={handleUpdateDetailCaso}
               />
             </div>
             <div className="infodetailcaso">
