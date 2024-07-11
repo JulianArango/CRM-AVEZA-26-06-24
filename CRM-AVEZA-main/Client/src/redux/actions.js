@@ -23,6 +23,7 @@ export const FILTER_CASOS = "FILTER_CASOS";
 export const ORDER_CASOS = "ORDER_CASOS";
 export const GET_CASO_BY_ID = "GET_CASO_BY_ID";
 export const DELETE_CASO = "DELETE_CASO;";
+export const FIN_CASO = "FIN_CASO;";
 export const POST_CITA = "POST_CITA";
 export const GET_CITAS = "GET_CITAS";
 export const POST_CONSULTA = "POST_CONSULTA";
@@ -35,6 +36,7 @@ export const MODIFICAR_DATOS = "MODIFICAR_DATOS";
 export const MODIFICAR_DATOS_ABOGADO = "MODIFICAR_DATOS_ABOGADO";
 export const SET_ABOGADO = "SET_ABOGADO";
 export const GET_CLIENTES_TODOS = "GET_CLIENTES_TODOS";
+export const MODIFICAR_CASO = "MODIFICAR_CASO";
 
 
 export const clienteActual = (cliente) => {
@@ -321,15 +323,29 @@ export const getCasoById = (id) => {
   };
 };
 
-export const deleteCaso = (id) => {
+export const deleteCaso = (idCaso) => {
   const endpoint = `/casos/elimina`;
 
   return async (dispatch) => {
-    const data = await axios.post(endpoint, { id });
-    console.log("url", endpoint, "id", id);
+    const data = await axios.post(endpoint, { idCaso});
+    console.log("url", endpoint, "id", idCaso);
 
     return dispatch({
       type: DELETE_CASO,
+      payload: data,
+    });
+  };
+};
+
+export const finCaso = (idCaso, fechaFin) => {
+  const endpoint = `/casos/findecaso`;
+
+  return async (dispatch) => {
+    const data = await axios.post(endpoint, { idCaso, fechaFin });
+    console.log("url", endpoint, "id", idCaso, "fechaFin", fechaFin);
+
+    return dispatch({
+      type: FIN_CASO,
       payload: data,
     });
   };
@@ -462,7 +478,19 @@ export const getAbogadosTodos = () => {
       };
     };
   
+ export const modificarCaso = (payload) => {
+   const endpoint = `/casos/actualiza`;
 
+   return async (dispatch) => {
+     const data = await axios.put(endpoint, payload);
+     console.log("URL", endpoint, "PAYLOAD", payload);
+     window.alert("Se ha actualizado el caso con éxito.");
+     return dispatch({
+       type: MODIFICAR_CASO,
+       payload: data,
+     });
+   };
+ };
 export const setAbogado = (abogado) => {
   console.log("Abogado Action:", abogado);
   return {

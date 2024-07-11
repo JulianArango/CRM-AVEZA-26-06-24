@@ -46,6 +46,10 @@ export default (sequelize) => {
         type: DataTypes.STRING,
         defaultValue: "No",
       },
+      activo: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+      },
     },
     { timestamps: false }
   );

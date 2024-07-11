@@ -1,13 +1,12 @@
-import './detailCasos.css';
+import "./detailCasos.css";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCaso, getCasos } from '../../redux/actions';
-import { Button } from '../Mystyles';
-import { getCasoById } from '../../handlers/detailCaso';
+import { deleteCaso, getCasos, modificarCaso } from "../../redux/actions";
+import { Button, Buttonf } from "../Mystyles";
+import { getCasoById } from "../../handlers/detailCaso";
 import { numeroALetras } from "../convertiraletras";
-import { generarDocumentos } from '../../handlers/generarDocumentos';
-
+import { generarDocumentos } from "../../handlers/generarDocumentos";
 
 function DetailCasos() {
   const user = JSON.parse(localStorage.getItem("loggedUser"));
@@ -34,7 +33,7 @@ function DetailCasos() {
     AbogadoCedulaAbogado: "",
     Cliente: "",
     Abogado: "",
-    radicado:"",
+    radicado: "",
   });
 
   const caso = useSelector((state) => state.caso); // Asumimos que el detalle del caso se almacena en 'caso'
@@ -43,7 +42,7 @@ function DetailCasos() {
     if (!dateString) return ""; // Devuelve una cadena vacía si dateString es nulo o indefinido
     const date = new Date(dateString);
     if (isNaN(date)) return ""; // Devuelve una cadena vacía si la fecha no es válida
-    return date.toLocaleDateString("es-CA"); // Convierte al formato YYYY-MM-DD
+    return date.toISOString().split("T")[0]; //.toLocaleDateString("es-CO"); // Convierte al formato YYYY-MM-DD
   };
 
   useEffect(() => {
@@ -52,7 +51,7 @@ function DetailCasos() {
         const caso = await getCasoById(id);
         setCasoDetail(caso);
       } catch (error) {
-        console.error("Error al obtener los abogados:", error);
+        console.error("Error al obtener el caso:", error);
       }
     };
 
@@ -63,27 +62,45 @@ function DetailCasos() {
   // ciudad: datos.Ciudads[0].nombre_ciudad,
   // departamento: datos.Ciudads[0].Departamentos[0].nombre_departamento,
 
-  const valor_pretensiones_letras = numeroALetras(Number(casoDetail.valor_pretensiones));
+  const valor_pretensiones_letras = numeroALetras(
+    Number(casoDetail.valor_pretensiones)
+  );
   // const valor_pretensiones = Number(casoDetail.valor_pretensiones).toLocaleString();
   const honorarios_letras = numeroALetras(Number(casoDetail.honorarios));
   // const honorarios = Number(casoDetail.honorarios).toLocaleString();
-  
+
+  const handleFinalizar = () => {
+    // const isConfirmed = window.confirm(
+    //   "¿Estás seguro de que deseas finalizar este caso?"
+    // );
+
+    // if (isConfirmed) {
+    const fechaFin = new Date().toISOString().split("T")[0]; // Obtener la fecha actual en formato YYYY-MM-DD
+    dispatch(finCaso(id, fechaFin));
+    // dispatch(getCasos());
+    console.log("id", id, "fechaFin", fechaFin);
+    navigate("/casos");
+    // }
+  };
+
   const handleDelete = () => {
     const isConfirmed = window.confirm(
-      "¿Estás seguro de que deseas eliminar este registro?"
+      "¿Estás seguro de que deseas finalizar este caso?"
     );
 
     if (isConfirmed) {
-      const fechaFin = new Date().toISOString().split("T")[0]; // Obtener la fecha actual en formato YYYY-MM-DD
-      dispatch(deleteCaso(id, fechaFin));
+      dispatch(deleteCaso(id));
+      // dispatch(getCasos());
+      console.log("id", id);
       navigate("/casos");
-      dispatch(getCasos());
-      console.log("id", id, "fechaFin", fechaFin);
     }
   };
 
-  const handleGenerateContract = () => {
-    navigate("/home/documentos/contrato", { state: { caso: caso } });
+  const handleUpdateCaso = (e) => {
+    e.preventDefault();
+    dispatch(modificarCaso(userDataDetail));
+    window.localStorage.setItem("caso", JSON.stringify(userDataDetail));
+    // window.location.reload();
   };
 
   const handlerGenerarDocumentos = () => {
@@ -116,7 +133,7 @@ function DetailCasos() {
           {/* <Link to={"/cotizacion"}>
             <Button className="botonesiniciosesion">Cotización</Button>
           </Link> */}
-          <Button onClick={handleDelete} className="botonesiniciosesion">
+          <Button onClick={handleUpdateCaso} className="botonesiniciosesion">
             Actualizar
           </Button>
           {/* <Button className="botonesiniciosesion" onClick={generarContrato}>
@@ -231,20 +248,32 @@ function DetailCasos() {
                 onChange={handleUpdateDetailCaso}
               />
             </div>
-            <div className="infodetailcaso">
-              <label for="fechaFin" className="labeldetailcaso">
-                Fecha de finalización:
-              </label>
-              <input
-                type="text"
-                text
-                className="cajadetail"
-                name="fechaFin"
-                id="fechaFin"
-                value={formatDate(casoDetail.fechaFin)}
-                onChange={handleUpdateDetailCaso}
-              />
-            </div>
+            {casoDetail.fechaFin ? (
+              <div className="infodetailcaso">
+                <label for="fechaFin" className="labeldetailcaso">
+                  Fecha de finalización:
+                </label>
+                <input
+                  type="text"
+                  text
+                  className="cajadetail"
+                  name="fechaFin"
+                  id="fechaFin"
+                  value={formatDate(casoDetail.fechaFin)}
+                  onChange={handleUpdateDetailCaso}
+                />
+              </div>
+            ) : (
+              <div className="infodetailcaso">
+                <label for="fechaFin" className="labeldetailcaso">
+                  Fecha de finalización:
+                </label>
+                <div className="cajadetail">
+                  <Buttonf onClick={handleFinalizar}>Finalizar</Buttonf>
+                </div>
+              </div>
+            )}
+
             <div className="infodetailcaso">
               <label for="valor_pretensiones" className="labeldetailcaso">
                 Valor pretensiones:

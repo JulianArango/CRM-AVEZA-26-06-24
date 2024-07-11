@@ -20,13 +20,16 @@ const getAllCaso = async (filters) => {
   // Consulta a la base de datos
   if (todos.toUpperCase() === "FALSE") {
     getAllCasoBd = await Caso.findAll({
+      // where: {
+      //   [Sequelize.Op.or]: [
+      //     { fechaFin: null },
+      //     {
+      //       fechaFin: { [Sequelize.Op.gt]: Sequelize.literal("CURRENT_DATE") },
+      //     },
+      //   ],
+      // },
       where: {
-        [Sequelize.Op.or]: [
-          { fechaFin: null },
-          {
-            fechaFin: { [Sequelize.Op.gt]: Sequelize.literal("CURRENT_DATE") },
-          },
-        ],
+        activo: true,
       },
       attributes: ["idCaso", "fecha", "descripcion"],
       include: [
@@ -88,7 +91,7 @@ const getAllCaso = async (filters) => {
     });
   }
 
-console.log('Casos :',getAllCasoBd)
+// console.log('Casos :',getAllCasoBd)
   //Obtiene los campos a devolver
   let datos = getAllCasoBd.map((elemento) => ({
     id: elemento.dataValues.idCaso,

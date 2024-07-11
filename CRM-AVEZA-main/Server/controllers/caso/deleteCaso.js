@@ -1,10 +1,11 @@
 import { models } from "../../DB.js";
 
 const Caso=models.Caso
-const deleteCaso = async (idCaso,fechaFin) => {
+const deleteCaso = async (idCaso) => {
+  console.log('Controller idCaso:',idCaso)
   await Caso.update(
     {
-        fechaFin: fechaFin,
+        activo: false,
     },
     {
       where: {
@@ -12,7 +13,7 @@ const deleteCaso = async (idCaso,fechaFin) => {
       },
     }
   );
-  return JSON.stringify({ mensaje: "Se agrego fecha de fin al caso" })
+  return JSON.stringify({ mensaje: "Se eliminó caso" })
 };
 
 export {

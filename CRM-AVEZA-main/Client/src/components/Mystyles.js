@@ -43,3 +43,12 @@ margin: 10px;
 height: 30px;
 width: 150px;
 `;
+
+export const Buttonf = styled.button`
+  border-radius: 50px;
+  background-color: rgb(81, 115, 238, 0.75);
+  color: black;
+  min-width: 50px;
+  font-weight: bold;
+  justify-content: center;
+`;

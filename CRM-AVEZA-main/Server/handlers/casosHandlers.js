@@ -1,7 +1,9 @@
 import { createCaso } from "../controllers/caso/postAgregaCaso.js";
 import { getAllCaso } from "../controllers/caso/getAllCaso.js";
+import { finCaso } from "../controllers/caso/finCaso.js";
 import { deleteCaso } from "../controllers/caso/deleteCaso.js";
 import { getCasoId } from "../controllers/caso/getCasoById.js";
+import { actualizaCaso } from "../controllers/caso/postActualizaCaso.js";
 
 const createCasosHandler = async (req, res) => {
   const {
@@ -72,20 +74,72 @@ const getTipoDeCasoByIdHandler = async (req, res) => {
   }
 };
 
-const deleteCasoHandler = async (req, res) => {
+const finCasoHandler = async (req, res) => {
   const { idCaso, fechaFin } = req.body;
+  console.log('body handler fin:', req.body)
 
   try {
-    const response = await deleteCaso(idCaso, fechaFin);
+    const response = await finCaso(idCaso, fechaFin);
     res.status(200).json(response);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-export  {
+const deleteCasoHandler = async (req, res) => {
+  const { idCaso} = req.body;
+  console.log("body handler delete:", req.body);
+
+  try {
+    const response = await deleteCaso(idCaso);
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const postActualizaCaso = async (req, res) => {
+  const {
+    cedulanew,
+    nombres,
+    apellidos,
+    email,
+    celular,
+    direccion,
+    ciudad,
+    ciudad_anterior,
+    comentarios,
+    cedula_anterior,
+  } = req.body;
+
+  const cedula = cedulanew;
+
+  try {
+    console.log("Cedula anterior handler:", cedula_anterior);
+    const response = await actualizaCaso(
+      cedula,
+      nombres,
+      apellidos,
+      email,
+      celular,
+      direccion,
+      ciudad,
+      ciudad_anterior,
+      comentarios,
+      cedula_anterior
+    );
+    if (response) res.status(200).json(response);
+    else res.status(204).json("No se actualizo el caso");
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+export {
   createCasosHandler,
   getCasoHandler,
+  finCasoHandler,
   deleteCasoHandler,
   getTipoDeCasoByIdHandler,
+  postActualizaCaso,
 };

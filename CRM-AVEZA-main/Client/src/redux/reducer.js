@@ -43,6 +43,8 @@ import {
   MODIFICAR_DATOS,
   MODIFICAR_DATOS_ABOGADO,
   GET_PAGOS,
+  MODIFICAR_CASO,
+  FIN_CASO,
 } from "./actions";
 
 let initialState = {
@@ -193,6 +195,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         casos: action.payload,
       };
+    case FIN_CASO:
+      return {
+        ...state,
+        casos: action.payload,
+      };
     case POST_CITA:
       return {
         ...state,
@@ -222,6 +229,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         cliente: action.payload,
+      };
+    case MODIFICAR_CASO:
+      return {
+        ...state,
+        caso: action.payload,
       };
     case MODIFICAR_DATOS_ABOGADO:
       return {
