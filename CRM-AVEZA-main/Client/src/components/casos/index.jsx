@@ -15,6 +15,7 @@ import loading from "../../assets/loading.gif";
 import { Button, Button2, Button3 } from "../Mystyles";
 
 function Casos() {
+  localStorage.removeItem("casosFilter");
   const user = JSON.parse(localStorage.getItem("loggedUser"));
   const dispatch = useDispatch();
   const casos = useSelector((state) => state.casos);
@@ -39,11 +40,11 @@ function Casos() {
     if (order) {
       dispatch(orderCasos(order, currentPage));
     } else {
-      dispatch(getCasos(currentPage));
       const storedFilter = JSON.parse(localStorage.getItem("casosFilter"));
       if (storedFilter) {
         setFilterApplied(true);
       }
+      dispatch(getCasos(currentPage));
     }
   }, [dispatch, currentPage, order]);
 
@@ -98,27 +99,25 @@ function Casos() {
       <div className="menucasos">
         <SearchBar onFilter={handleFilter} />
         {user.administrador === true || user.cedulaAbogado ? (
-        <Link to="/casos/crearcaso" className="botoncrearcaso">
-          <Button>
-            {" "}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="1em"
-              height="1em"
-              viewBox="0 0 16 16"
-            >
-              <path fill="black" d="M14 7H9V2H7v5H2v2h5v5h2V9h5z"></path>
-            </svg>
-            Crear caso
-          </Button>
-        </Link>
+          <Link to="/casos/crearcaso" className="botoncrearcaso">
+            <Button>
+              {" "}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="1em"
+                height="1em"
+                viewBox="0 0 16 16"
+              >
+                <path fill="black" d="M14 7H9V2H7v5H2v2h5v5h2V9h5z"></path>
+              </svg>
+              Crear caso
+            </Button>
+          </Link>
         ) : null}
-        {filterApplied && (
+        {filterApplied === true ? (
           <Button onClick={handleVerTodosClick}>Ver todos</Button>
-        )}
+        ) : null}
       </div>
-
-
 
       {isLoading ? (
         <div className="loading-container">
@@ -126,12 +125,10 @@ function Casos() {
         </div>
       ) : (
         <div className="casosconpagina">
-          {searchPerformed ? undefined : (
+          {/* {searchPerformed ? undefined : ( */}
             <div className="pagination">
               {currentPage > 1 && (
-                <Button2
-                  onClick={() => handlePageChange(currentPage - 1)}
-                >
+                <Button2 onClick={() => handlePageChange(currentPage - 1)}>
                   &lt;&lt;
                 </Button2>
               )}
@@ -145,7 +142,7 @@ function Casos() {
                 </Button2>
               )}
             </div>
-          )}
+          {/* )} */}
           <br />
           <div className="divcasos">
             {userCasos.map((caso) => (
@@ -155,7 +152,6 @@ function Casos() {
         </div>
       )}
     </div>
-
   );
 }
 

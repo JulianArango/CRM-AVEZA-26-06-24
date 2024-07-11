@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./searchBar.css";
-import { filterCasos } from "../../redux/actions";
+import { filterCasos, getCasos } from "../../redux/actions";
 import { Button } from "../Mystyles";
 import { getTiposCasos } from "../../handlers/todosTiposdecasos";
 
 const SearchBar = ({ onFilter }) => {
   const [tipoCaso, setTipoCaso] = useState("");
+  const [estado, setEstado] = useState("false");
+  // const [select, setSelect] = useState("");
   const [apellidoAbogado, setApellidoAbogado] = useState("");
   const [apellidoCliente, setApellidoCliente] = useState("");
   const [tipos, setTipos] = useState({ allTipoDeCaso: [] });
@@ -38,24 +40,58 @@ const SearchBar = ({ onFilter }) => {
   //    handleSearch(tipoCaso);
   //  }, [tipoCaso]);
 
+
+    // const todos = pages?.datosPagina || [];
+    // const totalPages = Math.ceil(todos.length / 9);
+
+    // console.log(totalPages);
+
+    // console.log("pages", pages);
+
+    // useEffect(() => {
+    //    dispatch(getCasos(currentPage));    
+    // }, [dispatch, currentPage]);
+
+    // console.log("order", order, "currentpage", currentPage);
+
   const handleInputChange = (e, setValue) => {
     setValue(e.target.value);
   };
 
   const handleChangeSelect = (e) => {
     e.preventDefault();
-    const valueTipoCaso = e.target.value;
-      console.log("Target value", valueTipoCaso);
-    setTipoCaso(valueTipoCaso);
-    console.log("Tipo caso change: ", tipoCaso);
-      handleSearch(valueTipoCaso);
 
+    if (e.target.name === "estado") {
+      const valueEstado = e.target.value;
+      console.log("Target value", valueEstado);
+      setEstado(valueEstado);
+      window.localStorage.setItem("select", JSON.stringify("estado"));
+      console.log("Estado change: ", estado);
+      handleSearch(valueEstado);
+    } else {
+      const valueTipoCaso = e.target.value;
+      console.log("Target value", valueTipoCaso);
+      setTipoCaso(valueTipoCaso);
+      window.localStorage.setItem("select", JSON.stringify("tipoCaso"));
+      console.log("Tipo caso change: ", tipoCaso);
+      handleSearch(valueTipoCaso);
+    }
   };
 
-  const handleSearch = (valueTipoCaso) => {
+  const handleSearch = (searchParam) => {
     const queryParts = [];
-    console.log("Tipo caso search: ", valueTipoCaso);
-    if (valueTipoCaso) queryParts.push(`tipoCaso=${valueTipoCaso}`);
+
+    console.log("Parametro search: ", searchParam);
+
+    const select = JSON.parse(localStorage.getItem("select"));
+    console.log('Select: ', select)
+
+    if (select === "estado") {
+      queryParts.push(`todos=${searchParam}`);
+    } else {
+      queryParts.push(`tipoCaso=${searchParam}`);
+    }
+
     if (apellidoAbogado)
       queryParts.push(`apellidosAbogado=${formatInputValue(apellidoAbogado)}`);
     if (apellidoCliente)
@@ -80,7 +116,7 @@ const SearchBar = ({ onFilter }) => {
 
   const formatInputValue = (value) => {
     if (!value) return "";
-    return value //.charAt(0).toUpperCase() + value.slice(1); //.toLowerCase();
+    return value; //.charAt(0).toUpperCase() + value.slice(1); //.toLowerCase();
   };
 
   return (
@@ -91,7 +127,7 @@ const SearchBar = ({ onFilter }) => {
         className="inputfiltrocaso"
         onChange={(e) => handleChangeSelect(e)}
       >
-        <option value="1" className="tipodecaso">
+        <option value="" className="tipodecaso">
           Tipo de caso
         </option>
         {tipos.allTipoDeCaso.map((tipo) => (
@@ -103,6 +139,25 @@ const SearchBar = ({ onFilter }) => {
             {tipo.descripcion}
           </option>
         ))}
+      </select>
+      <select
+        name="estado"
+        id="estado"
+        className="inputfiltrocaso"
+        onChange={(e) => handleChangeSelect(e)}
+      >
+        <option value="" className="tipodecaso">
+          Estado del caso
+        </option>
+        <option value="verdadero" className="inputfiltrocaso">
+          Todos
+        </option>
+        <option value="false" className="inputfiltrocaso">
+          Activos
+        </option>
+        <option value="deleted" className="inputfiltrocaso">
+          Eliminados
+        </option>
       </select>
 
       <input
