@@ -41,6 +41,7 @@ function Casos() {
       dispatch(orderCasos(order, currentPage));
     } else {
       const storedFilter = JSON.parse(localStorage.getItem("casosFilter"));
+      console.log('Stored filter:', storedFilter)
       if (storedFilter) {
         setFilterApplied(true);
       }
