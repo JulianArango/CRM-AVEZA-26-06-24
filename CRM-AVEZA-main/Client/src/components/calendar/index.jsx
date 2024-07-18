@@ -18,6 +18,7 @@ dayjs.tz.setDefault(DEFAULT_TIMEZONE);
 
 function Calendario() {
   const datos = JSON.parse(localStorage.getItem("loggedUser"));
+  const filtroCita = JSON.parse(localStorage.getItem("filtroCita"));
   const messages = {
     allDay: "Todo el día",
     previous: "Anterior",
@@ -35,28 +36,66 @@ function Calendario() {
   const localizer = dayjsLocalizer(dayjs);
   const dispatch = useDispatch();
   const citas = useSelector((state) => state.citas);
+  const filtro = useSelector((state) => state.filtro);
   const [citasId, setCitasId] = useState([]);
   const [view, setView] = useState("month");
   const [date, setDate] = useState(new Date());
 
   useEffect(() => {
     dispatch(getCitas());
-  }, [dispatch]);
-// console.log('Citas calendario: ', citas)
+  }, [dispatch, filtro]);
+
+  console.log("Citas: ", citas);
+
+  let filteredCitas = [];
   useEffect(() => {
     if (citas) {
+
+      console.log('filtro calendario:', filtro)
       // const filteredCitas = datos.administrador
-      //   ? citas.datosPagina
+      //   ? (filtro==='todos'?citas.datosPagina:citas.datosPagina?.filter(
+      //       (cita) =>
+      //         (cita.nombreAbogado === datos.nombres &&
+      //           cita.apellidoAbogado === datos.apellidos)
+      //     ))
       //   : citas.datosPagina?.filter(
       //       (cita) =>
-      //         (cita.nombreCliente === datos.nombre &&
-      //           cita.apellidoCliente === datos.apellido) ||
-      //         (cita.nombreAbogado === datos.nombre &&
-      //           cita.apellidoAbogado === datos.apellido)
-      //     );
-      setCitasId(citas.datosPagina);
+      //         (cita.nombreCliente === datos.nombres &&
+      //           cita.apellidoCliente === datos.apellidos) ||
+      //         (cita.nombreAbogado === datos.nombres &&
+      //           cita.apellidoAbogado === datos.apellidos)
+      //   );
+
+      if (datos.administrador === true) {
+        if (filtro === 'todos') {
+          filteredCitas = citas.datosPagina;
+        } else {
+          console.log("Citas antes: ", citas.datosPagina);
+          console.log("NOmbres: ", datos.nombres);
+          console.log("Apellidos: ", datos.apellidos);
+          filteredCitas = citas.datosPagina?.filter(
+            (cita) =>
+              
+              cita.apellidoAbogado === datos.apellidos
+          );
+          console.log("Citas if: ", filteredCitas);
+        }
+        
+      } else {
+        filteredCitas=citas.datosPagina?.filter(
+            (cita) =>
+              (cita.nombreCliente === datos.nombres &&
+                cita.apellidoCliente === datos.apellidos) ||
+              (cita.nombreAbogado === datos.nombres &&
+                cita.apellidoAbogado === datos.apellidos)
+        );
+      }
+      console.log("Citas filtradas:", filteredCitas);
+      setCitasId(filteredCitas);
     }
-  }, [citas, datos]);
+  }, [citas,filtro]);
+
+  console.log("Citas calendario: ", citasId);
 
   const events = citasId
     ?.map((cita) => {

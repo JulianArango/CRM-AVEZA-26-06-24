@@ -45,6 +45,8 @@ import {
   GET_PAGOS,
   MODIFICAR_CASO,
   FIN_CASO,
+  FILTER_CITAS,
+  SET_FILTRO,
 } from "./actions";
 
 let initialState = {
@@ -59,6 +61,8 @@ let initialState = {
   casos: [],
   caso: {},
   cita: [],
+  citas: [],
+  filtro:[],
   consultas: [],
   pagos: [],
   source: "cliente",
@@ -81,6 +85,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
+      };
+    case SET_FILTRO:
+      return {
+        ...state,
+        filtro: action.payload,
       };
     case GET_ABOGADOS:
       return {
@@ -206,6 +215,11 @@ const rootReducer = (state = initialState, action) => {
         citas: action.payload,
       };
     case GET_CITAS:
+      return {
+        ...state,
+        citas: action.payload,
+      };
+    case FILTER_CITAS:
       return {
         ...state,
         citas: action.payload,

@@ -4,7 +4,7 @@ import Calendario from "../../components/calendar";
 // import FormCita from "../formCrearCita/index";
 import logo from "../../img/logoAveza.png";
 import { Link, useNavigate } from "react-router-dom";
-import { getCasos, getCasosTodos } from "../../redux/actions";
+import { getCasos, getCasosTodos, setFiltro } from "../../redux/actions";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postCitaHandlers } from "../../handlers/crearCita";
@@ -22,7 +22,9 @@ const [dataRegistro, setDataRegistro] = useState({
   idCaso: "",
 });
 
-const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});
+
+  
 
 const [isLoading, setIsLoading] = useState(true); // Estado para controlar la visualización del loading
 
@@ -33,8 +35,14 @@ const dispatch = useDispatch();
 const casos = useSelector((state) => state.casos);
 const pages = useSelector((state) => state.pages);
 
-useEffect(() => {
-  dispatch(getCasosTodos()).then(() => setIsLoading(false)); // Desactivar el loading después de cargar los casos
+  useEffect(() => {
+  
+    // if (filtro === "todos") {
+    
+      dispatch(getCasosTodos()).then(() => setIsLoading(false)); // Desactivar el loading después de cargar los casos
+    // } else {
+      
+    // }
 }, []);
   
   
@@ -55,6 +63,18 @@ const submitHandlerRegistro = async (e) => {
   }
 };
 
+    const handleChangeSelect = (e) => {
+      // e.preventDefault();
+
+        const filtroCita = e.target.value;
+        console.log("Target value", filtroCita);
+        // setFiltro(filtroCita);
+        window.localStorage.setItem("filtroCita", JSON.stringify(filtroCita));
+      // console.log("Filtro change: ", filtro);
+      dispatch(setFiltro(filtroCita));
+
+    };
+  
   const handleChangeRegistro = (e) => {
     const { name, value } = e.target
       ? e.target
@@ -94,8 +114,25 @@ if (isLoading || !pages || !pages.datosPagina) {
         <br />
         <Calendario></Calendario>
         <div className="containerCita">
-          <h1 className="tituloCita">Crear Cita</h1>
+          <select
+            name="filtrocita"
+            id="estado"
+            className="selectcita"
+            onChange={(e) => handleChangeSelect(e)}
+          >
+            <option value="" className="tipodecaso">
+              Ver citas de:
+            </option>
+            <option value="todos" className="selectcita">
+              Todos
+            </option>
+            <option value="usuario" className="selectcita">
+              Usuario actual
+            </option>
+          </select>
+
           <form onSubmit={submitHandlerRegistro} className="formularioCita">
+            <h1 className="tituloCita">Crear Cita</h1>
             <div className="input-row">
               <div className="infoCrearCita">
                 <label className="labelCrearCita">Titulo:</label>

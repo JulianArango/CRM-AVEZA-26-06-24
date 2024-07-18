@@ -3,14 +3,19 @@ import { Link} from "react-router-dom";
 import { Button } from "../Mystyles";
 import logo from "../../img/logoAveza.png";
 import "./nav.css";
+import { useDispatch } from "react-redux";
+import { setFiltro } from "../../redux/actions";
 
 const Nav = ({ logout }) => {
-  
+   const dispatch = useDispatch();
    const user = JSON.parse(localStorage.getItem("loggedUser"));
  
    console.log("User local storage: ", user);
 
-  
+  const handleClick = () => {
+    window.localStorage.setItem("filtroCita", JSON.stringify("usuario"));
+    dispatch(setFiltro('usuario'));
+  }
   return (
     <div className="navbar">
       {/* <SearchBar onVerificarCliente={onVerificarCliente} /> */}
@@ -90,7 +95,7 @@ const Nav = ({ logout }) => {
       </Link> */}
 
       <Link to="/agendarcitas">
-        <Button>
+        <Button onClick={handleClick}>
           {" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"

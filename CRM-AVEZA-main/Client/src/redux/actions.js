@@ -26,6 +26,8 @@ export const DELETE_CASO = "DELETE_CASO;";
 export const FIN_CASO = "FIN_CASO;";
 export const POST_CITA = "POST_CITA";
 export const GET_CITAS = "GET_CITAS";
+export const FILTER_CITAS = "FILTER_CITAS";
+export const SET_FILTRO = "SET_FILTRO";
 export const POST_CONSULTA = "POST_CONSULTA";
 export const GET_CONSULTAS = "GET_CONSULTAS";
 export const GET_CONSULTAS_TODOS = "GET_CONSULTAS_TODOS";
@@ -374,6 +376,29 @@ export const getCitas = () => {
   };
 };
 
+export const filterCitas = (filtro) => {
+  const endpoint = `/citas?${filtro}`;
+  console.log("URL", endpoint);
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(endpoint);
+
+      return dispatch({
+        type: FILTER_CITAS,
+        payload: data,
+      });
+    } catch (error) {
+      throw error;
+    }
+  };
+};
+
+export const setFiltro = (filtro) => {
+      return {
+        type: SET_FILTRO,
+        payload: filtro,
+      };
+};
 export const postConsulta =  async(payload) => {
   const endpoint = `/consultas`;
    console.log('Payload post consulta:', payload)
