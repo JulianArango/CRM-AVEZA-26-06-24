@@ -27,7 +27,7 @@ const postAbogadosHandler = async (req, res) => {
       nombre_ciudad,
       tarjetaProf,
       password,
-    // administrador,
+      administrador,
   } = req.body;
 
   console.log("body crear abogado:", {
@@ -40,7 +40,7 @@ const postAbogadosHandler = async (req, res) => {
     nombre_ciudad,
     tarjetaProf,
     password,
-    // administrador,
+    administrador,
   });
 
   try {

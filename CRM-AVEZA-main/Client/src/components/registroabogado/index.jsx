@@ -16,6 +16,7 @@ const RegistroAbogado = () => {
     nombre_ciudad: "",
     tarjetaProf: "",
     password: "",
+    administrador: false,
   });
   
   const navigate = useNavigate();
@@ -31,6 +32,15 @@ const RegistroAbogado = () => {
     registroAbogado(userDataRegistro);
     navigate("/abogados");
   };
+
+    const handleChangeAdministrador = (e) => {
+      if (e.target.checked) {
+        setUserDataRegistro((prevState) => ({
+          ...prevState,
+          administrador: true,
+        }));
+      }
+    };
 
   return (
     <div className="contenedorregistro">
@@ -149,6 +159,20 @@ const RegistroAbogado = () => {
           />
         </div>
         <br />
+        <div className="administrador">
+          <label htmlFor="administrador" className="labeladministrador">
+            Administrador ?
+          </label>
+          <br />
+          <input
+            type="checkbox"
+            className="checkboxadministrador"
+            name="administrador"
+            id="administrador"
+            // value={dataRegistro.administrador}
+            onChange={handleChangeAdministrador}
+          />
+        </div>
         <br />
         <br />
         <div className="inforegistroabogado">

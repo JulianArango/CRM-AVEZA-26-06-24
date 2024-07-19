@@ -52,44 +52,19 @@ function Calendario() {
     if (citas) {
 
       console.log('filtro calendario:', filtro)
-      // const filteredCitas = datos.administrador
-      //   ? (filtro==='todos'?citas.datosPagina:citas.datosPagina?.filter(
-      //       (cita) =>
-      //         (cita.nombreAbogado === datos.nombres &&
-      //           cita.apellidoAbogado === datos.apellidos)
-      //     ))
-      //   : citas.datosPagina?.filter(
-      //       (cita) =>
-      //         (cita.nombreCliente === datos.nombres &&
-      //           cita.apellidoCliente === datos.apellidos) ||
-      //         (cita.nombreAbogado === datos.nombres &&
-      //           cita.apellidoAbogado === datos.apellidos)
-      //   );
-
-      if (datos.administrador === true) {
-        if (filtro === 'todos') {
-          filteredCitas = citas.datosPagina;
-        } else {
-          console.log("Citas antes: ", citas.datosPagina);
-          console.log("NOmbres: ", datos.nombres);
-          console.log("Apellidos: ", datos.apellidos);
-          filteredCitas = citas.datosPagina?.filter(
+      const filteredCitas = datos.administrador
+        ? (filtro==='todos'?citas.datosPagina:citas.datosPagina?.filter(
             (cita) =>
-              
-              cita.apellidoAbogado === datos.apellidos
-          );
-          console.log("Citas if: ", filteredCitas);
-        }
-        
-      } else {
-        filteredCitas=citas.datosPagina?.filter(
+              // (cita.nombreAbogado === datos.nombres &&
+                cita.apellidoAbogado === datos.apellidos
+          ))
+        : citas.datosPagina?.filter(
             (cita) =>
               (cita.nombreCliente === datos.nombres &&
                 cita.apellidoCliente === datos.apellidos) ||
               (cita.nombreAbogado === datos.nombres &&
                 cita.apellidoAbogado === datos.apellidos)
         );
-      }
       console.log("Citas filtradas:", filteredCitas);
       setCitasId(filteredCitas);
     }

@@ -14,7 +14,8 @@ const createAbogadoBd = async (
   direccion,
   nombre_ciudad,
   tarjetaProf,
-  password
+  password,
+  administrador
 ) => {
   const ciudadfilter = codigoCiudades.filter(
     (ciudad) => ciudad.nombre_ciudad === nombre_ciudad.toUpperCase()
@@ -38,6 +39,7 @@ const createAbogadoBd = async (
     nombre_ciudad,
     tarjetaProf,
     password,
+    administrador
   });
   try {
     const newAbogado = await Abogado.create({
@@ -50,6 +52,7 @@ const createAbogadoBd = async (
       nombre_ciudad,
       tarjetaProf,
       password,
+      administrador
     });
 
           newAbogado.addCiudad(codigo_ciudad);
