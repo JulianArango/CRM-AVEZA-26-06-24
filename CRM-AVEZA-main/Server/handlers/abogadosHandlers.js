@@ -5,8 +5,11 @@ import { createAbogadoBd } from "../controllers/controllersAbogados/postAbogados
 import { actualizaAbogado } from "../controllers/controllersAbogados/postActualizaAbogado.js";
 
 const getAbogadosHandler = async (req, res) => {
+  let response;
+  
   try {
-    const response = await getAllAbogados(req.query);
+    
+    response = await getAllAbogados(req.query);
     res.status(200).json(response);
   } catch (error) {
     console.log(error);
@@ -64,8 +67,9 @@ const postAbogadosHandler = async (req, res) => {
 };
 
 const getAbogadoDetailHandler = async (req, res) => {
-  const { cedulaAbogado } = req.query;
+  const { cedulaAbogado } = req.params;
   try {
+    console.log('Cedula abogado handler:', cedulaAbogado)
     const response = await getAbogadoById(cedulaAbogado);
     res.status(200).json(response);
   } catch (error) {

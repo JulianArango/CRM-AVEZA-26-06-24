@@ -129,7 +129,7 @@ export const getAbogados = (page) => {
 
 
 export const getByIdAbogado = (cedulaAbogado) => {
-  const endpoint = `/abogados/cedulaabogado?cedulaAbogado=${cedulaAbogado}`;
+  const endpoint = `/abogados/${cedulaAbogado}`;
   console.log("URL", endpoint);
   return async (dispatch) => {
     try {

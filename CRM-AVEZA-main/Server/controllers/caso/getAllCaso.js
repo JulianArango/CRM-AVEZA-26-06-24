@@ -11,14 +11,14 @@ function paginarArreglo(arreglo, paginaActual, tamañoPagina) {
 //Si la variable todos viene en true, muestra todos los casos aun los que han sido finalizados
 const getAllCaso = async (filters) => {
   console.log("filters get caso controller:", filters.query);
-  const todos = filters.query.todos || "verdadero";
+  const todos = filters.query.todos || "false";
   let getAllCasoBd = [];
   console.log("Todos filter casos:", todos);
   console.log("Esto viene en el query en todos ... ", filters.query.todos);
   // if (!filters.query.todos || filters.query.todos==='false' ) {
 
   // Consulta a la base de datos
-  if (todos === "false") {
+  if (todos === "verdadero") {
     getAllCasoBd = await Caso.findAll({
       where: {
         activo: true,
@@ -86,6 +86,9 @@ const getAllCaso = async (filters) => {
     });
   } else {
     getAllCasoBd = await Caso.findAll({
+      where: {
+        activo: true,
+      },
       attributes: ["idCaso", "fecha", "descripcion"],
       include: [
         {

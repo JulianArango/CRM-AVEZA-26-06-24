@@ -116,7 +116,7 @@ const rootReducer = (state = initialState, action) => {
       //window.localStorage.setItem("abogado", JSON.stringify(action.payload));
       return {
         ...state,
-        abogado: action.payload,
+        abogados: action.payload,
       };
     case GET_BY_ID_CLIENTE:
       return {

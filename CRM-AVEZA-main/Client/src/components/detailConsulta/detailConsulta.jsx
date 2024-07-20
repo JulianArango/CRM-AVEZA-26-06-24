@@ -13,11 +13,17 @@ function DetailConsulta({consulta}) {
 
   const handleComplete = (e) => {
     e.preventDefault();
+    const isConfirmed = window.confirm(
+      "¿Estás seguro de que deseas eliminar esta consulta?"
+    );
+
+    if (isConfirmed) {
       dispatch(deleteConsulta(consulta.id));
-    console.log("id", consulta.id);
-    window.location.reload();
+      console.log("id", consulta.id);
+      window.location.reload();
       // navigate("/verconsultas");
-    };
+    }
+  };
 
 
 
