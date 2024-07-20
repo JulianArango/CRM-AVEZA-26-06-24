@@ -57,7 +57,7 @@ export default (sequelize) => {
       },
       administrador: {
         type: DataTypes.BOOLEAN,
-        // defaultValue: true,
+        defaultValue: false,
       },
     },
     { timestamps: false }

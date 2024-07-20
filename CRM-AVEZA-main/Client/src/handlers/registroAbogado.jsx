@@ -13,6 +13,7 @@ export async function registroAbogado(userDataRegistro) {
     nombre_ciudad,
     tarjetaProf,
     password,
+    administrador,
   } = userDataRegistro;
 
  
@@ -32,6 +33,7 @@ export async function registroAbogado(userDataRegistro) {
       nombre_ciudad: `${nombre_ciudad}`,
       tarjetaProf: `${tarjetaProf}`,
       password: `${password}`,
+      administrador: `${administrador}`,
     });
     window.alert("Se ha registrado el abogado con éxito.");
     

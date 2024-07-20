@@ -32,7 +32,7 @@ const postConsultaHandler = async (req, res) => {
 const deleteConsultaHandler = async (req, res) => {
   const { id } = req.body;
   try {
-    const response = await deleteConsulta(correo);
+    const response = await deleteConsulta(id);
     res.status(200).json(response);
   } catch (error) {
     res.status(400).json({ error: error.message });

@@ -53,7 +53,8 @@ const postAbogadosHandler = async (req, res) => {
       direccion,
       nombre_ciudad,
       tarjetaProf,
-      password
+      password,
+      administrador
     );
     res.status(200).json(response);
   } catch (error) {

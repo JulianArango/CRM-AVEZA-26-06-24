@@ -39,7 +39,7 @@ export const MODIFICAR_DATOS_ABOGADO = "MODIFICAR_DATOS_ABOGADO";
 export const SET_ABOGADO = "SET_ABOGADO";
 export const GET_CLIENTES_TODOS = "GET_CLIENTES_TODOS";
 export const MODIFICAR_CASO = "MODIFICAR_CASO";
-
+export const DELETE_CONSULTA = "DELETE_CONSULTA";
 
 export const clienteActual = (cliente) => {
   console.log("Cliente Action:", cliente);
@@ -429,6 +429,19 @@ export const postConsulta =  async(payload) => {
       const { data } = await axios.get(endpoint);
       return dispatch({
         type: GET_CONSULTAS,
+        payload: data,
+      });
+    };
+  };
+
+  export const deleteConsulta = (id) => {
+    const endpoint = `/consultas/delete`;
+    return async (dispatch) => {
+      const { data } = await axios.post(endpoint, {
+        id: `${id}`
+      });
+      return dispatch({
+        type: DELETE_CONSULTA,
         payload: data,
       });
     };

@@ -13,7 +13,7 @@ dayjs.locale("es");
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-const DEFAULT_TIMEZONE = "America/Argentina/Buenos_Aires";
+const DEFAULT_TIMEZONE = "America/Bogota";
 dayjs.tz.setDefault(DEFAULT_TIMEZONE);
 
 function Calendario() {
@@ -76,7 +76,7 @@ function Calendario() {
     ?.map((cita) => {
       const fechaCita = dayjs.tz(
         cita.fechaCita,
-        "America/Argentina/Buenos_Aires"
+        "America/Bogota"
       );
       const [hour, minute, second] = cita.horaCita.split(":").map(Number);
 
@@ -119,11 +119,10 @@ function Calendario() {
   };
 
   return (
-    <div>
       <div
         style={{
           height: "100%",
-          width: "100%",
+          width: "800px",
         }}
       >
         <Calendar
@@ -138,7 +137,6 @@ function Calendario() {
           onView={setView}
         />
       </div>
-    </div>
   );
 }
 

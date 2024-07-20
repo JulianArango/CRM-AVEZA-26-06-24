@@ -70,7 +70,7 @@ justify-content:flex-start;
 
  .labeladministrador {
   height: 25px;
-  width: 90px;
+  width: 120px;
   font-size: 100;
   padding-left: 15px;
   font-family: Arial, Helvetica, sans-serif;
@@ -80,7 +80,7 @@ justify-content:flex-start;
 }
 
 .checkboxadministrador{
-   width: 15%;
+   width: 40px;
    /* padding: 10px; */
    /* margin-left: 50px; */
    border: 1px solid black; /* Color del borde */

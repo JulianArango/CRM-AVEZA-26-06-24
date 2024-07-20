@@ -47,6 +47,7 @@ import {
   FIN_CASO,
   FILTER_CITAS,
   SET_FILTRO,
+  DELETE_CONSULTA,
 } from "./actions";
 
 let initialState = {
@@ -168,6 +169,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         clientes: action.payload,
+      };
+    case DELETE_CONSULTA:
+      return {
+        ...state,
+        consulta: action.payload,
       };
     case GET_TIPOSDECASOS:
       return {

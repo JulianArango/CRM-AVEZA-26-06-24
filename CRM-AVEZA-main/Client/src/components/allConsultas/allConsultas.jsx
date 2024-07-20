@@ -1,18 +1,21 @@
 import "./allConsultas.css";
-
-import { getConsultas, getConsultasTodos } from "../../redux/actions";
+import { deleteConsulta, getConsultas, getConsultasTodos } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import loading from "../../assets/loading.gif";
 import { Button2, Button3 } from "../Mystyles";
+import DetailConsulta from "../detailConsulta/detailConsulta";
 
 function AllConsultas() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const consultas = useSelector((state) => state.consultas);
   const pages = useSelector((state) => state.pages);
   const [loadingState, setLoadingState] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+
+
 
   useEffect(() => {
     dispatch(getConsultas());
@@ -61,35 +64,13 @@ function AllConsultas() {
           </div>
         ) : consultas && consultas.length > 0 ? (
           <div className="divconsultas">
-            {pages.map((consulta) => (
-              <div key={consulta.id} className="cardconsulta">
-                <h3>Consulta N° {consulta.id}</h3>
-                <div className="infoconsultatarjeta">
-                  <span className="labelconsulta">Remitente: </span>
-                  <span className="nombreconsulta">
-                    {consulta.nombre} {consulta.apellido}
-                  </span>
-                </div>
-                <div className="infoconsultatarjeta">
-                  <span className="labelconsulta">Fecha: </span>
-                  <span className="nombreconsulta">
-                    {consulta.createdAt.split("T")[0]}
-                  </span>
-                </div>
-                <div className="infoconsultatarjeta">
-                  <span className="labelconsulta">Correo electrónico: </span>
-                  <span className="nombreconsulta">{consulta.correo}</span>
-                </div>
-                <div className="infoconsultatarjeta">
-                  <span className="labelconsulta">Celular: </span>
-                  <span className="nombreconsulta">{consulta.telefono}</span>
-                </div>
-                <div className="infoconsultatarjeta">
-                  <span className="labelconsulta">Consulta: </span>
-                  <span className="nombreconsulta">{consulta.consulta}</span>
-                </div>
-              </div>
-            ))}
+              {pages.map((consulta) => {
+                return (
+                  <div>
+                    <DetailConsulta key={consulta.id} consulta={consulta} />
+                  </div>
+                );
+              })}
           </div>
         ) : (
           <p>No hay consultas disponibles</p>
