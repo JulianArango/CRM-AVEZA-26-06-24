@@ -1,4 +1,6 @@
 import axios from "axios";
+import dotenv from "dotenv";
+dotenv.config();
 import {
   createPagosClientes,
 } from "../pagosClientesControllers/postPagosClientes.js";
@@ -10,7 +12,8 @@ const obtenerPago = async (idPago) => {
       `https://api.mercadopago.com/v1/payments/${idPago}`,
       {
         headers: {
-          Authorization: process.env.ACCESSTOKEN,
+          Authorization: `${process.env.ACCESSTOKEN}`,
+          // Authorization: process.env.ACCESSTOKEN,
         },
       }
     );
