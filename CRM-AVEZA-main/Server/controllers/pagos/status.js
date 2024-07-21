@@ -10,8 +10,7 @@ const obtenerPago = async (idPago) => {
       `https://api.mercadopago.com/v1/payments/${idPago}`,
       {
         headers: {
-          Authorization:
-            "Bearer APP_USR-7845349164975835-051714-ec5b987de7ec8e0f4239e0b93dc2fa4d-1817941600",
+          Authorization: process.env.ACCESSTOKEN,
         },
       }
     );
