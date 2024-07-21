@@ -3,6 +3,7 @@ import axios from "axios";
 export async function postCaso(data) {
   const {
     radicado,
+    juzgado,
     cedulaAbogado,
     cedulaCliente,
     fecha,
@@ -19,7 +20,8 @@ export async function postCaso(data) {
   const URL = "/casos";
   try {
     await axios.post(URL, {
-      radicado:`${radicado}`,
+      radicado: `${radicado}`,
+      juzgado: `${juzgado}`,
       cedulaCliente: `${cedulaCliente}`,
       cedulaAbogado: `${cedulaAbogado}`,
       fecha: `${fecha}`,
@@ -29,6 +31,7 @@ export async function postCaso(data) {
       honorarios: `${honorarios}`,
       valor_pretensiones: `${valor_pretensiones}`,
       forma_de_pago: `${forma_de_pago}`,
+      cuotas: `${cuotas}`,
     });
     window.alert("Se ha registrado el caso con éxito.");
   } catch (error) {

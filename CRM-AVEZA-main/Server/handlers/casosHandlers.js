@@ -8,19 +8,24 @@ import { actualizaCaso } from "../controllers/caso/postActualizaCaso.js";
 const createCasosHandler = async (req, res) => {
   const {
     radicado,
-    cedulaCliente,
+    juzgado,
     cedulaAbogado,
+    cedulaCliente,
     fecha,
+    fechaFin,
     descripcion,
     TipoDeCasoid,
-    forma_de_pago,
     honorarios,
     valor_pretensiones,
+    cuotas,
+    forma_de_pago,
   } = req.body;
   //const fecha_caso= new Date(fecha)
   console.log(
     "radicado",
     radicado,
+    "juzgado",
+    juzgado,
     "cedulaCliente",
     cedulaCliente,
     "cedulaAbogado",
@@ -30,20 +35,25 @@ const createCasosHandler = async (req, res) => {
     "descripcion",
     descripcion,
     "TipoDeCasoId",
-    TipoDeCasoid
+    TipoDeCasoid,
+    "cuotas",
+    cuotas
   );
 
   try {
     const response = await createCaso(
       radicado,
+      juzgado,
       parseInt(cedulaCliente),
       parseInt(cedulaAbogado),
       fecha,
+      fechaFin,
       descripcion,
       TipoDeCasoid,
-      forma_de_pago,
       honorarios,
-      valor_pretensiones
+      valor_pretensiones,
+      cuotas,
+      forma_de_pago
     );
     res.status(200).json(response);
   } catch (error) {

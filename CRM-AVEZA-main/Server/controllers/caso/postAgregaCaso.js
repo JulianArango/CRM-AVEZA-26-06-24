@@ -1,20 +1,49 @@
 import { models } from "../../DB.js";
-import moment from 'moment'
+import moment from "moment";
 
-const { Caso, Cliente, Abogado, TipoDeCaso } = models
+const { Caso, Cliente, Abogado, TipoDeCaso } = models;
 
 const createCaso = async (
   radicado,
+  juzgado,
   cedulaCliente,
   cedulaAbogado,
   fecha,
+  fechaFin,
   descripcion,
   TipoDeCasoid,
-  forma_de_pago,
   honorarios,
-  valor_pretensiones
-  // importe,
+  valor_pretensiones,
+  cuotas,
+  forma_de_pago
 ) => {
+  console.log(
+    "radicado",
+    radicado,
+    "juzgado",
+    juzgado,
+    "cedulaCliente",
+    cedulaCliente,
+    "cedulaAbogado",
+    cedulaAbogado,
+    "fecha",
+    fecha,
+    "descripcion",
+    descripcion,
+    "TipoDeCasoId",
+    TipoDeCasoid,
+    "cuotas",
+    cuotas,
+    "honorarios",
+    honorarios,
+    "valor_pretensiones",
+    valor_pretensiones,
+    "cuotas",
+    cuotas,
+    "forma_de_pago",
+    forma_de_pago
+  );
+
   const estaCliente = await Cliente.findOne({
     where: {
       cedulaCliente: cedulaCliente,
@@ -49,9 +78,10 @@ const createCaso = async (
     });
   const fechaUTC = moment(fecha).utc().toDate();
 
-  console.log('Radicado controller:',radicado)
+  console.log("Radicado controller:", radicado);
   const newCaso = await Caso.create({
     radicado: radicado,
+    juzgado: juzgado,
     fecha: fechaUTC,
     descripcion: descripcion,
     TipoDeCasoTipoDeCasoid: TipoDeCasoid,
@@ -59,8 +89,8 @@ const createCaso = async (
     AbogadoCedulaAbogado: cedulaAbogado,
     honorarios: honorarios,
     forma_de_pago: forma_de_pago,
-    valor_pretensiones: valor_pretensiones
-    // importe: importe,
+    valor_pretensiones: valor_pretensiones,
+    cuotas: cuotas,
   });
 
   //  newAbogado.addCliente(clientes);
@@ -70,4 +100,4 @@ const createCaso = async (
   // return await Abogado.create({nombre, duracion,dificultad, temporada}); //?ASI También puede ser
 };
 
-export {createCaso};
+export { createCaso };

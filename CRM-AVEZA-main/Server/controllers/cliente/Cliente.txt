@@ -1,2 +1,0 @@
-A tener en cuenta ademas de la cedula, el mail y el telefono deben ser unicos.
-

@@ -12,6 +12,9 @@ export default (sequelize) => {
       radicado: {
         type: DataTypes.STRING,
       },
+      juzgado: {
+        type: DataTypes.STRING,
+      },
       fecha: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -33,6 +36,7 @@ export default (sequelize) => {
         defaultValue: "No",
       },
       honorarios: { type: DataTypes.BIGINT, allowNull: false },
+      cuotas: { type: DataTypes.INTEGER, allowNull: true, defaultValue: 1 },
       forma_de_pago: { type: DataTypes.STRING, allowNull: false },
       etapa: {
         type: DataTypes.STRING,
@@ -55,20 +59,3 @@ export default (sequelize) => {
   );
   return Caso;
 };
-
-// const { DataTypes } = require("sequelize");
-
-// module.exports = (sequelize) => {
-//   sequelize.define(
-//     "Caso",
-//     {
-//       numero_caso: {
-//         type: DataTypes.BIGINT,
-//         allowNull: false,
-//         primaryKey: true,
-//       },
-//       descripcion: { type: DataTypes.STRING, allowNull: false },
-//     },
-//     { timestamps: false }
-//   );
-// };

@@ -6,6 +6,7 @@ import "./crearCaso.css";
 import { Link } from "react-router-dom";
 import { getTiposCasos } from "../../handlers/todosTiposdecasos";
 import { Button } from "../Mystyles";
+import { useNavigate } from "react-router-dom";
 
 function CrearCaso() {
   const [userDataRegistro, setUserDataRegistro] = useState({
@@ -19,6 +20,8 @@ function CrearCaso() {
   console.log(userDataRegistro);
 
   const [abogados, setAbogados] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const obtenerAbogados = async () => {
@@ -85,7 +88,7 @@ function CrearCaso() {
     e.preventDefault();
     try {
       await postCaso(userDataRegistro);
-
+    navigate("/casos");
       // window.alert("Caso creado con éxito");
     } catch (error) {
       console.error("Error al crear el caso:", error.message);
@@ -99,124 +102,30 @@ function CrearCaso() {
         <h1 className="titulo">Crear caso</h1>
       </div>
       <form onSubmit={submitHandlerRegistro} className="datoscrearcaso">
-        <br />
-        <div className="datoscrear">
-          <div className="inputcrearcaso">
-            <label htmlFor="TipoDeCasoid" className="labelcrearcaso">
-              Selecciona el tipo de caso:
-            </label>
-            <select
-              name="TipoDeCasoid"
-              id="TipoDeCasoid"
-              className="cajacrearcaso"
-              onChange={(event) => handleChangeRegistro(event)}
-            >
-              <option value="" className="tipodecaso">
-                Tipo de caso
+
+        <div className="inputcrearcaso">
+          <label htmlFor="TipoDeCasoid" className="labelcrearcaso">
+            Selecciona el tipo de caso:
+          </label>
+          <select
+            name="TipoDeCasoid"
+            id="TipoDeCasoid"
+            className="cajacrearcaso"
+            onChange={(event) => handleChangeRegistro(event)}
+          >
+            <option value="" className="tipodecaso">
+              Tipo de caso
+            </option>
+            {tipos.allTipoDeCaso.map((tipo) => (
+              <option
+                key={tipo.TipoDeCasoid}
+                value={tipo.TipoDeCasoid}
+                className="opcionestipodecaso"
+              >
+                {tipo.descripcion}
               </option>
-              {tipos.allTipoDeCaso.map((tipo) => (
-                <option
-                  key={tipo.TipoDeCasoid}
-                  value={tipo.TipoDeCasoid}
-                  className="opcionestipodecaso"
-                >
-                  {tipo.descripcion}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="inputcrearcaso">
-            <label htmlFor="fecha" className="labelcrearcaso">
-              Fecha inicio:
-            </label>
-            <input
-              className="cajacrearcaso"
-              name="fecha"
-              id="fecha"
-              type="date"
-              value={userDataRegistro.fecha}
-              onChange={handleChangeRegistro}
-            />
-          </div>
-
-          <div className="inputcrearcaso">
-            <label htmlFor="fechaFin" className="labelcrearcaso">
-              Fecha final:
-            </label>
-            <input
-              className="cajacrearcaso"
-              name="fechaFin"
-              id="fechaFin"
-              type="date"
-              value={userDataRegistro.fechaFin}
-              onChange={handleChangeRegistro}
-            />
-          </div>
-          <div className="inputcrearcaso">
-            <label htmlFor="Abogado" className="labelcrearcaso">
-              Selecciona el abogado:
-            </label>
-            <select
-              name="cedulaAbogado"
-              id="cedulaAbogado"
-              className="cajacrearcaso"
-              onChange={(event) => handleChangeRegistro(event)}
-            >
-              <option value="" className="tipodecaso">
-                Abogados
-              </option>
-              {abogados.map((abogado) => (
-                <option
-                  key={abogado.cedulaAbogado}
-                  value={abogado.cedulaAbogado}
-                  className="opcionestipodecaso"
-                >
-                  {abogado.nombres} {abogado.apellidos}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="inputcrearcaso">
-            <label htmlFor="cedulaCliente" className="labelcrearcaso">
-              Selecciona el cliente:
-            </label>
-            <select
-              name="cedulaCliente"
-              id="cedulaCliente"
-              onChange={handleChangeRegistro}
-              className="cajacrearcaso"
-            >
-              <option value="" className="clientes">
-                Clientes
-              </option>
-              {clientes.map((cliente) => (
-                <option
-                  key={cliente.cedulaCliente}
-                  value={cliente.cedulaCliente}
-                  className="opcionesclientes"
-                >
-                  {cliente.nombres} {cliente.apellidos}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="w-full px-4">
-            <label className="w-full">
-              <textarea
-                className="textarea textarea-bordered h-24 w-full"
-                name="descripcion"
-                id="descripcion"
-                value={userDataRegistro.descripcion}
-                onChange={handleChangeRegistro}
-                placeholder="Descripción"
-              ></textarea>
-            </label>
-          </div>
-        </div>
-        <div className="honorarios">
+            ))}
+          </select>
           <label htmlFor="numerocedula" className="labelcrearcaso">
             Valor pretensiones:
           </label>
@@ -228,15 +137,18 @@ function CrearCaso() {
             value={userDataRegistro.valor_pretensiones}
             onChange={handleChangeRegistro}
           />
-          <label htmlFor="radicado" className="labelcrearcaso">
-            N° Radicado juzgado:
+        </div>
+
+        <div className="inputcrearcaso">
+          <label htmlFor="fecha" className="labelcrearcaso">
+            Fecha inicio:
           </label>
           <input
-            type="number"
             className="cajacrearcaso"
-            name="radicado"
-            id="radicado"
-            value={userDataRegistro.radicado}
+            name="fecha"
+            id="fecha"
+            type="date"
+            value={userDataRegistro.fecha}
             onChange={handleChangeRegistro}
           />
           <label htmlFor="honorarios" className="labelcrearcaso">
@@ -248,6 +160,20 @@ function CrearCaso() {
             name="honorarios"
             id="honorarios"
             value={userDataRegistro.honorarios}
+            onChange={handleChangeRegistro}
+          />
+        </div>
+
+        <div className="inputcrearcaso">
+          <label htmlFor="fechaFin" className="labelcrearcaso">
+            Fecha final:
+          </label>
+          <input
+            className="cajacrearcaso"
+            name="fechaFin"
+            id="fechaFin"
+            type="date"
+            value={userDataRegistro.fechaFin}
             onChange={handleChangeRegistro}
           />
           <label htmlFor="tipodeusuario" className="labelcrearcaso">
@@ -263,7 +189,32 @@ function CrearCaso() {
             <option value="">Elija una opcion</option>
             <option value="Contado">Contado</option>
             <option value="Crédito">Crédito</option>
-          </select>{" "}
+          </select>
+        </div>
+        <div className="inputcrearcaso">
+          <label htmlFor="Abogado" className="labelcrearcaso">
+            Selecciona el abogado:
+          </label>
+          <select
+            name="cedulaAbogado"
+            id="cedulaAbogado"
+            className="cajacrearcaso"
+            onChange={(event) => handleChangeRegistro(event)}
+          >
+            <option value="" className="tipodecaso">
+              Abogados
+            </option>
+            {abogados.map((abogado) => (
+              <option
+                key={abogado.cedulaAbogado}
+                value={abogado.cedulaAbogado}
+                className="opcionestipodecaso"
+              >
+                {abogado.nombres} {abogado.apellidos}
+              </option>
+            ))}
+          </select>
+
           <label htmlFor="cuotas" className="labelcrearcaso">
             Numero de cuotas:
           </label>
@@ -275,20 +226,78 @@ function CrearCaso() {
             value={userDataRegistro.cuotas}
             onChange={handleChangeRegistro}
           />
-          <br />
-          <br />
         </div>
 
-        <div className="flex justify-center gap-2 mt-4">
-          <Button
-            type="submit"
-            className="btn btn-sm btn-accent text-white"
-            value="Guardar"
+        <div className="inputcrearcaso">
+          <label htmlFor="cedulaCliente" className="labelcrearcaso">
+            Selecciona el cliente:
+          </label>
+          <select
+            name="cedulaCliente"
+            id="cedulaCliente"
+            onChange={handleChangeRegistro}
+            className="cajacrearcaso"
           >
+            <option value="" className="clientes">
+              Clientes
+            </option>
+            {clientes.map((cliente) => (
+              <option
+                key={cliente.cedulaCliente}
+                value={cliente.cedulaCliente}
+                className="opcionesclientes"
+              >
+                {cliente.nombres} {cliente.apellidos}
+              </option>
+            ))}
+          </select>
+          <label htmlFor="radicado" className="labelcrearcaso">
+            N° Radicado juzgado:
+          </label>
+          <input
+            type="number"
+            className="cajacrearcaso"
+            name="radicado"
+            id="radicado"
+            value={userDataRegistro.radicado}
+            onChange={handleChangeRegistro}
+          />
+        </div>
+
+        <div className="inputcrearcaso">
+          <label htmlFor="descripcion" className="labelcrearcaso">
+            Descripción
+          </label>
+          <textarea
+            // className="cajacrearcaso"
+            name="descripcion"
+            id="descripcion"
+            value={userDataRegistro.descripcion}
+            onChange={handleChangeRegistro}
+            placeholder="Descripción"
+            cols="160"
+            rows="8"
+            className="textareacrear"
+          ></textarea>
+          <label htmlFor="juzgado" className="labelcrearcaso">
+            Nombre juzgado:
+          </label>
+          <input
+            type="text"
+            className="cajacrearcaso"
+            name="juzgado"
+            id="juzgado"
+            value={userDataRegistro.juzgado}
+            onChange={handleChangeRegistro}
+          />
+        </div>
+
+        <div className="botonescrearcaso">
+          <Button type="submit" value="Guardar">
             Guardar
           </Button>
           <Link to="/casos">
-            <Button className="btn btn-sm btn-accent text-white">Volver</Button>
+            <Button>Volver</Button>
           </Link>
         </div>
       </form>
