@@ -7,6 +7,7 @@ import {
 
 const obtenerPago = async (idPago) => {
   console.log("Payment id: ", idPago);
+  console.log("Token:", process.env.ACCESSTOKEN);
   try {
     const { data } = await axios.get(
       `https://api.mercadopago.com/v1/payments/${idPago}`,
