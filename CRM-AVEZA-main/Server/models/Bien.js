@@ -1,0 +1,23 @@
+import { DataTypes } from "sequelize";
+
+export default (sequelize) => {
+  const Bien = sequelize.define(
+    "Bien",
+    {
+      idBien: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      tipoBien: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      valor: { type: DataTypes.BIGINT, allowNull: false },
+      tipoAfectacion: { type: DataTypes.STRING, defaultValue: "Ninguna" },
+      descripcion: { type: DataTypes.STRING, allowNull: false },
+    },
+    { timestamps: false }
+  );
+  return Bien;
+};
