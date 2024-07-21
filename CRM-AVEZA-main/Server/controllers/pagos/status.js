@@ -14,7 +14,6 @@ const obtenerPago = async (idPago) => {
       {
         headers: {
           Authorization: `Bearer ${process.env.ACCESSTOKEN}`,
-          // Authorization: process.env.ACCESSTOKEN,
         },
       }
     );
@@ -29,9 +28,6 @@ const obtenerPago = async (idPago) => {
     const tipoDePago = data.payment_type_id;
     const pagoId = data.id;
     
-
-
- console.log("Data crear pago:",)
     const newPago = createPagosClientes(
       idCaso,
       descripcion,
@@ -43,10 +39,11 @@ const obtenerPago = async (idPago) => {
       importeDeLaTransaccion
       
     );
+
+    console.log("Pago creado:", newPago);
     return data;
   } catch (error) {
     console.log(error);
-    // window.alert("No se obtuvieron los datos del pago");
   }
 };
 
