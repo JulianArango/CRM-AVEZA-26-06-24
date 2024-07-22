@@ -4,6 +4,7 @@ import { getAbogados } from "../../handlers/todosAbogados";
 import { getClientes } from "../../handlers/todosClientes";
 import "./crearCaso.css";
 import { Link } from "react-router-dom";
+
 import { getTiposCasos } from "../../handlers/todosTiposdecasos";
 import { Button } from "../Mystyles";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +18,7 @@ function CrearCaso() {
     descripcion: "",
     TipoDeCasoid: "",
   });
-  console.log(userDataRegistro);
+  // console.log(userDataRegistro);
 
   const [abogados, setAbogados] = useState([]);
 
@@ -82,13 +83,28 @@ function CrearCaso() {
       [name]: value,
     }));
   };
-  console.log(setUserDataRegistro);
+
 
   const submitHandlerRegistro = async (e) => {
     e.preventDefault();
     try {
       await postCaso(userDataRegistro);
-    navigate("/casos");
+
+      if (userDataRegistro.TipoDeCasoid === "2") {
+            const isConfirmed = window.confirm(
+              "¿Desea ingresar los datos para la solicitud de insolvencia?"
+            );
+
+            if (isConfirmed) {
+              // dispatch(deleteCaso(id));
+              // dispatch(getCasos());
+              // console.log("id", id);
+              navigate("/insolvencia");
+            }
+      } else {
+        
+        navigate("/casos");
+      }
       // window.alert("Caso creado con éxito");
     } catch (error) {
       console.error("Error al crear el caso:", error.message);
@@ -96,13 +112,13 @@ function CrearCaso() {
     }
   };
 
+  // console.log('Tipos de caso:', tipos)
   return (
     <div className="contenedorcrearcaso">
       <div className="encabezado">
         <h1 className="titulo">Crear caso</h1>
       </div>
       <form onSubmit={submitHandlerRegistro} className="datoscrearcaso">
-
         <div className="inputcrearcaso">
           <label htmlFor="TipoDeCasoid" className="labelcrearcaso">
             Selecciona el tipo de caso:
@@ -293,6 +309,19 @@ function CrearCaso() {
         </div>
 
         <div className="botonescrearcaso">
+          {/* {userDataRegistro.TipoDeCasoid === 2 ? (
+            <div>
+              <Button type="submit" value="Guardar">
+                Deudas / Bienes
+              </Button>
+              <Button type="submit" value="Guardar">
+                Ingresos / Gastos
+              </Button>
+              <Button type="submit" value="Guardar">
+                Prouesta pago
+              </Button>
+            </div>
+          ) : undefined} */}
           <Button type="submit" value="Guardar">
             Guardar
           </Button>
