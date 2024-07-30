@@ -41,14 +41,15 @@ import AllConsultas from "./components/allConsultas/allConsultas.jsx";
 import Payments from "./components/payments/payments.component.jsx";
 import { crearUsuario } from "./handlers/crearUsuario.jsx";
 import Status from "../src/components/status";
+import Ingresos from "./components/ingresos/index.jsx";
 
 // export const URL = "http://localhost:3001/crmAveza/";
 
 // const URL = import.meta.env.VITE_URL;
 // const { URL } = process.env;
-axios.defaults.baseURL = "https://crm-aveza.onrender.com/crmAveza";
+// axios.defaults.baseURL = "https://crm-aveza.onrender.com/crmAveza";
 
-// axios.defaults.baseURL = "http://localhost:3001/crmAveza";
+axios.defaults.baseURL = "http://localhost:3001/crmAveza";
 function App() {
   const [access, setAccess] = useState(false);
   const location = useLocation();
@@ -170,6 +171,9 @@ function App() {
         <Route path="poder" element={<Poder />} />
         <Route path="PDF" element={<PDF />} />
         <Route path="insolvencia" element={<Insolvencia />} />
+        <Route path="ingresos" element={<Ingresos />} />
+        <Route path="bienes" element={<Ingresos />} />
+        <Route path="sociedades" element={<Ingresos />} />
         <Route path="registrocliente" element={<RegistroCliente />} />
         <Route path="registroabogado" element={<RegistroAbogado />} />
         <Route path="detail" element={<Detail />} />

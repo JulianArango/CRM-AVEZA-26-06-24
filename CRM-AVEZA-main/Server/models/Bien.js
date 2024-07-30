@@ -15,7 +15,7 @@ export default (sequelize) => {
       },
       valor: { type: DataTypes.BIGINT, allowNull: false },
       tipoAfectacion: { type: DataTypes.STRING, defaultValue: "Ninguna" },
-      descripcion: { type: DataTypes.STRING, allowNull: false },
+      descripcionBien: { type: DataTypes.STRING, allowNull: false },
     },
     { timestamps: false }
   );
