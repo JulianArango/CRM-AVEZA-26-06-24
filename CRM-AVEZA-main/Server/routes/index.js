@@ -9,6 +9,7 @@ import usuariosRouter from "./usuariosRoutes.js";
 import citasRouter from "./citasRoutes.js";
 import paymentsRouter from "./../routes/paymentsRoutes.js";
 import pagosClientesRouter from "./pagosClienteRoutes.js";
+import insolvenciaRouter from "./insolvenciaRoutes.js";
 // import reviewsRouter from "./reviewsRoutes.js";
 // import dashboardRouter from './dashboardRoutes.js'
 
@@ -23,8 +24,9 @@ router.use("/login", loginRouter);
 router.use("/usuarios", usuariosRouter);
 router.use("/citas", citasRouter);
 router.use("/pagos", paymentsRouter);
-// router.use("/reviews", reviewsRouter);
+router.use("/insolvencia", insolvenciaRouter);
 router.use("/pagosClientes", pagosClientesRouter);
+// router.use("/reviews", reviewsRouter);
 // router.use("/dashboard", dashboardRouter)
 
 export default router;

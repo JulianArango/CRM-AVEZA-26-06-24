@@ -18,6 +18,7 @@ import departamentoModel from "./models/Departamento.js";
 import ciudadModel from "./models/Ciudad.js";
 import tipoUsuarioModel from "./models/TipoUsuario.js";
 import facturaModel from "./models/Factura.js";
+import acreedorModel from "./models/Acreedor.js";
 // import reviewModel from "./models/Review.js";
 import pagoClienteModel from "./models/pagoCliente.js";
 // import carteraModel from "./models/Cartera.js";
@@ -52,6 +53,7 @@ const sequelize = new Sequelize(
 const Caso = casoModel(sequelize);
 const Cotizacion = cotizacionModel(sequelize);
 const Consulta = consultaModel(sequelize);
+const Acreedor = acreedorModel(sequelize);
 const Abogado = abogadoModel(sequelize);
 const Cliente = clienteModel(sequelize);
 const Contrato = contratoModel(sequelize);
@@ -117,6 +119,9 @@ Abogado.belongsTo(Usuario);
 
 Pais.belongsToMany(Departamento, { through: "pais_departamento" });
 Departamento.belongsToMany(Pais, { through: "pais_departamento" });
+
+Cliente.belongsToMany(Acreedor, { through: "cliente_acreedor" });
+Acreedor.belongsToMany(Cliente, { through: "cliente_acreedor" });
 
 Departamento.belongsToMany(Ciudad, { through: "ciudad_departamento" });
 Ciudad.belongsToMany(Departamento, { through: "ciudad_departamento" });

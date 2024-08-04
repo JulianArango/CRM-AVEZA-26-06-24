@@ -6,6 +6,8 @@ import "../insolvencia/insolvencia.css";
 import { printDivContent } from "../../utils/printDivContent";
 import { Link } from "react-router-dom";
 import { Button } from "../Mystyles";
+import { listaacreedores } from "../../utils/acreedores.js";
+import { generarSolicitud } from "../../handlers/generarSolicitud.jsx";
 
 const Insolvencia = () => {
   const cliente = useSelector((state) => state.cliente);
@@ -17,6 +19,7 @@ const Insolvencia = () => {
   const initDeuda = {
     idDeuda: "",
     acreedor: "",
+    acreedorBuscado: "",
     tipoDeuda: "",
     tipoGarantia: "",
     documentoSoporte: "",
@@ -82,6 +85,14 @@ const Insolvencia = () => {
     idHijo: "",
   };
 
+    const initAcreedorFilt = {
+      acreedores: [],
+    };
+  
+      const initMotivos = {
+        motivos:"",
+      };
+
   const [ingreso, setIngreso] = useState(initIngreso);
   const [ingresos, setIngresos] = useState(ingresosObj);
   const [gasto, setGasto] = useState(initGastos);
@@ -98,7 +109,8 @@ const Insolvencia = () => {
   const [propuestas, setPropuestas] = useState(propuestasObj);
   const [datosDeuda, setDatosDeuda] = useState(initDeuda);
   const [propuesta, setPropuesta] = useState(initPropuesta);
-
+  const [acreedorFilt, setAcreedorFilt] = useState(initAcreedorFilt);
+   const [motivos, setMotivos] = useState(initMotivos);
   const addDeuda = (deuda) => {
     setDeudas([...deudas, deuda]);
     setDatosDeuda(initDeuda);
@@ -128,6 +140,13 @@ const Insolvencia = () => {
       [e.target.name]: e.target.value,
     });
   };
+
+    const handleMotivosChange = (e) => {
+      setMotivos({
+        ...motivos,
+        [e.target.name]: e.target.value,
+      });
+    };
 
   const handleSubmitDeuda = async (e) => {
     e.preventDefault();
@@ -211,6 +230,8 @@ const Insolvencia = () => {
 
   console.log("Obligaciones:", obligaciones);
   console.log("obligacion:", obligacion);
+
+   console.log("motivos:", motivos);
 
   const handleIngresoChange = (e) => {
     setIngreso({
@@ -325,6 +346,40 @@ const Insolvencia = () => {
     }
   };
 
+  const handleSearchAcreedor = (e) => {
+    e.preventDefault();
+
+    // const textoBuscado = "Banco Popular"; // Cambia esto al texto que deseas buscar
+
+    const resultado = listaacreedores.find((acreedor) => {
+      return acreedor.nombre.includes(datosDeuda.acreedorBuscado);
+    });
+    let resultados = listaacreedores.filter((acreedor) => {
+      return acreedor.nombre.includes(datosDeuda.acreedorBuscado);
+    });
+    if (resultados) {
+      console.log("Elemento encontrado:", resultado);
+      setAcreedorFilt(resultados);
+      // setDatosDeuda({
+      //   ...datosDeuda,
+      //   acreedor: resultado.nombre,
+      // });
+    } else {
+      console.log("No se encontró ningún elemento con ese nombre.");
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
+  const formatInputValue = (value) => {
+    if (!value) return "";
+    return value.toUpperCase(); //.charAt(0).toUpperCase() + value.slice(1); //.toLowerCase();
+  };
+
   useEffect(() => {
     // const obtenerAcreedores = async () => {
     //   try {
@@ -338,11 +393,18 @@ const Insolvencia = () => {
   }, []);
 
   const handlerGenerarSolicitud = () => {
-    // generarSolicitud(
-    //   casoDetail,
-    //   valor_pretensiones_letras,
-    //   honorarios_letras
-    // );
+    generarSolicitud(
+      ingresos,
+      gastos,
+      bienes,
+      procesos,
+      obligaciones,
+      sociedades,
+      deudas,
+      propuestas,
+      motivos
+      
+    );
   };
 
   return (
@@ -369,49 +431,55 @@ const Insolvencia = () => {
         <div className="infotodosinsolvencia">
           <div className="infotodosingresos">
             <div className="formingresos">
-              <div className="encabezadopropuesta">
-                <h6 className="titulo">Motivos para la solicitud</h6>
-              </div>
-              <br />
-              <div className="infotextarea">
-                {/* <label
+              <div className="infoseccion">
+                <div className="encabezadopropuesta">
+                  <h6 className="titulo">Motivos para la solicitud</h6>
+                </div>
+                <br />
+                <div className="infotextarea">
+                  {/* <label
                 htmlFor="clasificacionpropuesta"
                 className="labeldetaildeudas"
               >
                 Clasificación del Crédito:
               </label> */}
-                <textarea
-                  name="motivos"
-                  id="motivos"
-                  value={propuesta.motivos}
-                  onChange={(event) => handlePropuestaChange(event)}
-                  placeholder="Ingrese aquí los motivos para su solicitud de insolvencia"
-                  cols="60"
-                  rows="8"
-                  className="textareainsolvencia"
-                />
-                <Button onClick={handleSubmitMotivos} value="Guardarpropuesta">
-                  Guardar motivos
-                </Button>
+                  <textarea
+                    name="motivos"
+                    id="motivos"
+                    value={propuesta.motivos}
+                    onChange={(event) => handleMotivosChange(event)}
+                    placeholder="Ingrese aquí los motivos para su solicitud de insolvencia"
+                    cols="54"
+                    rows="8"
+                    className="textareainsolvencia"
+                  />
+                  <Button
+                    onClick={handleSubmitMotivos}
+                    value="Guardarpropuesta"
+                  >
+                    Guardar motivos
+                  </Button>
+                </div>
               </div>
-              <br />
-              <div className="encabezadodeudas">
-                <h6 className="titulo">Información de las deudas</h6>
-              </div>
-              <div className="infodetaildeudas">
-                <label htmlFor="acreedor" className="labeldetaildeudas">
-                  Selecciona el acreedor:
-                </label>
-                <select
-                  name="acreedor"
-                  id="acreedor"
-                  className="cajadeudas"
-                  onChange={(event) => handleDeudaChange(event)}
-                >
-                  <option value="" className="opcionesacreedor">
-                    Acreedor
-                  </option>
-                  {/* {acreedores.map((acreedor) => (
+              {/* <br /> */}
+              <div className="infoseccion">
+                <div className="encabezadodeudas">
+                  <h6 className="titulo">Información de las deudas</h6>
+                </div>
+                <div className="infodetaildeudas">
+                  <label htmlFor="acreedor" className="labeldetaildeudas">
+                    Selecciona el acreedor:
+                  </label>
+                  {/* <select
+                    name="acreedor"
+                    id="acreedor"
+                    className="cajadeudas"
+                    onChange={(event) => handleDeudaChange(event)}
+                  >
+                    <option value="" className="opcionesacreedor">
+                      Acreedor
+                    </option>
+                    {acreedores.map((acreedor) => (
                   <option
                     key={acreedor.idAcreedor}
                     value={acreedor.idAcreedor}
@@ -419,566 +487,632 @@ const Insolvencia = () => {
                   >
                     {acreedor.nombre}
                   </option>
-                ))} */}
-                </select>
-              </div>
-              <div className="infodetaildeudas">
-                <label htmlFor="tipoDeuda" className="labeldetaildeudas">
-                  Naturaleza del crédito::
-                </label>
-                <input
-                  type="text"
-                  className="cajadeudas"
-                  name="tipoDeuda"
-                  id="tipoDeuda"
-                  value={datosDeuda.tipoDeuda}
-                  onChange={(event) => handleDeudaChange(event)}
-                />
-              </div>
-              <div className="infodetaildeudas">
-                <label htmlFor="tipogarantia" className="labeldetaildeudas">
-                  Tipo de garantía:
-                </label>
-                <input
-                  type="text"
-                  text
-                  className="cajadeudas"
-                  name="tipoGarantia"
-                  id="tipogarantia"
-                  value={datosDeuda.tipoGarantia}
-                  onChange={(event) => handleDeudaChange(event)}
-                />
-              </div>
-              <div className="infodetaildeudas">
-                <label htmlFor="documentosoporte" className="labeldetaildeudas">
-                  Documento que soporta la garantía:
-                </label>
-                <input
-                  type="text"
-                  text
-                  className="cajadeudas"
-                  name="documentoSoporte"
-                  id="documentosoporte"
-                  value={datosDeuda.documentoSoporte}
-                  onChange={(event) => handleDeudaChange(event)}
-                />
-              </div>
+                ))}
+                  </select> */}
 
-              <div className="infodetaildeudas">
-                <label htmlFor="capital" className="labeldetaildeudas">
-                  Capital :
-                </label>
-                <input
-                  type="number"
-                  text
-                  className="cajadeudas"
-                  name="capital"
-                  id="capital"
-                  value={datosDeuda.capital}
-                  onChange={(event) => handleDeudaChange(event)}
-                />
+                  <input
+                    placeholder="Nombre Institución"
+                    type="text"
+                    name="acreedorBuscado"
+                    id="acreedorBuscado"
+                    value={datosDeuda.acreedorBuscado}
+                    onKeyDown={handleKeyDown}
+                    onChange={(event) => handleDeudaChange(event)}
+                    className="cajadeudas"
+                  />
+                </div>
+                <div className="infodetaildeudas">
+                  <Button onClick={handleSearchAcreedor} className="buscar">
+                    Buscar Institución
+                  </Button>
+
+                  {/* <input
+                    type="text"
+                    className="cajadeudas"
+                    name="acreedor"
+                    id="acreedor"
+                    value={datosDeuda.acreedor}
+                    onChange={(event) => handleDeudaChange(event)}
+                  /> */}
+
+                  <select
+                    name="acreedor"
+                    id="acreedor"
+                    className="cajadeudas"
+                    onChange={(event) => handleDeudaChange(event)}
+                  >
+                    <option value="" className="opcionesacreedor">
+                     Instituciones encontradas
+                    </option>
+                    {acreedorFilt.length>0&&acreedorFilt.map((acreedor) => (
+                  <option
+                    key={acreedor.idAcreedor}
+                    value={acreedor.idAcreedor}
+                    className="opcionesacreedor"
+                  >
+                    {acreedor.nombre}
+                  </option>
+                ))}
+                  </select>
+                </div>
+                <div className="infodetaildeudas">
+                  <label htmlFor="tipoDeuda" className="labeldetaildeudas">
+                    Naturaleza del crédito::
+                  </label>
+                  <input
+                    type="text"
+                    className="cajadeudas"
+                    name="tipoDeuda"
+                    id="tipoDeuda"
+                    value={datosDeuda.tipoDeuda}
+                    onChange={(event) => handleDeudaChange(event)}
+                  />
+                </div>
+                <div className="infodetaildeudas">
+                  <label htmlFor="tipogarantia" className="labeldetaildeudas">
+                    Tipo de garantía:
+                  </label>
+                  <input
+                    type="text"
+                    text
+                    className="cajadeudas"
+                    name="tipoGarantia"
+                    id="tipogarantia"
+                    value={datosDeuda.tipoGarantia}
+                    onChange={(event) => handleDeudaChange(event)}
+                  />
+                </div>
+                <div className="infodetaildeudas">
+                  <label
+                    htmlFor="documentosoporte"
+                    className="labeldetaildeudas"
+                  >
+                    Documento que soporta la garantía:
+                  </label>
+                  <input
+                    type="text"
+                    text
+                    className="cajadeudas"
+                    name="documentoSoporte"
+                    id="documentosoporte"
+                    value={datosDeuda.documentoSoporte}
+                    onChange={(event) => handleDeudaChange(event)}
+                  />
+                </div>
+
+                <div className="infodetaildeudas">
+                  <label htmlFor="capital" className="labeldetaildeudas">
+                    Capital :
+                  </label>
+                  <input
+                    type="number"
+                    text
+                    className="cajadeudas"
+                    name="capital"
+                    id="capital"
+                    value={datosDeuda.capital}
+                    onChange={(event) => handleDeudaChange(event)}
+                  />
+                </div>
+                <div className="infodetaildeudas">
+                  <label htmlFor="intereses" className="labeldetaildeudas">
+                    Valor intereses:
+                  </label>
+                  <input
+                    type="number"
+                    text
+                    className="cajadeudas"
+                    name="intereses"
+                    id="intereses"
+                    value={datosDeuda.intereses}
+                    onChange={(event) => handleDeudaChange(event)}
+                  />
+                </div>
+                <div className="infodetaildeudas">
+                  <label htmlFor="clasificacion" className="labeldetaildeudas">
+                    Clasificación del Crédito:
+                  </label>
+                  <input
+                    type="text"
+                    text
+                    className="cajadeudas"
+                    name="clasificacion"
+                    id="clasificacion"
+                    value={datosDeuda.clasificacion}
+                    onChange={(event) => handleDeudaChange(event)}
+                  />
+                </div>
+                <div className="infodetaildeudas">
+                  <label htmlFor="diasmora" className="labeldetaildeudas">
+                    Número de días en mora:
+                  </label>
+                  <input
+                    type="text"
+                    text
+                    className="cajadeudas"
+                    name="diasMora"
+                    id="diasmora"
+                    value={datosDeuda.diasMora}
+                    onChange={(event) => handleDeudaChange(event)}
+                  />
+                </div>
+                <Button type="submit" value="Guardar">
+                  Guardar deuda
+                </Button>
               </div>
-              <div className="infodetaildeudas">
-                <label htmlFor="intereses" className="labeldetaildeudas">
-                  Valor intereses:
-                </label>
-                <input
-                  type="number"
-                  text
-                  className="cajadeudas"
-                  name="intereses"
-                  id="intereses"
-                  value={datosDeuda.intereses}
-                  onChange={(event) => handleDeudaChange(event)}
-                />
-              </div>
-              <div className="infodetaildeudas">
-                <label htmlFor="clasificacion" className="labeldetaildeudas">
-                  Clasificación del Crédito:
-                </label>
-                <input
-                  type="text"
-                  text
-                  className="cajadeudas"
-                  name="clasificacion"
-                  id="clasificacion"
-                  value={datosDeuda.clasificacion}
-                  onChange={(event) => handleDeudaChange(event)}
-                />
-              </div>
-              <div className="infodetaildeudas">
-                <label htmlFor="diasmora" className="labeldetaildeudas">
-                  Número de días en mora:
-                </label>
-                <input
-                  type="text"
-                  text
-                  className="cajadeudas"
-                  name="diasMora"
-                  id="diasmora"
-                  value={datosDeuda.diasMora}
-                  onChange={(event) => handleDeudaChange(event)}
-                />
-              </div>
-              <Button type="submit" value="Guardar">
-                Guardar deuda
-              </Button>
               <br />
               <br />
-            </div>{" "}
+            </div>
             <div className="formdeudas">
-              <div className="encabezadoingresos">
-                <h6 className="titulo">Bienes</h6>
+              <div className="infoseccion">
+                <div className="encabezadoingresos">
+                  <h6 className="titulo">Bienes</h6>
+                </div>
+                <div className="infodetailingresos">
+                  <label htmlFor="tipoBien" className="labelingresos">
+                    Tipo de bien:
+                  </label>
+                  <input
+                    type="text"
+                    className="cajaingresos"
+                    name="tipoBien"
+                    id="tipoBien"
+                    value={bien.tipoBien}
+                    onChange={(event) => handleBienChange(event)}
+                  />
+                </div>
+                <div className="infodetailingresos">
+                  <label htmlFor="valorBien" className="labelingresos">
+                    Valor comercial:
+                  </label>
+                  <input
+                    type="number"
+                    className="cajaingresos"
+                    name="valor"
+                    id="valorBien"
+                    value={bien.valor}
+                    onChange={(event) => handleBienChange(event)}
+                  />
+                </div>
+                <div className="infodetailingresos">
+                  <label htmlFor="tipoafectacion" className="labelingresos">
+                    Tipo de afectación:
+                  </label>
+                  <input
+                    type="text"
+                    className="cajaingresos"
+                    name="tipoAfectacion"
+                    id="tipoafectacion"
+                    value={bien.tipoAfectacion}
+                    onChange={(event) => handleBienChange(event)}
+                  />
+                </div>
+                <div className="infodetailingresos">
+                  <label htmlFor="decripcionBien" className="labelingresos">
+                    Descripción:
+                  </label>
+                  <input
+                    type="text"
+                    className="cajaingresos"
+                    name="descripcionBien"
+                    id="descripcionBien"
+                    value={bien.descripcionBien}
+                    onChange={(event) => handleBienChange(event)}
+                  />
+                </div>
+                <Button onClick={handleSubmitBien} value="Guardarbien">
+                  Guardar bien
+                </Button>
               </div>
-              <div className="infodetailingresos">
-                <label htmlFor="tipoBien" className="labelingresos">
-                  Tipo de bien:
-                </label>
-                <input
-                  type="text"
-                  className="cajaingresos"
-                  name="tipoBien"
-                  id="tipoBien"
-                  value={bien.tipoBien}
-                  onChange={(event) => handleBienChange(event)}
-                />
+              <div className="infoseccion">
+                <div className="encabezadoingresos">
+                  <h6 className="titulo">Procesos judiciales</h6>
+                </div>
+                <div className="infodetailingresos">
+                  <label htmlFor="juzgado" className="labelingresos">
+                    Juzgado:
+                  </label>
+                  <input
+                    type="text"
+                    className="cajaingresos"
+                    name="juzgado"
+                    id="juzgado"
+                    value={proceso.juzgado}
+                    onChange={(event) => handleProcesoChange(event)}
+                  />
+                </div>
+                <div className="infodetailingresos">
+                  <label htmlFor="radicado" className="labelingresos">
+                    Radicado:
+                  </label>
+                  <input
+                    type="text"
+                    className="cajaingresos"
+                    name="radicado"
+                    id="radicado"
+                    value={proceso.radicado}
+                    onChange={(event) => handleProcesoChange(event)}
+                  />
+                </div>
+                <div className="infodetailingresos">
+                  <label htmlFor="demandante" className="labelingresos">
+                    Demandante:
+                  </label>
+                  <input
+                    type="text"
+                    className="cajaingresos"
+                    name="demandante"
+                    id="demandante"
+                    value={proceso.demandante}
+                    onChange={(event) => handleProcesoChange(event)}
+                  />
+                </div>
+                <div className="infodetailingresos">
+                  <label htmlFor="tipoProceso" className="labelingresos">
+                    Tipo de proceso:
+                  </label>
+                  <input
+                    type="text"
+                    className="cajaingresos"
+                    name="tipoProceso"
+                    id="tipoProceso"
+                    value={proceso.tipoProceso}
+                    onChange={(event) => handleProcesoChange(event)}
+                  />
+                </div>
+                <Button onClick={handleSubmitProceso} value="Guardarproceso">
+                  Guardar proceso
+                </Button>
               </div>
-              <div className="infodetailingresos">
-                <label htmlFor="valorBien" className="labelingresos">
-                  Valor comercial:
-                </label>
-                <input
-                  type="number"
-                  className="cajaingresos"
-                  name="valor"
-                  id="valorBien"
-                  value={bien.valor}
-                  onChange={(event) => handleBienChange(event)}
-                />
-              </div>
-              <div className="infodetailingresos">
-                <label htmlFor="tipoafectacion" className="labelingresos">
-                  Tipo de afectación:
-                </label>
-                <input
-                  type="text"
-                  className="cajaingresos"
-                  name="tipoAfectacion"
-                  id="tipoafectacion"
-                  value={bien.tipoAfectacion}
-                  onChange={(event) => handleBienChange(event)}
-                />
-              </div>
-              <div className="infodetailingresos">
-                <label htmlFor="decripcionBien" className="labelingresos">
-                  Descripción:
-                </label>
-                <input
-                  type="text"
-                  className="cajaingresos"
-                  name="descripcionBien"
-                  id="descripcionBien"
-                  value={bien.descripcionBien}
-                  onChange={(event) => handleBienChange(event)}
-                />
-              </div>
-              <Button onClick={handleSubmitBien} value="Guardarbien">
-                Guardar bien
-              </Button>
-              <div className="encabezadoingresos">
-                <h6 className="titulo">Procesos judiciales</h6>
-              </div>
-              <div className="infodetailingresos">
-                <label htmlFor="juzgado" className="labelingresos">
-                  Juzgado:
-                </label>
-                <input
-                  type="text"
-                  className="cajaingresos"
-                  name="juzgado"
-                  id="juzgado"
-                  value={proceso.juzgado}
-                  onChange={(event) => handleProcesoChange(event)}
-                />
-              </div>
-              <div className="infodetailingresos">
-                <label htmlFor="radicado" className="labelingresos">
-                  Radicado:
-                </label>
-                <input
-                  type="text"
-                  className="cajaingresos"
-                  name="radicado"
-                  id="radicado"
-                  value={proceso.radicado}
-                  onChange={(event) => handleProcesoChange(event)}
-                />
-              </div>
-              <div className="infodetailingresos">
-                <label htmlFor="demandante" className="labelingresos">
-                  Demandante:
-                </label>
-                <input
-                  type="text"
-                  className="cajaingresos"
-                  name="demandante"
-                  id="demandante"
-                  value={proceso.demandante}
-                  onChange={(event) => handleProcesoChange(event)}
-                />
-              </div>
-              <div className="infodetailingresos">
-                <label htmlFor="tipoProceso" className="labelingresos">
-                  Tipo de proceso:
-                </label>
-                <input
-                  type="text"
-                  className="cajaingresos"
-                  name="tipoProceso"
-                  id="tipoProceso"
-                  value={proceso.tipoProceso}
-                  onChange={(event) => handleProcesoChange(event)}
-                />
-              </div>
-              <Button onClick={handleSubmitProceso} value="Guardarproceso">
-                Guardar proceso
-              </Button>
-              <div className="encabezadoingresos">
-                <h6 className="titulo">Ingresos</h6>
-              </div>
-              <div className="infodetailingresos">
-                <label htmlFor="concepto" className="labelingresos">
-                  Concepto:
-                </label>
-                <input
-                  type="text"
-                  className="cajaingresos"
-                  name="concepto"
-                  id="concepto"
-                  value={ingreso.concepto}
-                  onChange={(event) => handleIngresoChange(event)}
-                />
-              </div>
-              <div className="infodetailingresos">
-                <label htmlFor="valor" className="labelingresos">
-                  Valor :
-                </label>
-                <input
-                  type="number"
-                  className="cajaingresos"
-                  name="valor"
-                  id="valor"
-                  value={ingreso.valor}
-                  onChange={(event) => handleIngresoChange(event)}
-                />
-              </div>
+              <div className="infoseccion">
+                <div className="encabezadoingresos">
+                  <h6 className="titulo">Ingresos</h6>
+                </div>
+                <div className="infodetailingresos">
+                  <label htmlFor="concepto" className="labelingresos">
+                    Concepto:
+                  </label>
+                  <input
+                    type="text"
+                    className="cajaingresos"
+                    name="concepto"
+                    id="concepto"
+                    value={ingreso.concepto}
+                    onChange={(event) => handleIngresoChange(event)}
+                  />
+                </div>
+                <div className="infodetailingresos">
+                  <label htmlFor="valor" className="labelingresos">
+                    Valor :
+                  </label>
+                  <input
+                    type="number"
+                    className="cajaingresos"
+                    name="valor"
+                    id="valor"
+                    value={ingreso.valor}
+                    onChange={(event) => handleIngresoChange(event)}
+                  />
+                </div>
 
-              <Button onClick={handleSubmitIngreso} value="Guardaringreso">
-                Guardar ingreso
-              </Button>
+                <Button onClick={handleSubmitIngreso} value="Guardaringreso">
+                  Guardar ingreso
+                </Button>
+              </div>
               <br />
               <br />
             </div>
           </div>
           <div className="infotodosingresos">
             <div className="formgastos">
-              <br />
-              <div className="encabezadogastos">
-                <h6 className="titulo">Gastos mensuales</h6>
-              </div>
+              {/* <br /> */}
+              <div className="infoseccion">
+                <div className="encabezadogastos">
+                  <h6 className="titulo">Gastos mensuales</h6>
+                </div>
 
-              <div className="infodetailingresos">
-                <label htmlFor="energia" className="labelingresos">
-                  Energía:
-                </label>
-                <input
-                  type="number"
-                  className="cajaingresos"
-                  name="energia"
-                  id="energia"
-                  value={gasto.energia}
-                  onChange={(event) => handleGastoChange(event)}
-                />
-              </div>
-              <div className="infodetailingresos">
-                <label htmlFor="agua" className="labelingresos">
-                  Agua, alcantarillado y aseo:
-                </label>
-                <input
-                  type="number"
-                  number
-                  className="cajaingresos"
-                  name="aguaAlcAseo"
-                  id="agua"
-                  value={gasto.aguaAlcAseo}
-                  onChange={(event) => handleGastoChange(event)}
-                />
-              </div>
-              <div className="infodetailingresos">
-                <label htmlFor="gas" className="labelingresos">
-                  Gas:
-                </label>
-                <input
-                  type="number"
-                  number
-                  className="cajaingresos"
-                  name="gas"
-                  id="gas"
-                  value={gasto.gas}
-                  onChange={(event) => handleGastoChange(event)}
-                />
-              </div>
+                <div className="infodetailingresos">
+                  <label htmlFor="energia" className="labelingresos">
+                    Energía:
+                  </label>
+                  <input
+                    type="number"
+                    className="cajaingresos"
+                    name="energia"
+                    id="energia"
+                    value={gasto.energia}
+                    onChange={(event) => handleGastoChange(event)}
+                  />
+                </div>
+                <div className="infodetailingresos">
+                  <label htmlFor="agua" className="labelingresos">
+                    Agua, alcantarillado y aseo:
+                  </label>
+                  <input
+                    type="number"
+                    number
+                    className="cajaingresos"
+                    name="aguaAlcAseo"
+                    id="agua"
+                    value={gasto.aguaAlcAseo}
+                    onChange={(event) => handleGastoChange(event)}
+                  />
+                </div>
+                <div className="infodetailingresos">
+                  <label htmlFor="gas" className="labelingresos">
+                    Gas:
+                  </label>
+                  <input
+                    type="number"
+                    number
+                    className="cajaingresos"
+                    name="gas"
+                    id="gas"
+                    value={gasto.gas}
+                    onChange={(event) => handleGastoChange(event)}
+                  />
+                </div>
 
-              <div className="infodetailingresos">
-                <label htmlFor="telecomunicaciones" className="labelingresos">
-                  Telecomunicaciones :
-                </label>
-                <input
-                  type="number"
-                  number
-                  className="cajaingresos"
-                  name="telecomunicaciones"
-                  id="telecomunicaciones"
-                  value={gasto.telecomunicaciones}
-                  onChange={(event) => handleGastoChange(event)}
-                />
-              </div>
-              <div className="infodetailingresos">
-                <label htmlFor="television" className="labelingresos">
-                  Televisión:
-                </label>
-                <input
-                  type="number"
-                  number
-                  className="cajaingresos"
-                  name="television"
-                  id="television"
-                  value={gasto.television}
-                  onChange={(event) => handleGastoChange(event)}
-                />
-              </div>
-              <div className="infodetailingresos">
-                <label htmlFor="arriendo" className="labelingresos">
-                  Arriendo:
-                </label>
-                <input
-                  type="number"
-                  number
-                  className="cajaingresos"
-                  name="arriendo"
-                  id="arriendo"
-                  value={gasto.arriendo}
-                  onChange={(event) => handleGastoChange(event)}
-                />
-              </div>
-              <div className="infodetailingresos">
-                <label htmlFor="seguros" className="labelingresos">
-                  Seguros:
-                </label>
-                <input
-                  type="number"
-                  number
-                  className="cajaingresos"
-                  name="seguros"
-                  id="seguros"
-                  value={gasto.seguros}
-                  onChange={(event) => handleGastoChange(event)}
-                />
-              </div>
-              <div className="infodetailingresos">
-                <label htmlFor="alimentacion" className="labelingresos">
-                  Alimentación:
-                </label>
-                <input
-                  type="number"
-                  number
-                  className="cajaingresos"
-                  name="alimentacion"
-                  id="alimentacion"
-                  value={gasto.alimentacion}
-                  onChange={(event) => handleGastoChange(event)}
-                />
-              </div>
-              <div className="infodetailingresos">
-                <label htmlFor="transporte" className="labelingresos">
-                  Transporte:
-                </label>
-                <input
-                  type="number"
-                  number
-                  className="cajaingresos"
-                  name="transporte"
-                  id="transporte"
-                  value={gasto.transporte}
-                  onChange={(event) => handleGastoChange(event)}
-                />
-              </div>
-              <div className="infodetailingresos">
-                <label htmlFor="otros" className="labelingresos">
-                  Otros gastos:
-                </label>
-                <input
-                  type="number"
-                  number
-                  className="cajaingresos"
-                  name="otros"
-                  id="otros"
-                  value={gasto.otros}
-                  onChange={(event) => handleGastoChange(event)}
-                />
-              </div>
+                <div className="infodetailingresos">
+                  <label htmlFor="telecomunicaciones" className="labelingresos">
+                    Telecomunicaciones :
+                  </label>
+                  <input
+                    type="number"
+                    number
+                    className="cajaingresos"
+                    name="telecomunicaciones"
+                    id="telecomunicaciones"
+                    value={gasto.telecomunicaciones}
+                    onChange={(event) => handleGastoChange(event)}
+                  />
+                </div>
+                <div className="infodetailingresos">
+                  <label htmlFor="television" className="labelingresos">
+                    Televisión:
+                  </label>
+                  <input
+                    type="number"
+                    number
+                    className="cajaingresos"
+                    name="television"
+                    id="television"
+                    value={gasto.television}
+                    onChange={(event) => handleGastoChange(event)}
+                  />
+                </div>
+                <div className="infodetailingresos">
+                  <label htmlFor="arriendo" className="labelingresos">
+                    Arriendo:
+                  </label>
+                  <input
+                    type="number"
+                    number
+                    className="cajaingresos"
+                    name="arriendo"
+                    id="arriendo"
+                    value={gasto.arriendo}
+                    onChange={(event) => handleGastoChange(event)}
+                  />
+                </div>
+                <div className="infodetailingresos">
+                  <label htmlFor="seguros" className="labelingresos">
+                    Seguros:
+                  </label>
+                  <input
+                    type="number"
+                    number
+                    className="cajaingresos"
+                    name="seguros"
+                    id="seguros"
+                    value={gasto.seguros}
+                    onChange={(event) => handleGastoChange(event)}
+                  />
+                </div>
+                <div className="infodetailingresos">
+                  <label htmlFor="alimentacion" className="labelingresos">
+                    Alimentación:
+                  </label>
+                  <input
+                    type="number"
+                    number
+                    className="cajaingresos"
+                    name="alimentacion"
+                    id="alimentacion"
+                    value={gasto.alimentacion}
+                    onChange={(event) => handleGastoChange(event)}
+                  />
+                </div>
+                <div className="infodetailingresos">
+                  <label htmlFor="transporte" className="labelingresos">
+                    Transporte:
+                  </label>
+                  <input
+                    type="number"
+                    number
+                    className="cajaingresos"
+                    name="transporte"
+                    id="transporte"
+                    value={gasto.transporte}
+                    onChange={(event) => handleGastoChange(event)}
+                  />
+                </div>
+                <div className="infodetailingresos">
+                  <label htmlFor="otros" className="labelingresos">
+                    Otros gastos:
+                  </label>
+                  <input
+                    type="number"
+                    number
+                    className="cajaingresos"
+                    name="otros"
+                    id="otros"
+                    value={gasto.otros}
+                    onChange={(event) => handleGastoChange(event)}
+                  />
+                </div>
 
-              <Button onClick={handleSubmitGasto} value="Guardar">
-                Guardar gastos
-              </Button>
+                <Button onClick={handleSubmitGasto} value="Guardar">
+                  Guardar gastos
+                </Button>
+              </div>
             </div>
             <div className="formpropuesta">
-              <br />
-              <div className="encabezadopropuesta">
-                <h6 className="titulo">Propuesta de pago</h6>
-              </div>
-              <div className="infodetailpropuesta">
-                <label
-                  htmlFor="clasificacionpropuesta"
-                  className="labeldetaildeudas"
+              {/* <br /> */}
+              <div className="infoseccion">
+                <div className="encabezadopropuesta">
+                  <h6 className="titulo">Propuesta de pago</h6>
+                </div>
+                <div className="infodetailpropuesta">
+                  <label
+                    htmlFor="clasificacionpropuesta"
+                    className="labeldetaildeudas"
+                  >
+                    Clasificación del Crédito:
+                  </label>
+                  <input
+                    type="text"
+                    text
+                    className="cajadeudas"
+                    name="Clasificacion"
+                    id="clasificacionpropuesta"
+                    value={propuesta.Clasificacion}
+                    onChange={(event) => handlePropuestaChange(event)}
+                  />
+                </div>
+                <div className="infodetailpropuesta">
+                  <label htmlFor="tasainteres" className="labeldetaildeudas">
+                    Tasa de interés :
+                  </label>
+                  <input
+                    type="number"
+                    text
+                    className="cajadeudas"
+                    name="tasaIntereses"
+                    id="tasainteres"
+                    value={propuesta.tasaIntereses}
+                    onChange={(event) => handlePropuestaChange(event)}
+                  />
+                </div>
+                <div className="infodetailpropuesta">
+                  <label htmlFor="valorcuota" className="labeldetaildeudas">
+                    Valor de la cuota :
+                  </label>
+                  <input
+                    type="number"
+                    text
+                    className="cajadeudas"
+                    name="valorCuota"
+                    id="valorcuota"
+                    value={propuesta.valorCuota}
+                    onChange={(event) => handlePropuestaChange(event)}
+                  />
+                </div>
+                <div className="infodetailpropuesta">
+                  <label htmlFor="numeroCuotas" className="labeldetaildeudas">
+                    Número de cuotas :
+                  </label>
+                  <input
+                    type="number"
+                    text
+                    className="cajadeudas"
+                    name="numeroCuotas"
+                    id="numeroCuotas"
+                    value={propuesta.numeroCuotas}
+                    onChange={(event) => handlePropuestaChange(event)}
+                  />
+                </div>
+                <Button
+                  onClick={handleSubmitPropuesta}
+                  value="Guardarpropuesta"
                 >
-                  Clasificación del Crédito:
-                </label>
-                <input
-                  type="text"
-                  text
-                  className="cajadeudas"
-                  name="Clasificacion"
-                  id="clasificacionpropuesta"
-                  value={propuesta.Clasificacion}
-                  onChange={(event) => handlePropuestaChange(event)}
-                />
+                  Guardar propuesta
+                </Button>
               </div>
-              <div className="infodetailpropuesta">
-                <label htmlFor="tasainteres" className="labeldetaildeudas">
-                  Tasa de interés :
-                </label>
-                <input
-                  type="number"
-                  text
-                  className="cajadeudas"
-                  name="tasaIntereses"
-                  id="tasainteres"
-                  value={propuesta.tasaIntereses}
-                  onChange={(event) => handlePropuestaChange(event)}
-                />
+              {/* <br /> */}
+              <div className="infoseccion">
+                <div className="encabezadopropuesta">
+                  <h6 className="titulo">Sociedad conyugal</h6>
+                </div>
+                <div className="infodetailpropuesta">
+                  <label
+                    htmlFor="clasificacionpropuesta"
+                    className="labeldetaildeudas"
+                  >
+                    Nombres y apellidos:
+                  </label>
+                  <input
+                    type="text"
+                    text
+                    className="cajadeudas"
+                    name="nombresConyuge"
+                    id="nombresConyuge"
+                    value={sociedad.nombresConyuge}
+                    onChange={(event) => handleSociedadChange(event)}
+                  />
+                </div>
+                <div className="infodetailpropuesta">
+                  <label htmlFor="tasainteres" className="labeldetaildeudas">
+                    Identificación :
+                  </label>
+                  <input
+                    type="number"
+                    text
+                    className="cajadeudas"
+                    name="idConyuge"
+                    id="idConyuge"
+                    value={sociedad.idConyuge}
+                    onChange={(event) => handleSociedadChange(event)}
+                  />
+                </div>
+                <Button onClick={handleSubmitSociedad} value="Guardarconyuge">
+                  Guardar conyuge
+                </Button>
               </div>
-              <div className="infodetailpropuesta">
-                <label htmlFor="valorcuota" className="labeldetaildeudas">
-                  Valor de la cuota :
-                </label>
-                <input
-                  type="number"
-                  text
-                  className="cajadeudas"
-                  name="valorCuota"
-                  id="valorcuota"
-                  value={propuesta.valorCuota}
-                  onChange={(event) => handlePropuestaChange(event)}
-                />
-              </div>
-              <div className="infodetailpropuesta">
-                <label htmlFor="numeroCuotas" className="labeldetaildeudas">
-                  Número de cuotas :
-                </label>
-                <input
-                  type="number"
-                  text
-                  className="cajadeudas"
-                  name="numeroCuotas"
-                  id="numeroCuotas"
-                  value={propuesta.numeroCuotas}
-                  onChange={(event) => handlePropuestaChange(event)}
-                />
-              </div>
-              <Button onClick={handleSubmitPropuesta} value="Guardarpropuesta">
-                Guardar propuesta
-              </Button>
-              <br />
-              <div className="encabezadopropuesta">
-                <h6 className="titulo">Sociedad conyugal</h6>
-              </div>
-              <div className="infodetailpropuesta">
-                <label
-                  htmlFor="clasificacionpropuesta"
-                  className="labeldetaildeudas"
+              {/* <br /> */}
+              <div className="infoseccion">
+                <div className="encabezadopropuesta">
+                  <h6 className="titulo">Obligaciones alimentarias</h6>
+                </div>
+                <div className="infodetailpropuesta">
+                  <label
+                    htmlFor="clasificacionpropuesta"
+                    className="labeldetaildeudas"
+                  >
+                    Nombres y apellidos:
+                  </label>
+                  <input
+                    type="text"
+                    text
+                    className="cajadeudas"
+                    name="nombresHijo"
+                    id="nombresHijo"
+                    value={obligacion.nombresHijo}
+                    onChange={(event) => handleObligacionChange(event)}
+                  />
+                </div>
+                <div className="infodetailpropuesta">
+                  <label htmlFor="idHijo" className="labeldetaildeudas">
+                    Identificación :
+                  </label>
+                  <input
+                    type="number"
+                    text
+                    className="cajadeudas"
+                    name="idHijo"
+                    id="idHijo"
+                    value={obligacion.idHijo}
+                    onChange={(event) => handleObligacionChange(event)}
+                  />
+                </div>
+                <Button
+                  onClick={handleSubmitObligacion}
+                  value="Guardarobligacion"
                 >
-                  Nombres y apellidos:
-                </label>
-                <input
-                  type="text"
-                  text
-                  className="cajadeudas"
-                  name="nombresConyuge"
-                  id="nombresConyuge"
-                  value={sociedad.nombresConyuge}
-                  onChange={(event) => handleSociedadChange(event)}
-                />
+                  Guardar obligación
+                </Button>
               </div>
-              <div className="infodetailpropuesta">
-                <label htmlFor="tasainteres" className="labeldetaildeudas">
-                  Identificación :
-                </label>
-                <input
-                  type="number"
-                  text
-                  className="cajadeudas"
-                  name="idConyuge"
-                  id="idConyuge"
-                  value={sociedad.idConyuge}
-                  onChange={(event) => handleSociedadChange(event)}
-                />
-              </div>
-              <Button onClick={handleSubmitSociedad} value="Guardarconyuge">
-                Guardar conyuge
-              </Button>
-              <br />
-              <div className="encabezadopropuesta">
-                <h6 className="titulo">Obligaciones alimentarias</h6>
-              </div>
-              <div className="infodetailpropuesta">
-                <label
-                  htmlFor="clasificacionpropuesta"
-                  className="labeldetaildeudas"
-                >
-                  Nombres y apellidos:
-                </label>
-                <input
-                  type="text"
-                  text
-                  className="cajadeudas"
-                  name="nombresHijo"
-                  id="nombresHijo"
-                  value={obligacion.nombresHijo}
-                  onChange={(event) => handleObligacionChange(event)}
-                />
-              </div>
-              <div className="infodetailpropuesta">
-                <label htmlFor="idHijo" className="labeldetaildeudas">
-                  Identificación :
-                </label>
-                <input
-                  type="number"
-                  text
-                  className="cajadeudas"
-                  name="idHijo"
-                  id="idHijo"
-                  value={obligacion.idHijo}
-                  onChange={(event) => handleObligacionChange(event)}
-                />
-              </div>
-              <Button
-                onClick={handleSubmitObligacion}
-                value="Guardarobligacion"
-              >
-                Guardar obligación
-              </Button>
-              <br />
+              {/* <br /> */}
             </div>
           </div>
         </div>
@@ -1120,7 +1254,8 @@ const Insolvencia = () => {
               </tbody>
             </table>
           </div>
-          <br /><br />
+          <br />
+          <br />
           <div className="resultadogastos">
             <table className="informationTable">
               <tr>

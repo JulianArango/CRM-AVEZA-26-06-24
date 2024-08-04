@@ -6,16 +6,16 @@ export default (sequelize) => {
     {
       NIT: {
         type: DataTypes.STRING,
-        allowNull: false,
-        primaryKey: true,
+        allowNull: true,
       },
       email: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
-      nombre: { type: DataTypes.STRING, allowNull: false },
-      direccion: { type: DataTypes.STRING, allowNull: false },
-      telefono: { type: DataTypes.BIGINT, allowNull: false },
+      nombre: { type: DataTypes.STRING, allowNull: true, primaryKey: true },
+      direccion: { type: DataTypes.STRING, allowNull: true },
+      ciudad: { type: DataTypes.STRING, allowNull: true },
+      telefono: { type: DataTypes.STRING, allowNull: true },
     },
     { timestamps: false }
   );
