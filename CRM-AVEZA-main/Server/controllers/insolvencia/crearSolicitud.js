@@ -147,7 +147,7 @@ export const crearSolicitud = async (req, res) => {
     }
     console.log("Ultimo Obligacion: ", newObligacion);
 
-    return newAcreedor.dataValues;
+    // return newAcreedor.dataValues;
   } catch (error) {
     console.log(error);
     res.status(500).send(error.message);
