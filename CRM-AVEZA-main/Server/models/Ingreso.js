@@ -1,13 +1,14 @@
 import { DataTypes } from "sequelize";
+import { v4 as uuidv4 } from "uuid";
 
 export default (sequelize) => {
-  const Ingresos = sequelize.define(
-    "Ingresos",
+  const Ingreso = sequelize.define(
+    "Ingreso",
     {
       idIngreso: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
+        defaultValue: uuidv4,
         primaryKey: true,
-        autoIncrement: true,
       },
       concepto: {
         type: DataTypes.STRING,
@@ -17,5 +18,5 @@ export default (sequelize) => {
     },
     { timestamps: false }
   );
-  return Ingresos;
+  return Ingreso;
 };

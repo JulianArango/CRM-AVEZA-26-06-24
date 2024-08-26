@@ -2,23 +2,23 @@ import { DataTypes } from "sequelize";
 import { v4 as uuidv4 } from "uuid";
 
 export default (sequelize) => {
-  const Bien = sequelize.define(
-    "Bien",
+  const Proceso = sequelize.define(
+    "Proceso",
     {
-      idBien: {
+      idProceso: {
         type: DataTypes.UUID,
         defaultValue: uuidv4,
         primaryKey: true,
       },
-      tipoBien: {
+      juzgado: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      valor: { type: DataTypes.BIGINT, allowNull: false },
-      tipoAfectacion: { type: DataTypes.STRING, defaultValue: "Ninguna" },
-      descripcionBien: { type: DataTypes.STRING, allowNull: false },
+      demandante: { type: DataTypes.STRING, allowNull: false },
+      radicado: { type: DataTypes.STRING, allowNull: false },
+      tipoProceso: { type: DataTypes.STRING, allowNull: false },
     },
     { timestamps: false }
   );
-  return Bien;
+  return Proceso;
 };

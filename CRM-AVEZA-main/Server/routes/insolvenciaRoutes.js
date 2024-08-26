@@ -4,6 +4,7 @@ import { crearAcreedoresHandler, getAllAcreedoresHandler } from "../handlers/ins
 const insolvenciaRouter = Router();
 
 insolvenciaRouter.post("/crearacreedores", crearAcreedoresHandler);
+insolvenciaRouter.post("/crearsolicitud", crearAcreedoresHandler);
 insolvenciaRouter.get("/acreedores", getAllAcreedoresHandler);
 
 export default insolvenciaRouter;

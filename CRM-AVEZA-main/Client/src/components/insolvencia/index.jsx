@@ -111,6 +111,7 @@ const Insolvencia = () => {
   const [propuesta, setPropuesta] = useState(initPropuesta);
   const [acreedorFilt, setAcreedorFilt] = useState(initAcreedorFilt);
    const [motivos, setMotivos] = useState(initMotivos);
+   
   const addDeuda = (deuda) => {
     setDeudas([...deudas, deuda]);
     setDatosDeuda(initDeuda);
